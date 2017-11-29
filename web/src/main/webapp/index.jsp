@@ -1,5 +1,8 @@
-<!doctype html>
-<html lang="en">
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
     <title>Hello, world!</title>
     <!-- Required meta tags -->
@@ -39,13 +42,14 @@
 <main>
     <div class="container">
         <h2>Vertical (basic) form</h2>
-        <form action="">
+        <c:out value=""></c:out>
+        <form action="chemist">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input class="form-control" id="name" placeholder="Enter name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="surname">Surname:</label>
+                <label for="surname">Фамилия:</label>
                 <input class="form-control" id="surname" placeholder="Enter surname" name="surname">
             </div>
             <div class="form-group">
@@ -61,8 +65,8 @@
                 <input class="form-control" id="phone" placeholder="Enter phone" name="phone">
             </div>
             <div class="form-group">
-                <label for="adress">Adress:</label>
-                <input class="form-control" id="adress" placeholder="Enter adress" name="adress">
+                <label for="account">Account:</label>
+                <input class="form-control" id="account" placeholder="Enter adress" name="account">
             </div>
 
 

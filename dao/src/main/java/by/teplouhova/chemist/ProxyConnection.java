@@ -20,6 +20,7 @@ public class ProxyConnection implements Connection {
         properties.setProperty("useSSL", bundle.getString("useSSL"));
         try {
             connection = DriverManager.getConnection(url, properties);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

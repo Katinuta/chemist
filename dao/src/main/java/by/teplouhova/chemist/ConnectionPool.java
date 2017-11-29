@@ -19,7 +19,7 @@ public class ConnectionPool {
 
     private ConnectionPool() {
 
-        connections = new ArrayBlockingQueue<ProxyConnection>(POOL_SIZE);
+        connections = new ArrayBlockingQueue<>(POOL_SIZE);
         for (int index = 0; index < POOL_SIZE; index++) {
             connections.offer(new ProxyConnection());
         }
@@ -30,7 +30,7 @@ public class ConnectionPool {
         if (!isExistPool.get()) {
             try {
                 lock.lock();
-                if (pool != null) {
+                if (pool == null) {
                     pool = new ConnectionPool();
                     isExistPool.set(true);
                 }
@@ -47,6 +47,7 @@ public class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
+
             e.printStackTrace();
         }
         return connection;
@@ -73,5 +74,10 @@ public class ConnectionPool {
         });
     }
 
-
+    @Override
+    public String toString() {
+        return "ConnectionPool{" +
+                "connections=" + connections +
+                '}';
+    }
 }
