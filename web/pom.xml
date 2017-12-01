@@ -7,36 +7,33 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-
+<groupId>chemist</groupId>
     <artifactId>web</artifactId>
     <packaging>war</packaging>
     <version>1.1</version>
 
-    <name>web Maven Webapp</name>
+    <name>web</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-
-
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>chemist</groupId>
             <artifactId>dao</artifactId>
             <version>1.1</version>
-        </dependency></dependencies>
+        </dependency>
+    </dependencies>
 
-    <build>
-        <finalName>chemist</finalName>
-    </build>
+
 
 </project>
 

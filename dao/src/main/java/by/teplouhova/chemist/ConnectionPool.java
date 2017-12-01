@@ -31,9 +31,12 @@ public class ConnectionPool {
             try {
                 lock.lock();
                 if (pool == null) {
+                    DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
                     pool = new ConnectionPool();
                     isExistPool.set(true);
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             } finally {
                 lock.unlock();
             }

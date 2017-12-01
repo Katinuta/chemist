@@ -21,7 +21,7 @@ public class UserDAO extends AbstractDAO<User> {
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
 
     public UserDAO() {
-        connection = ConnectionPool.getInstance().getConnection();
+       // connection = ConnectionPool.getInstance().getConnection();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class UserDAO extends AbstractDAO<User> {
         PreparedStatement st = null;
         User user = null;
         try {
-            st = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
+            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
             st.setString(1, login);
             ResultSet result = st.executeQuery();
             if (result.next()) {

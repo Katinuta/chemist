@@ -13,6 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<div id="name">${name}</div>
+${user.name}
+${user.surname}
 </body>
 </html>

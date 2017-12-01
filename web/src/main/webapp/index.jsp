@@ -76,6 +76,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
+    ${name}
 
 </main>
 <footer class="container-fluid text-center">Footer</footer>
