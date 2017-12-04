@@ -9,21 +9,8 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
     private Connection connection;
 
-    ProxyConnection() {
-        ResourceBundle bundle = ResourceBundle.getBundle("database");
-        String url = bundle.getString("url") + "?" +
-                "useUnicode=" + bundle.getString("useUnicode") + "&" +
-                "characterEncoding=" + bundle.getString("characterEncoding");
-        Properties properties = new Properties();
-        properties.setProperty("user", bundle.getString("user"));
-        properties.setProperty("password", bundle.getString("password"));
-        properties.setProperty("useSSL", bundle.getString("useSSL"));
-        try {
-            connection = DriverManager.getConnection(url, properties);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    ProxyConnection(Connection connection) {
+        this.connection=connection;
 
     }
 

@@ -1,27 +1,39 @@
 package by.teplouhova.chemist;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static final int POOL_SIZE = 15;
+  //  private static final int POOL_SIZE = 15;
     private static ReentrantLock lock = new ReentrantLock();
-    private BlockingQueue<ProxyConnection> connections;
     private static ConnectionPool pool;
     private static AtomicBoolean isExistPool = new AtomicBoolean(false);
+    private BlockingQueue<ProxyConnection> connections;
+
 
 
     private ConnectionPool() {
-
-        connections = new ArrayBlockingQueue<>(POOL_SIZE);
-        for (int index = 0; index < POOL_SIZE; index++) {
-            connections.offer(new ProxyConnection());
+        ResourceBundle bundle = ResourceBundle.getBundle("database");
+        String url = bundle.getString("url") + "?" +
+                "useUnicode=" + bundle.getString("useUnicode") + "&" +
+                "characterEncoding=" + bundle.getString("characterEncoding");
+        String user=bundle.getString("user");
+        String password=bundle.getString("password");
+        int poolInitSize=Integer.parseInt(bundle.getString("initialSize"));
+        int poolMaxActive=Integer.parseInt(bundle.getString("maxActive"));
+        connections = new ArrayBlockingQueue<>(poolMaxActive);
+       while (connections.remainingCapacity()!=poolInitSize) {
+            try {
+                connections.offer(new ProxyConnection(DriverManager.getConnection(url,user,password)));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }

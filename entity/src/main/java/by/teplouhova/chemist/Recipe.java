@@ -7,8 +7,9 @@ public class Recipe extends Entity{
     private long recipeId;
     private LocalDate dateBegin;
     private LocalDate dateEnd;
-    private User client;
-    private User doctor;
+    private long clientId;
+    private long doctorId;
     private boolean isActive;
+    //private
 
 }
