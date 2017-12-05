@@ -1,4 +1,8 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.controller;
+
+import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.impl.User;
+import by.teplouhova.chemist.impl.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

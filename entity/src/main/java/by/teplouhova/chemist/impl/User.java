@@ -1,4 +1,7 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.impl;
+
+import by.teplouhova.chemist.Entity;
+import by.teplouhova.chemist.RoleEnum;
 
 import java.math.BigDecimal;
 

@@ -1,5 +1,7 @@
 package by.teplouhova.chemist;
 
+import by.teplouhova.chemist.pool.ProxyConnection;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 

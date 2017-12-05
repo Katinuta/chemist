@@ -1,4 +1,8 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.impl;
+
+import by.teplouhova.chemist.AbstractDAO;
+import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.pool.ConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +16,7 @@ public class UserDAO extends AbstractDAO<User> {
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_user_id=?";
 
     private final static String SQL_INSERT_USER =
-            "INSERT INTO chemist.user (u_name, u_surname, u_login, u_password, u_account, u_phone, u_role) VALUES ( ?, ?, ?, ?, ?, ?,?)";
+            "INSERT INTO chemist.user (u_name, u_surname, u_login, u_password, u_account, u_phone, u_role) VALUES ( ?, ?, ?,MD5(?), ?, ?,?)";
 
     private final static String SQL_UPDATE_USER =
             "UPDATE chemist.user SET u_name =?, u_surname=?, u_login=?, u_password=?, u_account=?, u_phone=? WHERE u_user_id=?";
@@ -21,7 +25,7 @@ public class UserDAO extends AbstractDAO<User> {
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
 
     public UserDAO() {
-       // connection = ConnectionPool.getInstance().getConnection();
+
     }
 
     @Override

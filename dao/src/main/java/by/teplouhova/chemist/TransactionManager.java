@@ -1,11 +1,18 @@
 package by.teplouhova.chemist;
 
+import by.teplouhova.chemist.pool.ConnectionPool;
+import by.teplouhova.chemist.pool.ProxyConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 
 public class TransactionManager {
 
-    private ProxyConnection connection=ConnectionPool.getInstance().getConnection();
+    private final static Logger LOGGER= LogManager.getLogger();
+
+    private ProxyConnection connection= ConnectionPool.getInstance().getConnection();
 
     public void beginTransaction(AbstractDAO dao, AbstractDAO... listDAO) {
         try {
@@ -19,6 +26,12 @@ public class TransactionManager {
             e.printStackTrace();
         }
     }
+
+    public void beginTransaction(AbstractDAO dao){
+        dao.setConnection(connection);
+    }
+
+    
 
     public void commit(){
         try {

@@ -1,4 +1,6 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.impl;
+
+import by.teplouhova.chemist.Entity;
 
 import java.math.BigDecimal;
 
@@ -8,7 +10,10 @@ public class Medicine extends Entity {
     private BigDecimal price;
     private int quantityPackages;
     private boolean isNeedRecipe;
-    private Medicine analog;
+    private long analogId;
     private int quantityInPackage;
+    private long releaseFormId;
+    private long producerId;
+
     
 }

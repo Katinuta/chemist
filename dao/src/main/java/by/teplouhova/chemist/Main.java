@@ -1,5 +1,8 @@
 package by.teplouhova.chemist;
 
+import by.teplouhova.chemist.impl.User;
+import by.teplouhova.chemist.impl.UserDAO;
+
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +25,12 @@ public class Main {
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
-//        User user=new User(25,"Мила","Тутар","mila","mila",new BigDecimal(90), RoleEnum.CLIENT,"7534215");
-//        new UserDAO().update(user);
+
+        User user=new User("Мила","Тутар","mila","mila",new BigDecimal(90), RoleEnum.CLIENT,"7534215");
+       UserDAO dao=new UserDAO();
+       new TransactionManager().beginTransaction(dao);
+       dao.create(user);
+
 //        System.out.println(user);
     }
 }

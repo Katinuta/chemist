@@ -1,8 +1,8 @@
 package test.by.teplouhova.chemist;
 
 import by.teplouhova.chemist.RoleEnum;
-import by.teplouhova.chemist.User;
-import by.teplouhova.chemist.UserDAO;
+import by.teplouhova.chemist.impl.User;
+import by.teplouhova.chemist.impl.UserDAO;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

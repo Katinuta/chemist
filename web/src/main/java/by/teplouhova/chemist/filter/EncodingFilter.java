@@ -1,4 +1,4 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.filter;
 
 
 import javax.servlet.*;
