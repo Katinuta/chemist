@@ -1,6 +1,8 @@
 package by.teplouhova.chemist.controller;
 
 import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.command.Command;
+import by.teplouhova.chemist.exception.DAOException;
 import by.teplouhova.chemist.impl.User;
 import by.teplouhova.chemist.impl.UserDAO;
 
@@ -12,26 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-@WebServlet("/chemist")
+@WebServlet("/controller")
 public class Controller extends HttpServlet{
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getCharacterEncoding());
-        User user=new User();
-        String name=req.getParameter("name");
-        user.setName(req.getParameter("name"));
-        user.setSurname(req.getParameter("surname"));
-        user.setRole(RoleEnum.CLIENT);
-        user.setPhone(req.getParameter("phone"));
-        user.setAccount(BigDecimal.valueOf(Float.valueOf(req.getParameter("account"))));
-        user.setPassword(req.getParameter("pwd"));
-        user.setLogin(req.getParameter("login"));
-        new UserDAO().create(user);
-        user=new UserDAO().findByLogin(user.getLogin());
-        req.setAttribute("user",user);
-        System.out.println(user);
-        req.getRequestDispatcher("jsp/res.jsp").forward(req,resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response){
+        Command command;
     }
 }

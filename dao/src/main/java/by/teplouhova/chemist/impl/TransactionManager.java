@@ -1,4 +1,4 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.impl;
 
 import by.teplouhova.chemist.pool.ConnectionPool;
 import by.teplouhova.chemist.pool.ProxyConnection;

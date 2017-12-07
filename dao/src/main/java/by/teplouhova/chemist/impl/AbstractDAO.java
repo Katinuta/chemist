@@ -1,5 +1,7 @@
-package by.teplouhova.chemist;
+package by.teplouhova.chemist.impl;
 
+import by.teplouhova.chemist.Entity;
+import by.teplouhova.chemist.exception.DAOException;
 import by.teplouhova.chemist.pool.ProxyConnection;
 
 import java.sql.SQLException;
@@ -9,7 +11,7 @@ public abstract class AbstractDAO <T extends Entity>  {
 
     protected ProxyConnection connection;
     public abstract T findById(long id);
-    public abstract void create(T entity);
+    public abstract void create(T entity) throws DAOException;
     public abstract void update(T entity);
 
     void setConnection(ProxyConnection connection) {

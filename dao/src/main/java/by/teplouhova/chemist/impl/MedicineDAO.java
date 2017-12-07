@@ -1,7 +1,5 @@
 package by.teplouhova.chemist.impl;
 
-import by.teplouhova.chemist.AbstractDAO;
-
 public class MedicineDAO extends AbstractDAO<Medicine> {
     @Override
     public Medicine findById(long id) {

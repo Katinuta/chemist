@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.impl;
 
-import by.teplouhova.chemist.AbstractDAO;
 import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.exception.DAOException;
 import by.teplouhova.chemist.pool.ConnectionPool;
 
 import java.sql.PreparedStatement;
@@ -21,8 +21,12 @@ public class UserDAO extends AbstractDAO<User> {
     private final static String SQL_UPDATE_USER =
             "UPDATE chemist.user SET u_name =?, u_surname=?, u_login=?, u_password=?, u_account=?, u_phone=? WHERE u_user_id=?";
 
-    private final static String SQL_FIND_USER_BY_LOGIN=
+    private final static String SQL_FIND_USER_BY_LOGIN =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
+
+    private final static String SQL_FIND_USER_BY_LOGIN_PASSWORD =
+            "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
+
 
     public UserDAO() {
 
@@ -32,32 +36,32 @@ public class UserDAO extends AbstractDAO<User> {
     public User findById(long id) {
         PreparedStatement st = null;
         User user = null;
-        try {
-            st = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
-            st.setLong(1, id);
-            ResultSet result = st.executeQuery();
-            if (result.next()) {
-                user = new User();
-                user.setUsedId(result.getLong("u_user_id"));
-                user.setName(result.getString("u_name"));
-                user.setSurname(result.getString("u_surname"));
-                user.setLogin(result.getString("u_login"));
-                user.setPassword(result.getString("u_password"));
-                user.setAccount(result.getBigDecimal("u_account"));
-                user.setPhone(result.getString("u_phone"));
-                user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        close(st);
-        ConnectionPool.getInstance().releaseConnection(connection);
+//        try {
+//            st = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
+//            st.setLong(1, id);
+//            ResultSet result = st.executeQuery();
+//            if (result.next()) {
+//                user = new User();
+//                user.setUsedId(result.getLong("u_user_id"));
+//                user.setName(result.getString("u_name"));
+//                user.setSurname(result.getString("u_surname"));
+//                user.setLogin(result.getString("u_login"));
+//                user.setPassword(result.getString("u_password"));
+//                user.setAccount(result.getBigDecimal("u_account"));
+//                user.setPhone(result.getString("u_phone"));
+//                user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        close(st);
+//        ConnectionPool.getInstance().releaseConnection(connection);
         return user;
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User entity) throws DAOException {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
@@ -74,9 +78,12 @@ public class UserDAO extends AbstractDAO<User> {
                 entity.setUsedId(result.getLong(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
+        } finally {
+            close(st);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
-        close(st);
+
 
     }
 
@@ -95,19 +102,53 @@ public class UserDAO extends AbstractDAO<User> {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            close(st);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
-        close(st);
+
     }
 
-    public User findByLogin(String login){
+    public User findByLogin(String login) {
         PreparedStatement st = null;
         User user = null;
+//        try {
+//            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+//            st.setString(1, login);
+//            ResultSet result = st.executeQuery();
+//            if (result.next()) {
+//                user = new User();
+//                user.setUsedId(result.getLong("u_user_id"));
+//                user.setName(result.getString("u_name"));
+//                user.setSurname(result.getString("u_surname"));
+//                user.setLogin(result.getString("u_login"));
+//                user.setPassword(result.getString("u_password"));
+//                user.setAccount(result.getBigDecimal("u_account"));
+//                user.setPhone(result.getString("u_phone"));
+//                user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            close(st);
+//        }
+//
+//        ConnectionPool.getInstance().releaseConnection(connection);
+        return user;
+    }
+
+    public User findByLoginPassword(String login, String password) throws DAOException {
+        PreparedStatement statement = null;
+        User user=null;
         try {
-            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
-            st.setString(1, login);
-            ResultSet result = st.executeQuery();
-            if (result.next()) {
-                user = new User();
+            statement=connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_PASSWORD);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.execute();
+            ResultSet result=statement.executeQuery();
+            if(result.next()){
+                user=new User();
                 user.setUsedId(result.getLong("u_user_id"));
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
@@ -117,12 +158,12 @@ public class UserDAO extends AbstractDAO<User> {
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
+        }finally {
+            close(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
-        close(st);
-        ConnectionPool.getInstance().releaseConnection(connection);
         return user;
     }
 
