@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.Entity;
 import by.teplouhova.chemist.RoleEnum;

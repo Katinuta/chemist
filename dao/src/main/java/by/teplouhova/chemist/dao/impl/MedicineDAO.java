@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 public class MedicineDAO extends AbstractDAO<Medicine> {
     @Override

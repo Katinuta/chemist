@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.pool;
+package by.teplouhova.chemist.dao.pool;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

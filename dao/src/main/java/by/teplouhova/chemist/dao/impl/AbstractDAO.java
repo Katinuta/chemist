@@ -1,8 +1,8 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.Entity;
-import by.teplouhova.chemist.exception.DAOException;
-import by.teplouhova.chemist.pool.ProxyConnection;
+import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.pool.ProxyConnection;
 
 import java.sql.SQLException;
 import java.sql.Statement;

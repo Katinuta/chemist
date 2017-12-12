@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.exception;
+package by.teplouhova.chemist.dao.exception;
 
 public class ServiceException extends Exception {
     public ServiceException() {

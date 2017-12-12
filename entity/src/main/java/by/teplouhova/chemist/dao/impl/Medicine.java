@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.Entity;
 
@@ -10,10 +10,10 @@ public class Medicine extends Entity {
     private BigDecimal price;
     private int quantityPackages;
     private boolean isNeedRecipe;
-    private long analogId;
+    private Medicine analog;
     private int quantityInPackage;
-    private long releaseFormId;
-    private long producerId;
+    private ReleaseForm form;
+    private Producer producer;
 
     
 }

@@ -1,7 +1,8 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
-import by.teplouhova.chemist.pool.ConnectionPool;
-import by.teplouhova.chemist.pool.ProxyConnection;
+
+import by.teplouhova.chemist.dao.impl.AbstractDAO;
+import by.teplouhova.chemist.dao.pool.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

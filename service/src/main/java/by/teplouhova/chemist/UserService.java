@@ -1,9 +1,9 @@
 package by.teplouhova.chemist;
 
-import by.teplouhova.chemist.exception.DAOException;
-import by.teplouhova.chemist.exception.ServiceException;
-import by.teplouhova.chemist.impl.User;
-import by.teplouhova.chemist.impl.UserDAO;
+import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.exception.ServiceException;
+import by.teplouhova.chemist.dao.impl.User;
+import by.teplouhova.chemist.dao.impl.UserDAO;
 
 public class UserService {
 

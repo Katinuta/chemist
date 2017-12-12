@@ -1,17 +1,16 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.Entity;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 
 public class Recipe extends Entity {
     private long recipeId;
     private LocalDate dateBegin;
     private LocalDate dateEnd;
-    private long clientId;
-    private long doctorId;
+    private User client;
+    private User doctor;
     private boolean isActive;
-    private HashMap<Long,Integer>  medicineList;
+    private HashMap<Medicine,Integer>  medicineList;
 }

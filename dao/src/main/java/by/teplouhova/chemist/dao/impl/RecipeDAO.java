@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 public class RecipeDAO extends AbstractDAO<Recipe> {
     @Override

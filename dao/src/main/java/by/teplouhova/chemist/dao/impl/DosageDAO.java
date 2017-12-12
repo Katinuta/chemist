@@ -1,6 +1,6 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
-import by.teplouhova.chemist.exception.DAOException;
+import by.teplouhova.chemist.dao.exception.DAOException;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

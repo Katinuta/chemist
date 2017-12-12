@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.command;
 
 import by.teplouhova.chemist.UserService;
-import by.teplouhova.chemist.exception.ServiceException;
+import by.teplouhova.chemist.dao.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 

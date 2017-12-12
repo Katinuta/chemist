@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.impl;
+package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.Entity;
 import by.teplouhova.chemist.StatusOrderEnum;
@@ -10,9 +10,9 @@ public class Order extends Entity {
     private long orderId;
     private LocalDate dateCreating;
     private StatusOrderEnum status;
-    private long userId;
+    private User user;
     private long issuePointId;
-    private HashMap<Long,Integer> medicineList;
+    private HashMap<Medicine,Integer> medicineList;
 
     public long getOrderId() {
         return orderId;
@@ -38,12 +38,12 @@ public class Order extends Entity {
         this.status = status;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.user= user;
     }
 
     public long getIssuePointId() {

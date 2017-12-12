@@ -4,7 +4,9 @@ import by.teplouhova.chemist.UserService;
 
 public enum CommandType {
     LOGIN(new LoginCommand( new UserService())),
-    LOGOUT(new LogoutCommand(new UserService()));
+    LOGOUT(new LogoutCommand(new UserService())),
+    LOCALE(new LocaleCommand(new UserService()));
+
     private Command command;
 
     CommandType(Command command) {

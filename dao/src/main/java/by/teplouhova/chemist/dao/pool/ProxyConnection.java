@@ -1,6 +1,4 @@
-package by.teplouhova.chemist.pool;
-
-import by.teplouhova.chemist.pool.ConnectionPool;
+package by.teplouhova.chemist.dao.pool;
 
 import java.sql.*;
 import java.util.Map;
