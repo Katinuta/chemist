@@ -32,7 +32,7 @@ public class UserDAOTest {
                 "characterEncoding=" + bundle.getString("characterEncoding");
         Properties properties = new Properties();
         properties.setProperty("user", bundle.getString("user"));
-        properties.setProperty("password", bundle.getString("password"));
+        properties.setProperty("input.password", bundle.getString("input.password"));
         properties.setProperty("useSSL", bundle.getString("useSSL"));
         try {
             connection = DriverManager.getConnection(url, properties);

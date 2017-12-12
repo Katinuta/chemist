@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
 
-    private static String PARAM_LOGIN="login";
-    private static String PARAM_PASSWORD="password";
+    private static String PARAM_LOGIN= "input.login";
+    private static String PARAM_PASSWORD= "input.password";
 
     private UserService userService;
 

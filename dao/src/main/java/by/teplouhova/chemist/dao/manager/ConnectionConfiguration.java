@@ -28,7 +28,7 @@ public class ConnectionConfiguration {
                 "useSSL=" + DatabaseConfigManager.getInstance().getString("useSSL");
 
         USER = DatabaseConfigManager.getInstance().getString("user");
-        PASSWORD = DatabaseConfigManager.getInstance().getString("password");
+        PASSWORD = DatabaseConfigManager.getInstance().getString("input.password");
     }
 
     public static ConnectionConfiguration getConfiguration() {
