@@ -1,12 +1,12 @@
 package by.teplouhova.chemist.dao.pool;
 
+import by.teplouhova.chemist.dao.manager.ConnectionConfiguration;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,9 +17,6 @@ public class ConnectionPool {
 
     private final int POOL_MAX_ACTIVE;
     private final int POOL_INIT_SIZE;
-    private final String URL;
-    private final String USER;
-    private final String PASSWORD;
     private static ReentrantLock lock = new ReentrantLock();
     private static ConnectionPool pool;
     private static AtomicBoolean isExistPool = new AtomicBoolean(false);
@@ -27,23 +24,20 @@ public class ConnectionPool {
 
 
     private ConnectionPool() {
-        ResourceBundle bundle = ResourceBundle.getBundle("database");
-        URL = bundle.getString("url") + "?" +
-                "useUnicode=" + bundle.getString("useUnicode") + "&" +
-                "characterEncoding=" + bundle.getString("characterEncoding")+ "&" +
-                "useSSL=" + bundle.getString("useSSL");
-
-        USER = bundle.getString("user");
-        PASSWORD = bundle.getString("password");
-        POOL_INIT_SIZE = Integer.parseInt(bundle.getString("initialSize"));
-        POOL_MAX_ACTIVE = Integer.parseInt(bundle.getString("maxActive"));
+        POOL_MAX_ACTIVE = ConnectionConfiguration.getConfiguration().getPOOL_MAX_ACTIVE();
+        POOL_INIT_SIZE = ConnectionConfiguration.getConfiguration().getPOOL_INIT_SIZE();
         connections = new ArrayBlockingQueue<>(POOL_MAX_ACTIVE);
-        while (connections.remainingCapacity() != POOL_MAX_ACTIVE - POOL_INIT_SIZE) {
-            try {
-                connections.offer(new ProxyConnection(DriverManager.getConnection(URL, USER, PASSWORD)));
-            } catch (SQLException e) {
-                LOGGER.log(Level.ERROR, "Connection is not created " + URL);
+        for (int index = 1; index <= POOL_INIT_SIZE; index++) {
+            Connection connection = ConnectionConfiguration.getConfiguration().getConnection();
+            if (connection != null) {
+                connections.offer(new ProxyConnection(connection));
             }
+            if (index == POOL_INIT_SIZE) {
+                if (connections.size() != POOL_INIT_SIZE) {
+                    index = POOL_INIT_SIZE - connections.size();
+                }
+            }
+
         }
 
     }
@@ -53,13 +47,9 @@ public class ConnectionPool {
             try {
                 lock.lock();
                 if (pool == null) {
-                    DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
                     pool = new ConnectionPool();
                     isExistPool.set(true);
                 }
-            } catch (SQLException e) {
-                LOGGER.log(Level.FATAL, "Database driver is not registered ");
-                new RuntimeException(e);
             } finally {
                 lock.unlock();
             }
@@ -72,12 +62,17 @@ public class ConnectionPool {
         ProxyConnection connection = null;
         try {
             if (connections.remainingCapacity() == POOL_MAX_ACTIVE - POOL_INIT_SIZE && connections.isEmpty()) {
-                while (connections.remainingCapacity() != 0) {
-                    try {
-                        connections.offer(new ProxyConnection(DriverManager.getConnection(URL, USER, PASSWORD)));
-                    } catch (SQLException e) {
-                        LOGGER.log(Level.ERROR, "Connection is not created " + URL);
+                for (int index = 1; index <= POOL_INIT_SIZE; index++) {
+                    Connection newConnection = ConnectionConfiguration.getConfiguration().getConnection();
+                    if (newConnection != null) {
+                        connections.offer(new ProxyConnection(newConnection));
                     }
+                    if (index == POOL_INIT_SIZE) {
+                        if (connections.size() != POOL_INIT_SIZE) {
+                            index = POOL_INIT_SIZE - connections.size();
+                        }
+                    }
+
                 }
             }
             connection = connections.take();
@@ -92,9 +87,10 @@ public class ConnectionPool {
             if (!connection.getAutoCommit()) {
                 connection.setAutoCommit(true);
             }
+
             connections.offer(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARN, "Connection is not released", e);
         }
     }
 
@@ -103,15 +99,9 @@ public class ConnectionPool {
             try {
                 connection.closeConnection();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.ERROR, "Connection didn't close", e);
             }
         });
     }
 
-    @Override
-    public String toString() {
-        return "ConnectionPool{" +
-                "connections=" + connections +
-                '}';
-    }
 }
