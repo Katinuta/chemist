@@ -1,6 +1,7 @@
 package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.dao.pool.ConnectionPool;
 

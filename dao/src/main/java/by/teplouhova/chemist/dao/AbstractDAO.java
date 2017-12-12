@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.dao.impl;
+package by.teplouhova.chemist.dao;
 
 import by.teplouhova.chemist.Entity;
 import by.teplouhova.chemist.dao.exception.DAOException;
