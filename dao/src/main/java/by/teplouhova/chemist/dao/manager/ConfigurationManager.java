@@ -9,15 +9,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class DatabaseConfigManager {
+public class ConfigurationManager {
     private final static Logger LOGGER = LogManager.getLogger();
 
     private final String DEFAULT_POOL_INIT_SIZE = "10";
     private final String DEFAULT_POOL_MAX_ACTIVE = "20";
     private ResourceBundle bundle;
-    private final static DatabaseConfigManager manager = new DatabaseConfigManager();
+    private final static ConfigurationManager manager = new ConfigurationManager();
 
-    private DatabaseConfigManager() {
+    private ConfigurationManager() {
         try {
 
             bundle = ResourceBundle.getBundle("database");
@@ -29,7 +29,7 @@ public class DatabaseConfigManager {
 
     }
 
-    public static DatabaseConfigManager getInstance() {
+    public static ConfigurationManager getInstance() {
         return manager;
     }
 

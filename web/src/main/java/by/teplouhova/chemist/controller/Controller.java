@@ -1,6 +1,6 @@
 package by.teplouhova.chemist.controller;
 
-import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.SessionRequestContent;
 import by.teplouhova.chemist.command.ActionFactory;
 import by.teplouhova.chemist.command.Command;
 
@@ -24,9 +24,13 @@ public class Controller extends HttpServlet{
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response){
+
         String commandName=request.getParameter("command");
         Command command= ActionFactory.defineCommand(commandName);
+        SessionRequestContent requestContent=new SessionRequestContent();
+        requestContent.extractValues(request);
         String page=command.execute(request);
+        requestContent.insertAttributes(request);
 
     }
 }

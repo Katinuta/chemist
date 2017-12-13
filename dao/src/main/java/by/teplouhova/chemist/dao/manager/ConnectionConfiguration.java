@@ -1,5 +1,6 @@
 package by.teplouhova.chemist.dao.manager;
 
+import by.teplouhova.chemist.dao.constant.DAOConstant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,15 +21,15 @@ public class ConnectionConfiguration {
     private final static ConnectionConfiguration configuration=new ConnectionConfiguration();
 
     private ConnectionConfiguration() {
-        POOL_INIT_SIZE = Integer.parseInt(DatabaseConfigManager.getInstance().getString("initialSize"));
-        POOL_MAX_ACTIVE = Integer.parseInt(DatabaseConfigManager.getInstance().getString("maxActive"));
-        URL = DatabaseConfigManager.getInstance().getString("url") + "?" +
-                "useUnicode=" + DatabaseConfigManager.getInstance().getString("useUnicode") + "&" +
-                "characterEncoding=" + DatabaseConfigManager.getInstance().getString("characterEncoding")+ "&" +
-                "useSSL=" + DatabaseConfigManager.getInstance().getString("useSSL");
+        POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_INIT_SIZE_KEY));
+        POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_MAX_ACTIVE_KEY));
+        URL = ConfigurationManager.getInstance().getString(DAOConstant.URL_KEY) + "?" +
+                "useUnicode=" + ConfigurationManager.getInstance().getString("useUnicode") + "&" +
+                "characterEncoding=" + ConfigurationManager.getInstance().getString("characterEncoding")+ "&" +
+                "useSSL=" + ConfigurationManager.getInstance().getString("useSSL");
 
-        USER = DatabaseConfigManager.getInstance().getString("user");
-        PASSWORD = DatabaseConfigManager.getInstance().getString("input.password");
+        USER = ConfigurationManager.getInstance().getString("user");
+        PASSWORD = ConfigurationManager.getInstance().getString("input.password");
     }
 
     public static ConnectionConfiguration getConfiguration() {

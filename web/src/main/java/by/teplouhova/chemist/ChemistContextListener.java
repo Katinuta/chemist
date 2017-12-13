@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Locale;
 
 @WebListener
 public class ChemistContextListener implements ServletContextListener {
@@ -34,6 +35,7 @@ public class ChemistContextListener implements ServletContextListener {
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             ConnectionPool.getInstance();
+            //Locale locale=Locale.getDefault();
 
 
         } catch (SQLException e) {
