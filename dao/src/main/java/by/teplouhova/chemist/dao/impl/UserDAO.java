@@ -1,9 +1,13 @@
 package by.teplouhova.chemist.dao.impl;
 
-import by.teplouhova.chemist.RoleEnum;
+import by.teplouhova.chemist.entity.RoleEnum;
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.dao.pool.ConnectionPool;
+import by.teplouhova.chemist.entity.impl.User;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +16,7 @@ import java.sql.Statement;
 
 
 public class UserDAO extends AbstractDAO<User> {
-
+    private final static Logger LOGGER= LogManager.getLogger();
     private final static String SQL_SELECT_USER_BY_ID =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_user_id=?";
 
@@ -25,7 +29,7 @@ public class UserDAO extends AbstractDAO<User> {
     private final static String SQL_FIND_USER_BY_LOGIN =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
 
-    private final static String SQL_FIND_USER_BY_LOGIN_PASSWORD =
+   public final static String SQL_FIND_USER_BY_LOGIN_PASSWORD =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
 
@@ -110,32 +114,33 @@ public class UserDAO extends AbstractDAO<User> {
 
     }
 
-    public User findByLogin(String login) {
+    public User findByLogin(String login) throws DAOException {
         PreparedStatement st = null;
         User user = null;
-//        try {
-//            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
-//            st.setString(1, login);
-//            ResultSet result = st.executeQuery();
-//            if (result.next()) {
-//                user = new User();
-//                user.setUsedId(result.getLong("u_user_id"));
-//                user.setName(result.getString("u_name"));
-//                user.setSurname(result.getString("u_surname"));
-//                user.setLogin(result.getString("u_login"));
-//                user.setPassword(result.getString("u_password"));
-//                user.setAccount(result.getBigDecimal("u_account"));
-//                user.setPhone(result.getString("u_phone"));
-//                user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            close(st);
-//        }
-//
-//        ConnectionPool.getInstance().releaseConnection(connection);
+        try {
+            LOGGER.log(Level.INFO,connection==null);
+            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+            st.setString(1, login);
+            ResultSet result = st.executeQuery();
+            if (result.next()) {
+                user = new User();
+                user.setUsedId(result.getLong("u_user_id"));
+                user.setName(result.getString("u_name"));
+                user.setSurname(result.getString("u_surname"));
+                user.setLogin(result.getString("u_login"));
+                user.setPassword(result.getString("u_password"));
+                user.setAccount(result.getBigDecimal("u_account"));
+                user.setPhone(result.getString("u_phone"));
+                user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
+            }
+
+        } catch (SQLException e) {
+           throw new DAOException(e);
+        } finally {
+            close(st);
+        }
+
+        ConnectionPool.getInstance().releaseConnection(connection);
         return user;
     }
 
@@ -146,7 +151,6 @@ public class UserDAO extends AbstractDAO<User> {
             statement=connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
-            statement.execute();
             ResultSet result=statement.executeQuery();
             if(result.next()){
                 user=new User();
@@ -159,8 +163,10 @@ public class UserDAO extends AbstractDAO<User> {
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleEnum.valueOf(result.getString("u_role").toUpperCase()));
             }
+            LOGGER.log(Level.INFO,user);
         } catch (SQLException e) {
-            throw new DAOException(e);
+
+           throw new DAOException(e);
         }finally {
             close(statement);
             ConnectionPool.getInstance().releaseConnection(connection);

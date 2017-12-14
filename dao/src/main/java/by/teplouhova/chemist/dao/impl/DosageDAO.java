@@ -2,6 +2,7 @@ package by.teplouhova.chemist.dao.impl;
 
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.entity.impl.Dosage;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

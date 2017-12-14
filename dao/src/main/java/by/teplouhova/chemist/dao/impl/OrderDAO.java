@@ -1,8 +1,9 @@
 package by.teplouhova.chemist.dao.impl;
 
-import by.teplouhova.chemist.StatusOrderEnum;
+import by.teplouhova.chemist.entity.StatusOrderEnum;
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.entity.impl.Order;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

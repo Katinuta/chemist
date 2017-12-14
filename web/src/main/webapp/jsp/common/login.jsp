@@ -32,8 +32,8 @@
 <%--<c:import url="../admin/header.jspf"/>--%>
 <main>
     <div class="form" >
-        <form action="controller" method="post">
-            <input name="command" type="hidden" name="login" />
+        <form action="controller" method="get">
+            <input name="command" type="hidden" name="login" value="login" />
             <label for="login"><fmt:message bundle="${bundle}" key="input.login"/></label>
             <input type="text" name="login" id="login" required placeholder=<fmt:message bundle="${bundle}" key="placeholder.login"/>/>
             <label for="password"><fmt:message bundle="${bundle}" key="input.password"/></label>

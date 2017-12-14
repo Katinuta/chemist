@@ -14,8 +14,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="debug">
-            <Appender-ref ref="TxtFile" level="debug"/>
+        <Root level="DEBUG">
+            <Appender-ref ref="TxtFile" level="DEBUG"/>
         </Root>
     </Loggers>
 </Configuration>

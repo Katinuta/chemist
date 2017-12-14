@@ -29,7 +29,7 @@ public class ConnectionConfiguration {
                 "useSSL=" + ConfigurationManager.getInstance().getString("useSSL");
 
         USER = ConfigurationManager.getInstance().getString("user");
-        PASSWORD = ConfigurationManager.getInstance().getString("input.password");
+        PASSWORD = ConfigurationManager.getInstance().getString("password");
     }
 
     public static ConnectionConfiguration getConfiguration() {
