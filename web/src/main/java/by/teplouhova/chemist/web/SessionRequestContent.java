@@ -26,6 +26,13 @@ public class SessionRequestContent {
     public String[] getParameters(String name){
         return requestParameters.get(name);
     }
+    public String getParameter(String name){
+        return requestParameters.get(name)[0];
+    }
+
+    public void setSessionAttribute(String name, Object value) {
+        sessionAttributes.put(name,value);
+    }
 
     public void extractValues(HttpServletRequest request) {
         Enumeration<String> listRequestAttributeNames = request.getAttributeNames();

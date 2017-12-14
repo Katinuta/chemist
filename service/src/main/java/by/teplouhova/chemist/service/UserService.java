@@ -34,9 +34,7 @@ public class UserService {
             UserDAO userDAO=new UserDAO();
             transaction= new TransactionManager();
             transaction.beginTransaction(userDAO );
-            LOGGER.log(Level.INFO,"begin");
             user = userDAO.findByLogin(login);
-            LOGGER.log(Level.INFO,"end");
             transaction.endTransaction();
         } catch (DAOException e) {
             throw new ServiceException(e);

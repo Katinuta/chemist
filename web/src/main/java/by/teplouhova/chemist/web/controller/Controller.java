@@ -1,10 +1,9 @@
 package by.teplouhova.chemist.web.controller;
 
 import by.teplouhova.chemist.web.SessionRequestContent;
-import by.teplouhova.chemist.web.command.ActionFactory;
+import by.teplouhova.chemist.web.command.CommandFactory;
 import by.teplouhova.chemist.web.command.Command;
 import by.teplouhova.chemist.web.command.CommandResult;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,30 +15,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/controller")
-public class Controller extends HttpServlet{
-    private final static Logger LOGGER= LogManager.getLogger();
+public class Controller extends HttpServlet {
+    private final static Logger LOGGER = LogManager.getLogger();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        processRequest(request,response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String commandName=request.getParameter("command");
-        Command command= ActionFactory.defineCommand(commandName);
-        SessionRequestContent requestContent=new SessionRequestContent();
-      //  requestContent.extractValues(request);
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        CommandResult page=command.execute(request);
-      //  requestContent.insertAttributes(request);
+        String commandName = request.getParameter("command");
+        Command command = CommandFactory.defineCommand(commandName);
+        SessionRequestContent requestContent = new SessionRequestContent();
+        requestContent.extractValues(request);
+        CommandResult page = command.execute(requestContent);
+        requestContent.insertAttributes(request);
 
-            request.getRequestDispatcher(page.getPage()).forward(request,response);
+        if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
+            request.getRequestDispatcher(page.getPage()).forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + page.getPage());
+        }
 
 
     }

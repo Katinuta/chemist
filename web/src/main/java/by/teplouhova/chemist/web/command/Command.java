@@ -1,7 +1,8 @@
 package by.teplouhova.chemist.web.command;
 
-import javax.servlet.http.HttpServletRequest;
+import by.teplouhova.chemist.web.SessionRequestContent;
+
 
 public interface Command {
-   CommandResult execute(HttpServletRequest request);
+   CommandResult execute(SessionRequestContent content);
 }

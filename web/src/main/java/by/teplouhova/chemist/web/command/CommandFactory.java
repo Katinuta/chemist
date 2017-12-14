@@ -1,6 +1,6 @@
 package by.teplouhova.chemist.web.command;
 
-public class ActionFactory {
+public class CommandFactory {
     public static Command defineCommand(String commandName){
 
         CommandType type=CommandType.valueOf(commandName.toUpperCase());
