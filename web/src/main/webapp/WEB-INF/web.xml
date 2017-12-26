@@ -6,7 +6,10 @@
   <display-name>chemist</display-name>
   
   <error-page>
-    <exception-type>java.lang.Exception</exception-type>
+
     <location>/jsp/error/error.jsp</location>
   </error-page>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>

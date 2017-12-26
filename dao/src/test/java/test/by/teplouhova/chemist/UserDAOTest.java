@@ -1,8 +1,8 @@
 package test.by.teplouhova.chemist;
 
-import by.teplouhova.chemist.entity.RoleEnum;
+import by.teplouhova.chemist.entity.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.dao.impl.UserDAO;
+import by.teplouhova.chemist.dao.impl.UserDAOImpl;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,11 +21,11 @@ import static org.testng.Assert.assertTrue;
 public class UserDAOTest {
 
     private Connection connection;
-    private UserDAO userDAO;
+    private UserDAOImpl userDAOImpl;
 
     @BeforeClass
     public void setUp(){
-        userDAO=new UserDAO();
+        userDAOImpl =new UserDAOImpl();
         ResourceBundle bundle = ResourceBundle.getBundle("testdatabase");
         String url = bundle.getString("url") + "?" +
                 "useUnicode=" + bundle.getString("useUnicode") + "&" +
@@ -47,10 +47,10 @@ public class UserDAOTest {
     public Object[][] createUser(){
         return new Object[][]{
                 {
-                    2,new User(2,"Ольга","Гутар","ольга","ольга",new BigDecimal(50), RoleEnum.CLIENT,"2478557"), true
+                    2,new User(2,"Ольга","Гутар","ольга","ольга",new BigDecimal(50), RoleType.CLIENT,"2478557"), true
                 },
                 {
-                        3,new User(3,"Ольга","Гутар","ольга","ольга",new BigDecimal(100), RoleEnum.CLIENT,"2478557"), false
+                        3,new User(3,"Ольга","Гутар","ольга","ольга",new BigDecimal(100), RoleType.CLIENT,"2478557"), false
                 }
 
         };
@@ -58,7 +58,7 @@ public class UserDAOTest {
 
     @Test(dataProvider = "user")
     public void findUserByIdTest(long id,User expected, boolean result){
-        User actual=userDAO.findById(id);
+        User actual= userDAOImpl.findById(id);
         assertEquals(expected.equals(actual),result);
     }
 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="ru-RU"/>
 <c:if test="${not empty locale}">
     <fmt:setLocale value="${locale}" />
@@ -24,7 +25,7 @@
     <nav>
         <a href="" id="main">Chemist</a>
         <%--<a href="#home">Home</a>--%>
-        <%--<a class="right" href="#sign_up">Sing up</a>--%>
+        <a class="right" href="/controller?command=register">Sing up</a>
         <%--<a class="right" href="#sign_in">Sign in</a>--%>
 
     </nav>
@@ -41,7 +42,7 @@
             <input type="submit" value=<fmt:message bundle="${bundle}" key="button.submit"/> />
         </form>
     </div>
-
+    <ctg:info-tag/>
 </main>
 <footer>
 

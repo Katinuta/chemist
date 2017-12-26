@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
-import by.teplouhova.chemist.entity.StatusOrderEnum;
+import by.teplouhova.chemist.entity.StatusOrderType;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Order extends Entity {
     private long orderId;
     private LocalDate dateCreating;
-    private StatusOrderEnum status;
+    private StatusOrderType status;
     private User user;
     private long issuePointId;
     private HashMap<Medicine,Integer> medicineList;
@@ -30,11 +30,11 @@ public class Order extends Entity {
         this.dateCreating = dateCreating;
     }
 
-    public StatusOrderEnum getStatus() {
+    public StatusOrderType getStatus() {
         return status;
     }
 
-    public void setStatus(StatusOrderEnum status) {
+    public void setStatus(StatusOrderType status) {
         this.status = status;
     }
 

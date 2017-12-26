@@ -10,7 +10,7 @@ public class Medicine extends Entity {
     private BigDecimal price;
     private int quantityPackages;
     private boolean isNeedRecipe;
-    private Medicine analog;
+    private long analogId;
     private int quantityInPackage;
     private ReleaseForm form;
     private Producer producer;

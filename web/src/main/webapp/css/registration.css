@@ -1,0 +1,225 @@
+			body{
+    			margin: 0;
+    			font-family: 'Quicksand', sans-serif;
+    			background-color: #00cc99;
+    			padding: 0% 20%;
+    		}
+
+    		nav{
+    			list-style-type: none;
+    			margin: 0;
+  				padding: 0;
+    			overflow: hidden;
+    			background-color: #00cc99;
+    		}
+    
+    		nav	a {
+			    display: block;
+			    color: white;
+			    text-align: center;
+			    padding: 2% 1%;
+			    text-decoration: none;
+			    float: left;
+			    font-size: 24px;
+			    border-radius: 10px;
+			}
+
+			main{
+	    		display: block;
+	    		background-color: white ; 
+	    		border-radius: 10px;
+	    		padding: 2% 20% 4%;
+	    	}
+
+	    	input{
+	    		font-size: 18px ; 
+	    	}
+			input[type=text], input[type=password],input[type=email],
+    		input[type=number], select{
+				width: 100%;
+			    padding: 12px 20px;
+			    margin: 8px 0px;
+			    display:block;
+			    background-color: #f2f2f2;
+			    box-sizing: border-box;
+			    font-family: 'Quicksand', sans-serif;
+			    color:  #999;
+			    border:none;
+			    border-bottom: 1px solid #ccc;
+			}
+
+			footer > span, footer > h5{
+    			display: block;
+			    color: white;
+			    text-align: center;
+			    padding: 0% 5%;
+			    text-decoration: none;
+			    font-size: 16px;
+    		}
+
+	    	h1{
+				color: #999;
+				text-align: center;
+			}
+
+			label span{
+				position:relative; 
+				display:block; 
+				left: 1px;
+				top: -8px;
+				font-size: 10px;
+			}
+
+			input[type=submit] {
+				width: 100%;
+			}
+
+			input[type=submit]:hover , input[type=button]:hover{
+		    	background-color: #009973;
+			}
+
+			input[type=button] , input[type=submit]{
+			    background-color:  #00cc99;
+			    color: white;
+			    padding: 14px 20px;
+			    margin: 8px 0;
+			    border: none;
+			    border-radius: 4px;
+			    font-family: 'Quicksand', sans-serif;
+			}	
+    
+			label{
+			  color:#999; 
+			  font-size:20px;
+			  font-weight: normal;
+			  position:absolute;
+			  pointer-events:none;
+			  left:0.5%;
+			  top:1%;
+			  transition:0.3s ease all;
+			}
+
+			.form{
+	    		height: 100%;
+	    		border-radius: 5px;
+	   			background-color: #f2f2f2;
+	   			padding : 5% 5%  ;
+	   			border: 1px solid #ccc;
+	   			border-radius: 10px;
+			}
+
+			.group { 
+			  position:relative; 
+			 
+			}
+			.right{
+				float: right;
+
+			}
+			.bar  { 
+				position:relative; 
+				display:block; 
+				width:100%;
+				top: -6px;
+			}
+
+			.bar:before, .bar:after   {
+				content:'';
+				height:1px; 
+				width:0;
+				bottom:1px; 
+				position:absolute;
+				background: #00cc99; 
+				transition:0.3s ease all; 
+			}
+
+			.bar:before {
+			  left:50%;
+			}
+
+			.bar:after {
+			  right:50%; 
+			}
+
+			.highlight {
+			  position:absolute;
+			  height:40%; 
+			  width:150px; 
+			  top:25%; 
+			  left:0;
+			  pointer-events:none;
+			  opacity:0.4;
+			}
+
+			.helper{
+	    		position:relative; 
+				display:block; 
+	    		color:  #999;
+	    		font-size: 10px;
+	    		top:-6px;
+	    		left: 1%;
+	    	}
+
+	    	.invalid{
+	    		  top:-20%;
+			  font-size:16px;
+			  color: #00cc99;
+	    	}
+
+			a.active{
+	    		background-color:  #009973;
+	    	}
+
+	    	a:hover:not(.active){
+	    		background-color: #009973;
+	    	}
+
+			label.required:after
+			{
+			    color: red;
+			    content: " *";
+			}
+
+			label.error:after{
+				color: red;
+				font-size: 12px;
+			    content: "  Passwords are different!";
+			}
+
+			span.error:after{
+				color: red;
+				font-size: 10px;
+			    content: "Incorrect data format!";
+			    padding: 1%;
+			}
+
+			input:focus ~ label,input:valid ~ label {
+			  top:-20%;
+			  font-size:16px;
+			  color: #00cc99;
+			}
+
+			input:focus     { outline: none; }
+
+			input:focus ~ .bar:before, input:focus ~ .bar:after {
+			  width:50%;
+			}
+
+			input:focus ~ .highlight {
+			  animation:inputHighlighter 0.4s ease;
+			}
+		
+	    	input:focus ~ span.helper,input:valid ~ span.helper{
+	    		color:  #00cc99;
+	    	}
+    	
+			@media screen and (max-width: 600px){
+				nav  a, a.right{
+					float:none;
+				}
+			}
+    	
+			@keyframes inputHighlighter {
+			  from { background: #00cc99; }
+			  to  { width:0; background:transparent; }
+			}

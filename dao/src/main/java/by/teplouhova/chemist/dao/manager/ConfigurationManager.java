@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.MissingResourceException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ConfigurationManager {
@@ -14,15 +17,15 @@ public class ConfigurationManager {
 
     private final String DEFAULT_POOL_INIT_SIZE = "10";
     private final String DEFAULT_POOL_MAX_ACTIVE = "20";
-    private ResourceBundle bundle;
+    private Properties property;
     private final static ConfigurationManager manager = new ConfigurationManager();
 
     private ConfigurationManager() {
         try {
 
-            bundle = ResourceBundle.getBundle("database");
+            property.load(new FileReader("database.properties"));
 
-        } catch (MissingResourceException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.FATAL, "Configuration file of database didn't find");
             new RuntimeException("Configuration file of database didn't find", e);
         }
@@ -33,28 +36,22 @@ public class ConfigurationManager {
         return manager;
     }
 
-    public String getString(String key) {
+    public String getProperty(String key) {
         String value = null;
-        try {
-            value = bundle.getString(key);
-            if (DAOConstant.POOL_INIT_SIZE_KEY.equals(key) && DAOConstant.EMPTY_STRING.equals(value)) {
-                value = DEFAULT_POOL_INIT_SIZE;
-            }
-            if(DAOConstant.POOL_MAX_ACTIVE_KEY.equals(key)&&DAOConstant.EMPTY_STRING.equals(value)){
-                value=DEFAULT_POOL_MAX_ACTIVE;
+
+            switch(key){
+                case DAOConstant.POOL_MAX_ACTIVE_KEY:
+                    value=property.getProperty(key,DEFAULT_POOL_MAX_ACTIVE);
+                    break;
+                case DAOConstant.POOL_INIT_SIZE_KEY:
+                    value = property.getProperty(key,DEFAULT_POOL_INIT_SIZE);
+                    break;
+                default:
+                    value = property.getProperty(key);
+                    break;
             }
 
-        } catch (MissingResourceException e) {
-            if (DAOConstant.POOL_INIT_SIZE_KEY.equals(key)) {
-                value = DEFAULT_POOL_INIT_SIZE;
-            }else if(DAOConstant.POOL_MAX_ACTIVE_KEY.equals(key)){
-                value=DEFAULT_POOL_MAX_ACTIVE;
-            }else{
-                LOGGER.log(Level.ERROR,"Value of property " + key+"didn't find ");
-              //  new RuntimeException("");
-            }
 
-        }
         return value;
     }
 }

@@ -1,6 +1,6 @@
 package by.teplouhova.chemist.dao.impl;
 
-import by.teplouhova.chemist.entity.StatusOrderEnum;
+import by.teplouhova.chemist.entity.StatusOrderType;
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.entity.impl.Order;
@@ -27,7 +27,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement = connection.prepareStatement(SQL_INSERT_ORDER);
             statement.setLong(1, entity.getUser().getUsedId());
             statement.setDate(2, Date.valueOf(LocalDate.now()));
-            statement.setString(3, StatusOrderEnum.valueOf("in processing").getStatus());
+            statement.setString(3, StatusOrderType.valueOf("in processing").getStatus());
             statement.setLong(4, entity.getIssuePointId());
             statement.execute();
         } catch (SQLException e) {

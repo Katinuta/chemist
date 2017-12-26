@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
-import by.teplouhova.chemist.entity.RoleEnum;
+import by.teplouhova.chemist.entity.RoleType;
 
 import java.math.BigDecimal;
 
@@ -12,13 +12,13 @@ public class User extends Entity {
     private String login;
     private String password;
     private BigDecimal account;
-    private RoleEnum role;
+    private RoleType role;
     private String phone;
 
     public User() {
     }
 
-    public User(String name, String surname, String login, String password, BigDecimal account, RoleEnum role, String phone) {
+    public User(String name, String surname, String login, String password, BigDecimal account, RoleType role, String phone) {
         this.name = name;
         this.surname = surname;
         this.login = login;
@@ -28,7 +28,7 @@ public class User extends Entity {
         this.phone = phone;
     }
 
-    public User(long usedId, String name, String surname, String login, String password, BigDecimal account, RoleEnum role, String phone) {
+    public User(long usedId, String name, String surname, String login, String password, BigDecimal account, RoleType role, String phone) {
         this.usedId = usedId;
         this.name = name;
         this.surname = surname;
@@ -87,11 +87,11 @@ public class User extends Entity {
         this.account = account;
     }
 
-    public RoleEnum getRole() {
+    public RoleType getRole() {
         return role;
     }
 
-    public void setRole(RoleEnum role) {
+    public void setRole(RoleType role) {
         this.role = role;
     }
 

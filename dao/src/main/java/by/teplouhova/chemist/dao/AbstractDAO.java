@@ -2,7 +2,7 @@ package by.teplouhova.chemist.dao;
 
 import by.teplouhova.chemist.entity.Entity;
 import by.teplouhova.chemist.dao.exception.DAOException;
-import by.teplouhova.chemist.dao.pool.ProxyConnection;
+import by.teplouhova.chemist.pool.ProxyConnection;
 
 import java.sql.SQLException;
 import java.sql.Statement;
