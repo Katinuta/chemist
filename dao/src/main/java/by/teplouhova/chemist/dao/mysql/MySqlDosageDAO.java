@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.dao.impl;
+package by.teplouhova.chemist.dao.mysql;
 
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
@@ -7,7 +7,7 @@ import by.teplouhova.chemist.entity.impl.Dosage;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DosageDAO extends AbstractDAO<Dosage> {
+public class MySqlDosageDAO extends AbstractDAO<Dosage> {
     private final static String SQL_INSERT_DOSAGE =
             "INSERT INTO chemist.dosage (d_dosage_size, d_dosage_unit) VALUES ( ?, ?)";
 

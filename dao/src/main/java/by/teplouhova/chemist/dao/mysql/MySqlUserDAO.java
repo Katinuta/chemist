@@ -1,5 +1,6 @@
-package by.teplouhova.chemist.dao.impl;
+package by.teplouhova.chemist.dao.mysql;
 
+import by.teplouhova.chemist.dao.UserDAO;
 import by.teplouhova.chemist.entity.RoleType;
 import by.teplouhova.chemist.dao.AbstractDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class UserDAOImpl extends AbstractDAO<User> {
+public class MySqlUserDAO extends UserDAO {
     private final static Logger LOGGER= LogManager.getLogger();
     private final static String SQL_SELECT_USER_BY_ID =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_user_id=?";
@@ -33,7 +34,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
 
-    public UserDAOImpl() {
+    public MySqlUserDAO() {
 
     }
 
@@ -69,7 +70,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public void create(User entity) throws DAOException {
         PreparedStatement st = null;
         try {
-            LOGGER.log(Level.DEBUG,entity);
             st = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, entity.getName());
             st.setString(2, entity.getSurname());
@@ -84,7 +84,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
 //                entity.setUsedId(result.getLong(1));
 //            }
         } catch (SQLException e) {
-            LOGGER.log(Level.ERROR,e.getMessage());
             throw new DAOException(e);
         } finally {
             close(st);
@@ -95,7 +94,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public void update(User entity) {
+    public void update(User entity) throws DAOException {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_UPDATE_USER);
@@ -108,10 +107,10 @@ public class UserDAOImpl extends AbstractDAO<User> {
             st.setLong(7, entity.getUsedId());
             st.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+           throw new DAOException(e);
         } finally {
             close(st);
-            ConnectionPool.getInstance().releaseConnection(connection);
+
         }
 
     }
@@ -120,7 +119,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
         PreparedStatement st = null;
         User user = null;
         try {
-            LOGGER.log(Level.INFO,connection==null);
             st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
             st.setString(1, login);
             ResultSet result = st.executeQuery();
@@ -142,7 +140,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             close(st);
         }
 
-        ConnectionPool.getInstance().releaseConnection(connection);
+
         return user;
     }
 
@@ -165,13 +163,12 @@ public class UserDAOImpl extends AbstractDAO<User> {
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
             }
-            LOGGER.log(Level.INFO,user);
         } catch (SQLException e) {
 
            throw new DAOException(e);
         }finally {
             close(statement);
-            ConnectionPool.getInstance().releaseConnection(connection);
+
         }
         return user;
     }

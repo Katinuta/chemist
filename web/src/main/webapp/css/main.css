@@ -1,0 +1,68 @@
+div.container{
+	position: relative;
+	width: 100%;
+	color: green;
+}
+table{
+	color: green;
+}
+body {
+	margin: 0;
+	font-family: 'Quicksand', sans-serif;
+	/*font-family: 'Abril Fatface', cursive;*/
+	background-color: #00cc99;
+	padding: 0% 20%;
+	overflow: auto;
+}
+nav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+
+}
+nav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #00cc99;
+
+}
+
+a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 2% 1%;
+	text-decoration: none;
+	float: left;
+	font-size: 18px;
+	border-radius: 10px;}
+
+#basket{
+	padding: 5px 15px;
+}
+main {
+	display: block;
+	background-color: white;
+	border-radius: 10px;
+	/*height: 90vh;*/
+
+
+}
+a:hover:not(.email),.nav>li>a:hover {
+	background-color: #009973;
+	color: white;
+}
+
+.email{
+	float:none;
+	display: inline;
+}
+.navbar{
+	margin-bottom: 0px;
+}
+*{
+	font-family: 'Quicksand', sans-serif;
+}

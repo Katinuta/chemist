@@ -22,15 +22,15 @@ public class ConnectionConfiguration {
     private final static ConnectionConfiguration configuration = new ConnectionConfiguration();
 
     private ConnectionConfiguration() {
-        POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getProperty(DAOConstant.POOL_INIT_SIZE_KEY));
-        POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getProperty(DAOConstant.POOL_MAX_ACTIVE_KEY));
-        URL = ConfigurationManager.getInstance().getProperty(DAOConstant.URL_KEY) + "?" +
-                "useUnicode=" + ConfigurationManager.getInstance().getProperty("useUnicode") + "&" +
-                "characterEncoding=" + ConfigurationManager.getInstance().getProperty("characterEncoding") + "&" +
-                "useSSL=" + ConfigurationManager.getInstance().getProperty("useSSL");
+        POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_INIT_SIZE_KEY));
+        POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_MAX_ACTIVE_KEY));
+        URL = ConfigurationManager.getInstance().getString(DAOConstant.URL_KEY) + "?" +
+                "useUnicode=" + ConfigurationManager.getInstance().getString("useUnicode") + "&" +
+                "characterEncoding=" + ConfigurationManager.getInstance().getString("characterEncoding") + "&" +
+                "useSSL=" + ConfigurationManager.getInstance().getString("useSSL");
 
-        USER = ConfigurationManager.getInstance().getProperty("user");
-        PASSWORD = ConfigurationManager.getInstance().getProperty("password");
+        USER = ConfigurationManager.getInstance().getString("user");
+        PASSWORD = ConfigurationManager.getInstance().getString("password");
     }
 
     public static ConnectionConfiguration getConfiguration() {

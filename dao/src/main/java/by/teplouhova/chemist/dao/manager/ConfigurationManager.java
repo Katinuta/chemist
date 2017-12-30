@@ -18,13 +18,13 @@ public class ConfigurationManager {
     private final String DEFAULT_POOL_INIT_SIZE = "10";
     private final String DEFAULT_POOL_MAX_ACTIVE = "20";
     private Properties property;
+
     private final static ConfigurationManager manager = new ConfigurationManager();
 
     private ConfigurationManager() {
         try {
-
-            property.load(new FileReader("database.properties"));
-
+            property=new Properties();
+            property.load(ConfigurationManager.class.getClassLoader().getResourceAsStream("database.properties"));
         } catch (IOException e) {
             LOGGER.log(Level.FATAL, "Configuration file of database didn't find");
             new RuntimeException("Configuration file of database didn't find", e);
@@ -36,7 +36,7 @@ public class ConfigurationManager {
         return manager;
     }
 
-    public String getProperty(String key) {
+    public String getString(String key) {
         String value = null;
 
             switch(key){

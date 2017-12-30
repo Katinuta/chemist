@@ -2,7 +2,7 @@ package test.by.teplouhova.chemist;
 
 import by.teplouhova.chemist.entity.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.dao.impl.UserDAOImpl;
+import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,11 +21,11 @@ import static org.testng.Assert.assertTrue;
 public class UserDAOTest {
 
     private Connection connection;
-    private UserDAOImpl userDAOImpl;
+    private MySqlUserDAO mySqlUserDAO;
 
     @BeforeClass
     public void setUp(){
-        userDAOImpl =new UserDAOImpl();
+        mySqlUserDAO =new MySqlUserDAO();
         ResourceBundle bundle = ResourceBundle.getBundle("testdatabase");
         String url = bundle.getString("url") + "?" +
                 "useUnicode=" + bundle.getString("useUnicode") + "&" +
@@ -58,7 +58,7 @@ public class UserDAOTest {
 
     @Test(dataProvider = "user")
     public void findUserByIdTest(long id,User expected, boolean result){
-        User actual= userDAOImpl.findById(id);
+        User actual= mySqlUserDAO.findById(id);
         assertEquals(expected.equals(actual),result);
     }
 

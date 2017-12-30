@@ -40,7 +40,6 @@ public class Controller extends HttpServlet {
         if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
-            LOGGER.log(Level.INFO,request.getContextPath() + page.getPage());
             response.sendRedirect(request.getContextPath() + page.getPage());
         }
 

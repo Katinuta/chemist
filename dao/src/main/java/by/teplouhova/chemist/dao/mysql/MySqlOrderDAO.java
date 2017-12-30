@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.dao.impl;
+package by.teplouhova.chemist.dao.mysql;
 
 import by.teplouhova.chemist.entity.StatusOrderType;
 import by.teplouhova.chemist.dao.AbstractDAO;
@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class OrderDAO extends AbstractDAO<Order> {
+public class MySqlOrderDAO extends AbstractDAO<Order> {
 
     private final static String SQL_INSERT_ORDER =
             "INSERT INTO chemist.order (u_user_id, o_date_create, o_status,ip_issue_point_id) VALUES ( ?, ?, ?,?)";

@@ -12,7 +12,8 @@ public abstract class AbstractDAO <T extends Entity>  {
     protected ProxyConnection connection;
     public abstract T findById(long id);
     public abstract void create(T entity) throws DAOException;
-    public abstract void update(T entity);
+    public abstract void update(T entity) throws DAOException;
+
 
     void setConnection(ProxyConnection connection) {
         this.connection = connection;

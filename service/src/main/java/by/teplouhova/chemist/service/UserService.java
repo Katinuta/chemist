@@ -1,10 +1,12 @@
 package by.teplouhova.chemist.service;
 
 import by.teplouhova.chemist.dao.TransactionManager;
+import by.teplouhova.chemist.dao.UserDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.factory.DAOFactory;
 import by.teplouhova.chemist.entity.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.dao.impl.UserDAOImpl;
+import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,10 +20,10 @@ public class UserService {
         TransactionManager transaction;
 
         try {
-            UserDAOImpl userDAOImpl = new UserDAOImpl();
+            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             transaction = new TransactionManager();
-            transaction.beginTransaction(userDAOImpl);
-            user = userDAOImpl.findByLoginPassword(login, password);
+            transaction.beginTransaction(userDAO);
+            user = userDAO.findByLoginPassword(login, password);
             transaction.endTransaction();
 
         } catch (DAOException e) {
@@ -34,10 +36,10 @@ public class UserService {
         User user;
 
         try {
-            UserDAOImpl userDAOImpl = new UserDAOImpl();
+            MySqlUserDAO mySqlUserDAO = new MySqlUserDAO();
             TransactionManager transaction = new TransactionManager();
-            transaction.beginTransaction(userDAOImpl);
-            user = userDAOImpl.findByLogin(login);
+            transaction.beginTransaction(mySqlUserDAO);
+            user = mySqlUserDAO.findByLogin(login);
             transaction.endTransaction();
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -51,11 +53,11 @@ public class UserService {
         User user = null;
         try {
 //            User user = new User(name, surname, login, password, account, RoleType.CLIENT, phone);
-            UserDAOImpl userDAOImpl = new UserDAOImpl();
+            MySqlUserDAO mySqlUserDAO = new MySqlUserDAO();
             TransactionManager transaction = new TransactionManager();
-            transaction.beginTransaction(userDAOImpl);
-            userDAOImpl.create(new User(name, surname, login, password, account, RoleType.CLIENT, phone));
-            user = userDAOImpl.findByLogin(login);
+            transaction.beginTransaction(mySqlUserDAO);
+            mySqlUserDAO.create(new User(name, surname, login, password, account, RoleType.CLIENT, phone));
+            user = mySqlUserDAO.findByLogin(login);
             transaction.endTransaction();
         } catch (DAOException e) {
             throw new ServiceException(e);
