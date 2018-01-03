@@ -29,10 +29,11 @@ public class ClientPrescriptionCommand implements Command {
             Set<Prescription> prescriptions= service.getClientPrescriptions(user.getUsedId());
             if(prescriptions!=null){
                 content.setRequestAttributes(ATTR_PRESCRIPTIONS,prescriptions);
-                content.setRequestAttributes(ATTR_FLAG_FIND,true);
+
             }else{
                 content.setRequestAttributes("error","Prescriptions was not found");
             }
+            content.setRequestAttributes(ATTR_FLAG_FIND,true);
             page="/jsp/client/main.jsp";
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (ServiceException e) {

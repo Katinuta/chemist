@@ -13,7 +13,8 @@ public enum CommandType {
     FINDMEDICINE(new FindMedicineCommand(new MedicineService())),
     ALLCLIENTPRESCRIPTION(new ClientPrescriptionCommand(new ClientService())),
     ALLMEDICINE(new FindAllMedicinesCommand(new MedicineService())),
-    NEXTPAGE(new NextPage())
+    NEXTPAGE(new NextPage()),
+    OPENBASKET(new OpenBasketCommand())
     ;
 
     private Command command;

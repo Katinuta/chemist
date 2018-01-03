@@ -17,6 +17,7 @@ public class LoginCommand implements Command {
 
     private static String PARAM_LOGIN = "login";
     private static String PARAM_PASSWORD = "password";
+    private Integer integer;
 
     private UserService userService;
 

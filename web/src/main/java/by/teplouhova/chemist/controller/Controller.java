@@ -20,6 +20,7 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.toString());
         processRequest(request, response);
     }
 

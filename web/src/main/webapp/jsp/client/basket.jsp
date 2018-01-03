@@ -18,23 +18,23 @@
         <c:import url="/css/main.css"/>
         <c:import url="/css/footer.css"></c:import>
     </style>
-    <script type="application/javascript">
-        $(document).ready(function(){
+    <%--<script type="application/javascript">--%>
+        <%--$(document).ready(function(){--%>
 
-            $("button").click(function () {
-                var medicineForAdd= $(this).val();
+            <%--$("button").click(function () {--%>
+                <%--var medicineForAdd= $(this).val();--%>
 
-                $.ajax({url: "/controllerAjax",
-                    type : "get",
-                    data:{
-                        medicineForAdd:medicineForAdd
-                    },
-                    success: function(){
-                        location.reload();
-                    }});
-            })
-        });
-    </script>
+                <%--$.ajax({url: "/controllerAjax",--%>
+                    <%--type : "get",--%>
+                    <%--data:{--%>
+                        <%--medicineForAdd:medicineForAdd--%>
+                    <%--},--%>
+                    <%--success: function(){--%>
+                        <%--location.reload();--%>
+                    <%--}});--%>
+            <%--})--%>
+        <%--});--%>
+    <%--</script>--%>
 </head>
 <body>
 <header>
@@ -55,7 +55,7 @@
                                                            style="font-size:40px;color:black">
 
                 </i></a>
-                    <span  id="basketvalue" style="font-size: medium; margin-left: -20%;">${fn:length(basket)}</span></li>
+                    <%--<span  id="basketvalue" style="font-size: medium; margin-left: -20%;">${fn:length(basket)}</span></li>--%>
 
             </ul>
             <form class="navbar-form navbar-right" action="/controller">
@@ -74,31 +74,29 @@
     </nav>
 </header>
 <main>
-    <c:if test="${ not flagFind}">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th><fmt:message bundle="${bundle}" key="table.medicine.column.name"/></th>
+            <th><fmt:message bundle="${bundle}" key="table.medicine.column.price"/></th>
+            <th><fmt:message bundle="${bundle}" key="table.medicine.column.amount"/></th>
+            <th><fmt:message bundle="${bundle}" key="table.medicine.column.sum"/></th>
+            <
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="medicine" items="${medicines}">
+            <tr>
+                <td>${basket[medicine.name]}</td>
+                <td>${medicine.price}</td>
+                <td>${basket[appointment.docID]} </td>
+                <td>
 
-            <c:if test="${  currentpage ==null}">
-                <c:set var="currentpage" value="1"/>
-            </c:if>
+                </td>
 
-
-        <c:import url="/controller">
-            <c:param name="command" value="allmedicine"/>
-
-            <c:param name="currentpage" value="${currentpage}"/>
-
-        </c:import>
-
-    </c:if>
-
-    <c:if test="${not empty medicines }">
-        <c:import url="medicine.jsp"/>
-    </c:if>
-    <c:if test="${not empty prescriptions }">
-
-        <c:import url="prescription.jsp"/>
-    </c:if>
-    ${error}
-
+            </tr>
+        </c:forEach>
+        </tbody>
 </main>
 <footer>
     <c:import url="/jsp/common/footer.jsp"/>
