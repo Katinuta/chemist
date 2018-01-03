@@ -1,6 +1,5 @@
 package by.teplouhova.chemist.pool;
 
-import by.teplouhova.chemist.dao.constant.DAOConstant;
 import by.teplouhova.chemist.dao.manager.ConfigurationManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

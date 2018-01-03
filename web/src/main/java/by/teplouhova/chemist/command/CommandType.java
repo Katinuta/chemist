@@ -12,7 +12,8 @@ public enum CommandType {
     CREATEUSER(new CreateUserCommand(new UserService())),
     FINDMEDICINE(new FindMedicineCommand(new MedicineService())),
     ALLCLIENTPRESCRIPTION(new ClientPrescriptionCommand(new ClientService())),
-    ALLMEDICINE(new FindAllMedicinesCommand(new MedicineService()))
+    ALLMEDICINE(new FindAllMedicinesCommand(new MedicineService())),
+    NEXTPAGE(new NextPage())
     ;
 
     private Command command;

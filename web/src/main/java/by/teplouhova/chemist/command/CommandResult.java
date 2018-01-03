@@ -31,4 +31,12 @@ public class CommandResult {
     public void setPage(String page) {
         this.page = page;
     }
+
+    @Override
+    public String toString() {
+        return "CommandResult{" +
+                "responseType=" + responseType +
+                ", page='" + page + '\'' +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ import by.teplouhova.chemist.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class FindMedicineCommand implements Command {
@@ -29,7 +30,7 @@ public class FindMedicineCommand implements Command {
         CommandResult.ResponseType responseType;
         String name=content.getParameter(PARAM_NAME);
         try {
-            Set<Medicine> medicines=service.getMedicinesByName(name.toUpperCase());
+            ArrayList<Medicine> medicines=service.getMedicinesByName(name.toUpperCase());
             if(medicines!=null){
                 content.setRequestAttributes(ATTR_MEDICINES,medicines);
                 content.setRequestAttributes(ATTR_FLAG_FIND,true);

@@ -1,5 +1,6 @@
 package by.teplouhova.chemist.controller;
 
+import by.teplouhova.chemist.manager.MessageManager;
 import by.teplouhova.chemist.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -34,8 +35,6 @@ public class ChemistContextListener implements ServletContextListener {
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             ConnectionPool.getInstance();
-//            arg0.getServletContext().setAttribute("locale", new Locale("en","EN"));
-            //Locale locale=Locale.getDefault();
 
 
         } catch (SQLException e) {

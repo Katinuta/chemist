@@ -18,6 +18,24 @@
         <c:import url="/css/main.css"/>
         <c:import url="/css/footer.css"></c:import>
     </style>
+    <script type="application/javascript">
+        $(document).ready(function(){
+
+            $("button").click(function () {
+                var medicineForAdd= $(this).val();
+                alert(medicineForAdd);
+                $.ajax({url: "/controllerAjax",
+                    type : "get",
+                    data:{
+                        medicineForAdd:medicineForAdd
+                    },
+                    success: function(response){
+                        $("#basketvalue").innerHTML=response;
+                        alert(response);
+                    }});
+            })
+        });
+    </script>
 </head>
 <body>
 <header>
@@ -38,7 +56,7 @@
                                                            style="font-size:40px;color:black">
 
                 </i></a>
-                    <span style="font-size: medium; margin-left: -20%;">${fn:length(basket)}</span></li>
+                    <span  id="basketvalue" style="font-size: medium; margin-left: -20%;">${fn:length(basket)}</span></li>
 
             </ul>
             <form class="navbar-form navbar-right" action="/controller">
@@ -58,9 +76,19 @@
 </header>
 <main>
     <c:if test="${ not flagFind}">
+
+            <c:if test="${  currentpage ==null}">
+                <c:set var="currentpage" value="1"/>
+            </c:if>
+
+
         <c:import url="/controller">
             <c:param name="command" value="allmedicine"/>
+
+            <c:param name="currentpage" value="${currentpage}"/>
+
         </c:import>
+
     </c:if>
 
     <c:if test="${not empty medicines }">
@@ -70,9 +98,11 @@
         <c:import url="prescription.jsp"/>
     </c:if>
     ${error}
+
 </main>
 <footer>
     <c:import url="/jsp/common/footer.jsp"/>
 </footer>
+
 </body>
 </html>

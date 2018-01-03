@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.dao.constant;
+package by.teplouhova.chemist.pool;
 
 public class DAOConstant {
     public final static String POOL_INIT_SIZE_KEY = "initialSize";

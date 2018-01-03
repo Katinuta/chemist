@@ -13,14 +13,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class FindAllMedicinesCommand implements Command {
     private static final Logger LOGGER= LogManager.getLogger();
     private static final String ATTR_MEDICINES="medicines";
+    private static final String ATTR_PAGE="currentpage";
+    private static final String ATTR_COUNT_PAGES="countpages";
     private MedicineService service;
 
     public FindAllMedicinesCommand(MedicineService service) {
@@ -32,10 +32,13 @@ public class FindAllMedicinesCommand implements Command {
         String page ;
         CommandResult.ResponseType responseType ;
         try {
-            Set<Medicine> medicines=service.getMedicines();
-            if(medicines!=null){
+            Integer numberPage=Integer.parseInt(content.getParameter(ATTR_PAGE));
 
+            int[] countPages=new int[1];
+            ArrayList<Medicine> medicines=service.getMedicines(numberPage,countPages);
+            if(medicines!=null){
                 content.setRequestAttributes(ATTR_MEDICINES,medicines);
+                content.setRequestAttributes(ATTR_COUNT_PAGES,countPages[0]);
             }else{
                 content.setRequestAttributes("error","Medicines was not found");
             }

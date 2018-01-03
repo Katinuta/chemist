@@ -36,7 +36,6 @@ public class Controller extends HttpServlet {
         requestContent.extractValues(request);
         CommandResult page = command.execute(requestContent);
         requestContent.insertAttributes(request);
-
         if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {

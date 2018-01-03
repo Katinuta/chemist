@@ -8,18 +8,23 @@ import by.teplouhova.chemist.dao.mysql.MySqlMedicineDAO;
 import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 
 public class MySqlDAOFactory extends DAOFactory {
+
+    private  UserDAO userDAO=new MySqlUserDAO();
+    private  MedicineDAO medicineDAO=new MySqlMedicineDAO();
+    private PrescriptionDAO prescriptionDAO=new MySqlPrescriptionDAO();
+
     @Override
     public UserDAO getUserDAO() {
-        return new MySqlUserDAO();
+        return this.userDAO;
     }
 
     @Override
     public MedicineDAO getMedicineDAO() {
-        return new MySqlMedicineDAO();
+        return this.medicineDAO;
     }
 
     @Override
     public PrescriptionDAO getPrescriptionDAO() {
-        return new MySqlPrescriptionDAO();
+        return this.prescriptionDAO;
     }
 }

@@ -7,12 +7,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,6 +21,7 @@
         <c:import url="/css/main.css"/>
         <c:import url="/css/footer.css"></c:import>
     </style>
+
 </head>
 <body>
 
@@ -57,7 +59,7 @@
                     </c:choose>
                 </td>
                 <td>
-                    <button class="btn btn-default" name="medicineForAdd" value="${medicine.medicineId}">
+                    <button class="btn btn-default" name="medicineForAdd" id="medicineForAdd" value="${medicine.medicineId}">
                         <fmt:message bundle="${bundle}" key="button.addbasket"/>
                     </button>
                 </td>
@@ -65,7 +67,17 @@
         </c:forEach>
         </tbody>
     </table>
+
 </div>
+<c:if test="${ not flagFind}">
+    <div class="container">
+        <ul class="pagination">
+            <c:forEach begin="1" end="${countpages}" step="1" var="i">
+                <li class="page-item"><a class="page-link" href="/controller?command=nextpage&currentpage=${i}">${i}</a></li>
+            </c:forEach>
+        </ul>
+    </div>
+</c:if>
 
 </body>
 </html>

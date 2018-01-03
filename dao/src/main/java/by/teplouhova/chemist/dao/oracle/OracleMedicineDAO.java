@@ -4,6 +4,7 @@ import by.teplouhova.chemist.dao.MedicineDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.entity.impl.Medicine;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class OracleMedicineDAO extends MedicineDAO {
@@ -23,12 +24,17 @@ public class OracleMedicineDAO extends MedicineDAO {
     }
 
     @Override
-    public HashSet<Medicine> findMedicineByName(String name) throws DAOException {
+    public ArrayList<Medicine> findMedicineByName(String name) throws DAOException {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public HashSet<Medicine> findAll() throws DAOException {
+    public ArrayList<Medicine> findAll(int bedin, int end) throws DAOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getMedicineCountByName() throws DAOException {
         throw new UnsupportedOperationException();
     }
 }

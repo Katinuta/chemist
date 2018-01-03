@@ -9,16 +9,18 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class MedicineService {
     private final static Logger LOGGER = LogManager.getLogger();
+    private  static final int  RECORDS_PER_PAGE=15;
 
-    public Set<Medicine> getMedicinesByName(String name) throws ServiceException {
+    public ArrayList<Medicine> getMedicinesByName(String name) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
-       Set<Medicine> medicines;
+        ArrayList<Medicine> medicines;
         manager.beginTransaction(medicineDAO);
         try {
             medicines = medicineDAO.findMedicineByName(name);
@@ -30,13 +32,16 @@ public class MedicineService {
         return medicines;
     }
 
-    public Set<Medicine> getMedicines() throws ServiceException {
+    public ArrayList<Medicine> getMedicines(int numberPage,int[] countPages) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
-        Set<Medicine> medicines;
+        ArrayList<Medicine> medicines;
         try {
-            medicines = medicineDAO.findAll();
+            int begin=(numberPage-1)*RECORDS_PER_PAGE;
+
+            medicines = medicineDAO.findAll(begin,RECORDS_PER_PAGE);
+            countPages[0]= (int) Math.ceil(medicineDAO.getMedicineCountByName()/(double)RECORDS_PER_PAGE);
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -44,5 +49,9 @@ public class MedicineService {
         }
         return medicines;
     }
+
+//    public int getCountPages(){
+//
+//    }
 
 }

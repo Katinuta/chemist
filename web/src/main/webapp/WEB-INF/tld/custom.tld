@@ -10,8 +10,8 @@
     <uri>customtags</uri>
 
     <tag>
-        <name>info-tag</name>
-        <tag-class>by.teplouhova.chemist.tag.InfoTimeTag</tag-class>
+        <name>footer-tag</name>
+        <tag-class>by.teplouhova.chemist.tag.InfoFooterTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

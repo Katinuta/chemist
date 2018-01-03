@@ -1,16 +1,13 @@
 package by.teplouhova.chemist.dao.manager;
 
 
-import by.teplouhova.chemist.dao.constant.DAOConstant;
+import by.teplouhova.chemist.pool.DAOConstant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.MissingResourceException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class ConfigurationManager {
     private final static Logger LOGGER = LogManager.getLogger();
@@ -37,7 +34,7 @@ public class ConfigurationManager {
     }
 
     public String getString(String key) {
-        String value = null;
+        String value;
 
             switch(key){
                 case DAOConstant.POOL_MAX_ACTIVE_KEY:

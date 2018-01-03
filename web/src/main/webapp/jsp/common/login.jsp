@@ -64,6 +64,14 @@
             <input type="submit" value=<fmt:message bundle="${bundle}" key="button.submit"/> />
         </form>
     </div>
+        <c:choose>
+            <c:when test="${  currentpage ==null}">
+                <c:out value="1"/>
+            </c:when>
+            <%--<c:otherwise>--%>
+            <%--<c:param name="currentpage" value="1"/>--%>
+            <%--</c:otherwise>--%>
+        </c:choose>
     <%--<ctg:info-tag/>--%>
 </main>
 <footer>

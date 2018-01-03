@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
 
-public class InfoTimeTag extends TagSupport {
+public class InfoFooterTag extends TagSupport {
 
     public int doStartTag() throws JspException {
         String date = "<hr> Date: <b>" + LocalDate.now() + "</b></hr>";
