@@ -94,7 +94,6 @@
         <c:import url="medicine.jsp"/>
     </c:if>
     <c:if test="${not empty prescriptions }">
-
         <c:import url="prescription.jsp"/>
     </c:if>
     ${error}

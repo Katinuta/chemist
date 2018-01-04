@@ -44,7 +44,7 @@
                 </c:url>
                 <td><a href="${detailprescription}">${prescription.prescriptionId}</a></td>
                 <td>${prescription.doctor.name} ${prescription.doctor.surname}</td>
-                <td> <fmt:formatDate value="${prescription.dateBegin}"/></td>
+                <td> ${prescription.dateBegin}</td>
                 <td>${prescription.dateEnd}</td>
                 <td>
                     <c:choose>

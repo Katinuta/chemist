@@ -5,12 +5,15 @@ import by.teplouhova.chemist.entity.impl.Prescription;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.service.ClientService;
 import by.teplouhova.chemist.service.ServiceException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Set;
 
 
 public class ClientPrescriptionCommand implements Command {
-
+    private final static Logger LOGGER = LogManager.getLogger();
 
     private static final String ATTR_PRESCRIPTIONS="prescriptions";
     private static final String ATTR_FLAG_FIND="flagFind";
@@ -29,7 +32,7 @@ public class ClientPrescriptionCommand implements Command {
             Set<Prescription> prescriptions= service.getClientPrescriptions(user.getUsedId());
             if(prescriptions!=null){
                 content.setRequestAttributes(ATTR_PRESCRIPTIONS,prescriptions);
-
+            LOGGER.log(Level.DEBUG,prescriptions);
             }else{
                 content.setRequestAttributes("error","Prescriptions was not found");
             }
@@ -38,6 +41,7 @@ public class ClientPrescriptionCommand implements Command {
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (ServiceException e) {
             page = "/jsp/error/error.jsp";
+            LOGGER.log(Level.DEBUG,e);
             responseType= CommandResult.ResponseType.REDIRECT;
         }
 

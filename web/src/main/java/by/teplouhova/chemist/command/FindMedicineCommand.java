@@ -4,6 +4,7 @@ import by.teplouhova.chemist.controller.SessionRequestContent;
 import by.teplouhova.chemist.entity.impl.Medicine;
 import by.teplouhova.chemist.service.MedicineService;
 import by.teplouhova.chemist.service.ServiceException;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +42,7 @@ public class FindMedicineCommand implements Command {
             responseType= CommandResult.ResponseType.FORWARD;
 
         } catch (ServiceException e) {
-            //log?
+            LOGGER.log(Level.ERROR,"find medicine"+e);
             page = "/jsp/error/error.jsp";
             responseType= CommandResult.ResponseType.REDIRECT;
         }

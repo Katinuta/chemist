@@ -26,10 +26,10 @@ public class MySqlMedicineDAO extends MedicineDAO {
             "CONCAT(medicine.m_quantity_in_pack, unit_in_package.un_unit_in_package_name,' N1'))) " +
             "AS fullname,m_price, m_quantity_packages,m_is_need_recipe " +
             "FROM chemist.medicine " +
-            "JOIN chemist.release_form USING(rf_release_form_id)" +
-            "    JOIN chemist.unit_in_package USING(un_unit_in_package_id)" +
-            "LEFT JOIN chemist.dosage USING(d_dosage_id)" +
-            "    WHERE m_name=? AND m_quantity_packages>0" +
+            "JOIN chemist.release_form USING(rf_release_form_id) " +
+            "    JOIN chemist.unit_in_package USING(un_unit_in_package_id) " +
+            "LEFT JOIN chemist.dosage USING(d_dosage_id) " +
+            "    WHERE m_name=? AND m_quantity_packages>0 " +
             "ORDER BY medicine.m_name";
     private static final String SELECT_ALL_MEDICINES="SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', \n" +
             "IFNULL( IF(dosage.d_dosage_size > 1, " +
@@ -121,9 +121,8 @@ public class MySqlMedicineDAO extends MedicineDAO {
             throw new DAOException(""+ e);
         } finally {
             close(statement);
-
         }
-        medicines.sort(Comparator.comparing(Medicine::getName));
+//        medicines.sort(Comparator.comparing(Medicine::getName));
         return medicines;
     }
 

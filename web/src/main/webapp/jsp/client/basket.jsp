@@ -85,18 +85,25 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="medicine" items="${medicines}">
+        <c:forEach var="entry" items="${basket}">
             <tr>
-                <td>${basket[medicine.name]}</td>
-                <td>${medicine.price}</td>
-                <td>${basket[appointment.docID]} </td>
+                <td>${entry.key.name}</td>
+                <td>${entry.key.price}</td>
+                <td>${entry.value} </td>
                 <td>
-
+                        ${entry.value*entry.key.price}
                 </td>
 
             </tr>
         </c:forEach>
         </tbody>
+        <tfoot>
+        <tr>
+            <td>Total</td>
+        </tr>
+
+        </tfoot>
+    </table>
 </main>
 <footer>
     <c:import url="/jsp/common/footer.jsp"/>
