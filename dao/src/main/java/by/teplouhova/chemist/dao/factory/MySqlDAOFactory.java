@@ -1,17 +1,18 @@
 package by.teplouhova.chemist.dao.factory;
 
-import by.teplouhova.chemist.dao.MedicineDAO;
-import by.teplouhova.chemist.dao.PrescriptionDAO;
-import by.teplouhova.chemist.dao.UserDAO;
-import by.teplouhova.chemist.dao.mysql.MySqlPrescriptionDAO;
-import by.teplouhova.chemist.dao.mysql.MySqlMedicineDAO;
-import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
+import by.teplouhova.chemist.dao.*;
+import by.teplouhova.chemist.dao.mysql.*;
 
 public class MySqlDAOFactory extends DAOFactory {
 
     private  UserDAO userDAO=new MySqlUserDAO();
     private  MedicineDAO medicineDAO=new MySqlMedicineDAO();
     private PrescriptionDAO prescriptionDAO=new MySqlPrescriptionDAO();
+    private OrderDAO orderDAO=new MySqlOrderDAO();
+    private ReleaseFormDAO releaseFormDAO=new MySqlReleaseFormDAO();
+    private ProducerDAO producerDAO=new MySqlProducerDAO();
+    private DosageDAO dosageDAO=new MySqlDosageDAO();
+    private PrescripDetailDAO prescripDetailDAO=new MySqlPrescripDetailDAO();
 
     @Override
     public UserDAO getUserDAO() {
@@ -26,5 +27,30 @@ public class MySqlDAOFactory extends DAOFactory {
     @Override
     public PrescriptionDAO getPrescriptionDAO() {
         return this.prescriptionDAO;
+    }
+
+    @Override
+    public OrderDAO getOrderDAO() {
+        return this.orderDAO;
+    }
+
+    @Override
+    public ReleaseFormDAO getReleaseFormDAO() {
+        return this.releaseFormDAO;
+    }
+
+    @Override
+    public ProducerDAO getProducerDAO() {
+        return this.producerDAO;
+    }
+
+    @Override
+    public DosageDAO getDosageDAO() {
+        return this.dosageDAO;
+    }
+
+    @Override
+    public PrescripDetailDAO getPrescripDetailDAO() {
+        return this.prescripDetailDAO;
     }
 }

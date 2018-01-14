@@ -3,7 +3,11 @@ package by.teplouhova.chemist.entity.impl;
 import by.teplouhova.chemist.entity.Entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Prescription extends Entity {
     private long prescriptionId;
@@ -11,8 +15,17 @@ public class Prescription extends Entity {
     private LocalDate dateEnd;
     private User client;
     private User doctor;
-    private boolean isActive;
-    private HashMap<Medicine,Integer>  medicineList;
+    private PrescriptionStatus status;
+    private List<PrescriptionDetail> details;
+
+    public Prescription() {
+        details=new ArrayList<>();
+    }
+
+    public Prescription(long prescriptionId) {
+        this.prescriptionId = prescriptionId;
+        details=new ArrayList<>();
+    }
 
     public long getPrescriptionId() {
         return prescriptionId;
@@ -54,12 +67,31 @@ public class Prescription extends Entity {
         this.doctor = doctor;
     }
 
-    public boolean getIsActive() {
-        return isActive;
+    public PrescriptionStatus getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setStatus(PrescriptionStatus status) {
+        this.status = status;
+    }
+
+    public void setDetails(PrescriptionDetail detail){
+        details.add(detail);
+    }
+
+    public Iterator<PrescriptionDetail> getDetailsIterator() {
+        return details.iterator();
+    }
+     public boolean isEmptyDetails(){
+        return details.isEmpty();
+     }
+
+//     public Stream<PrescriptionDetail> getDetailSStream(){
+//         return details.stream();
+//     }
+//
+    public List<PrescriptionDetail> getDetails() {
+        return details;
     }
 
     @Override
@@ -67,15 +99,15 @@ public class Prescription extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Prescription recipe = (Prescription) o;
+        Prescription that = (Prescription) o;
 
-        if (prescriptionId != recipe.prescriptionId) return false;
-        if (isActive != recipe.isActive) return false;
-        if (dateBegin != null ? !dateBegin.equals(recipe.dateBegin) : recipe.dateBegin != null) return false;
-        if (dateEnd != null ? !dateEnd.equals(recipe.dateEnd) : recipe.dateEnd != null) return false;
-        if (client != null ? !client.equals(recipe.client) : recipe.client != null) return false;
-        if (doctor != null ? !doctor.equals(recipe.doctor) : recipe.doctor != null) return false;
-        return medicineList != null ? medicineList.equals(recipe.medicineList) : recipe.medicineList == null;
+        if (prescriptionId != that.prescriptionId) return false;
+        if (dateBegin != null ? !dateBegin.equals(that.dateBegin) : that.dateBegin != null) return false;
+        if (dateEnd != null ? !dateEnd.equals(that.dateEnd) : that.dateEnd != null) return false;
+        if (client != null ? !client.equals(that.client) : that.client != null) return false;
+        if (doctor != null ? !doctor.equals(that.doctor) : that.doctor != null) return false;
+        if (status != that.status) return false;
+        return details != null ? details.equals(that.details) : that.details == null;
     }
 
     @Override
@@ -85,8 +117,8 @@ public class Prescription extends Entity {
         result = 31 * result + (dateEnd != null ? dateEnd.hashCode() : 0);
         result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (doctor != null ? doctor.hashCode() : 0);
-        result = 31 * result + (isActive ? 1 : 0);
-        result = 31 * result + (medicineList != null ? medicineList.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (details != null ? details.hashCode() : 0);
         return result;
     }
 
@@ -98,8 +130,8 @@ public class Prescription extends Entity {
                 ", dateEnd=" + dateEnd +
                 ", client=" + client +
                 ", doctor=" + doctor +
-                ", isActive=" + isActive +
-                ", medicineList=" + medicineList +
+                ", status=" + status +
+                ", details=" + details +
                 '}';
     }
 }

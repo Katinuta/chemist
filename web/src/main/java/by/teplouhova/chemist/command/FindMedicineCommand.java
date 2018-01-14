@@ -2,6 +2,8 @@ package by.teplouhova.chemist.command;
 
 import by.teplouhova.chemist.controller.SessionRequestContent;
 import by.teplouhova.chemist.entity.impl.Medicine;
+import by.teplouhova.chemist.entity.impl.RoleType;
+import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.service.MedicineService;
 import by.teplouhova.chemist.service.ServiceException;
 import org.apache.logging.log4j.Level;
@@ -18,6 +20,7 @@ public class FindMedicineCommand implements Command {
     private static final String PARAM_NAME="name";
     private static final String ATTR_MEDICINES="medicines";
     private static final String ATTR_FLAG_FIND="flagFind";
+    private static final String ATTR_USER="user";
 
     private MedicineService service;
 
@@ -27,7 +30,7 @@ public class FindMedicineCommand implements Command {
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page ;
+        String page=null ;
         CommandResult.ResponseType responseType;
         String name=content.getParameter(PARAM_NAME);
         try {
@@ -38,7 +41,13 @@ public class FindMedicineCommand implements Command {
             }else{
                 content.setRequestAttributes("error","Medicine was not found");
             }
-            page="/jsp/client/main.jsp";
+            User user= (User) content.getSessionAttribute(ATTR_USER);
+            if(user.getRole().equals(RoleType.CLIENT)){
+                page = "/jsp/client/main.jsp";
+            }
+            if(user.getRole().equals(RoleType.PHARMACIST)){
+                page = "/jsp/pharmacist/main.jsp";
+            }
             responseType= CommandResult.ResponseType.FORWARD;
 
         } catch (ServiceException e) {

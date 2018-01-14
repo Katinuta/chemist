@@ -1,6 +1,6 @@
-package test.by.teplouhova.chemist;
+package test.by.teplouhova.chemist.chemist;
 
-import by.teplouhova.chemist.entity.RoleType;
+import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 import org.testng.annotations.BeforeClass;

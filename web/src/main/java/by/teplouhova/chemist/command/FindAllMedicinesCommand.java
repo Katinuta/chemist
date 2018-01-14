@@ -7,6 +7,8 @@ import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
 import by.teplouhova.chemist.dao.mysql.MySqlMedicineDAO;
 import by.teplouhova.chemist.entity.impl.Medicine;
+import by.teplouhova.chemist.entity.impl.RoleType;
+import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.service.MedicineService;
 import by.teplouhova.chemist.service.ServiceException;
 import org.apache.logging.log4j.Level;
@@ -19,8 +21,10 @@ import java.util.Set;
 public class FindAllMedicinesCommand implements Command {
     private static final Logger LOGGER= LogManager.getLogger();
     private static final String ATTR_MEDICINES="medicines";
-    private static final String ATTR_PAGE="currentpage";
+    private static final String PARAM_PAGE="currentpage";
     private static final String ATTR_COUNT_PAGES="countpages";
+    private static final String ATTR_USER="user";
+
     private MedicineService service;
 
     public FindAllMedicinesCommand(MedicineService service) {
@@ -29,11 +33,11 @@ public class FindAllMedicinesCommand implements Command {
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page ;
+        String page =null;
         CommandResult.ResponseType responseType ;
         try {
-            Integer numberPage=Integer.parseInt(content.getParameter(ATTR_PAGE));
-
+            Integer numberPage=Integer.parseInt(content.getParameter(PARAM_PAGE));
+            User user= (User) content.getSessionAttribute(ATTR_USER);
             int[] countPages=new int[1];
             ArrayList<Medicine> medicines=service.getMedicines(numberPage,countPages);
             if(medicines!=null){
@@ -42,9 +46,19 @@ public class FindAllMedicinesCommand implements Command {
             }else{
                 content.setRequestAttributes("error","Medicines was not found");
             }
-            page="/jsp/client/medicines.jsp";
+
+            if(user.getRole().equals(RoleType.CLIENT)){
+                page = "/jsp/client/medicine.jsp";
+            }
+            if(user.getRole().equals(RoleType.PHARMACIST)){
+                page = "/jsp/pharmacist/medicine.jsp";
+            }
+            if(user.getRole().equals(RoleType.PHARMACIST)){
+                page = "/jsp/doctor/medicine.jsp";
+            }
+
             responseType= CommandResult.ResponseType.FORWARD;
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             LOGGER.log(Level.ERROR,"Error in findall command" +e);
             page = "/jsp/error/error.jsp";
             responseType= CommandResult.ResponseType.REDIRECT;

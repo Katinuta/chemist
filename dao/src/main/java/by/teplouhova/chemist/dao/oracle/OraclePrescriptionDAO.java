@@ -5,10 +5,16 @@ import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.entity.impl.Prescription;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class OraclePrescriptionDAO extends PrescriptionDAO {
     @Override
     public HashSet<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
+        return null;
+    }
+
+    @Override
+    public List<Prescription> findPrescriptionByDoctorId(long doctorId) {
         return null;
     }
 

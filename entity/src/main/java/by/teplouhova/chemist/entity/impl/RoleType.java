@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.entity;
+package by.teplouhova.chemist.entity.impl;
 
 public enum RoleType {
     CLIENT("client"),

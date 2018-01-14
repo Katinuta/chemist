@@ -3,6 +3,7 @@ package by.teplouhova.chemist.dao;
 
 import by.teplouhova.chemist.pool.ConnectionPool;
 import by.teplouhova.chemist.pool.ProxyConnection;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,11 +25,12 @@ public class TransactionManager {
                 itemDAO.setConnection(connection);
             });
         } catch (SQLException e) {
-            e.printStackTrace();//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+           LOGGER.log(Level.ERROR,"Transaction don't begin" +e);
         }
     }
 
     public void beginTransaction(AbstractDAO dao){
+
         dao.setConnection(connection);
     }
 

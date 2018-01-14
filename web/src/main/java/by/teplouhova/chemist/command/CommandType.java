@@ -1,8 +1,6 @@
 package by.teplouhova.chemist.command;
 
-import by.teplouhova.chemist.service.ClientService;
-import by.teplouhova.chemist.service.MedicineService;
-import by.teplouhova.chemist.service.UserService;
+import by.teplouhova.chemist.service.*;
 
 public enum CommandType {
     LOGIN(new LoginCommand( new UserService())),
@@ -14,7 +12,20 @@ public enum CommandType {
     ALLCLIENTPRESCRIPTION(new ClientPrescriptionCommand(new ClientService())),
     ALLMEDICINE(new FindAllMedicinesCommand(new MedicineService())),
     NEXTPAGE(new NextPage()),
-    OPENBASKET(new OpenBasketCommand())
+    OPENCART(new OpenCartCommand()),
+DOCTORPRESCRIPTION(new DoctorPrescriptionCommand(new PrescriptionService())),
+    //BUY(new BuyCommand(new UserService())),
+    NEWMEDICINE(new NewMedicineCommand()),
+    EDITMEDICINE(new EditMedicineCommand(new MedicineService())),
+    DELETEMEDICINE(new DeleteMedicineCommand(new MedicineService())),
+    UPDATEMEDICINE(new UpdateMedicineCommand(new MedicineService())),
+    CREATEMEDICINE(new CreateMedicineCommand(new MedicineService())),
+    CLIENTPURCHASES(new ClientPurchasesCommand(new OrderService())),
+    OPENPRESCRIPTION(new OpenPrescripCommand(new PrescriptionService(),new ClientService())),
+    EXTENDPRESCRIPTION(new ExtendPrescriptionCommand(new PrescriptionService(),new ClientService())),
+    EXTENDPRESCRIPDETAIL(new ExtendPrescripDetailCommand(new ClientService(), new PrescripDetailService(),
+            new PrescriptionService())),
+    APPROVEEXTENDPRESCRIP(new ApproveExtendPrescripCommand(new PrescriptionService()))
     ;
 
     private Command command;

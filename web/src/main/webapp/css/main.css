@@ -30,7 +30,7 @@ nav {
 
 }
 
-a {
+a{
 	display: block;
 	color: white;
 	text-align: center;
@@ -40,7 +40,7 @@ a {
 	font-size: 18px;
 	border-radius: 10px;}
 
-#basket{
+#cart{
 	padding: 5px 15px;
 }
 main {
@@ -55,7 +55,10 @@ a:hover:not(.email),.nav>li>a:hover {
 	background-color: #009973;
 	color: white;
 }
-
+label.required:after,label.required:after {
+	color: red;
+	content: "*";
+}
 .email{
 	float:none;
 	display: inline;

@@ -9,11 +9,22 @@ public class Medicine extends Entity {
     private String name;
     private BigDecimal price;
     private int quantityPackages;
-    private boolean isNeedRecipe;
-    private long analogId;
     private int quantityInPackage;
-    private long releaseFormId;
-    private long producerId;
+    private boolean isNeedRecipe;
+    private Medicine analog;
+    private ReleaseForm releaseForm;
+    private Producer producer;
+    private Dosage dosage;
+    private UnitInPackage unitInPackage;
+
+    public Medicine() {
+    }
+
+    public Medicine(long medicineId) {
+        this.medicineId = medicineId;
+    }
+
+
 
     public long getMedicineId() {
         return medicineId;
@@ -47,22 +58,6 @@ public class Medicine extends Entity {
         this.quantityPackages = quantityPackages;
     }
 
-    public boolean getIsNeedRecipe() {
-        return isNeedRecipe;
-    }
-
-    public void setNeedRecipe(boolean needRecipe) {
-        isNeedRecipe = needRecipe;
-    }
-
-    public long getAnalogId() {
-        return analogId;
-    }
-
-    public void setAnalogId(long analogId) {
-        this.analogId = analogId;
-    }
-
     public int getQuantityInPackage() {
         return quantityInPackage;
     }
@@ -71,20 +66,52 @@ public class Medicine extends Entity {
         this.quantityInPackage = quantityInPackage;
     }
 
-    public long getReleaseFormId() {
-        return releaseFormId;
+    public boolean getIsNeedRecipe() {
+        return isNeedRecipe;
     }
 
-    public void setReleaseFormId(long releaseFormId) {
-        this.releaseFormId = releaseFormId;
+    public void setNeedRecipe(boolean needRecipe) {
+        isNeedRecipe = needRecipe;
     }
 
-    public long getProducerId() {
-        return producerId;
+    public Medicine getAnalog() {
+        return analog;
     }
 
-    public void setProducerId(long producerId) {
-        this.producerId = producerId;
+    public void setAnalog(Medicine analog) {
+        this.analog = analog;
+    }
+
+    public ReleaseForm getReleaseForm() {
+        return releaseForm;
+    }
+
+    public void setReleaseForm(ReleaseForm releaseForm) {
+        this.releaseForm = releaseForm;
+    }
+
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public Dosage getDosage() {
+        return dosage;
+    }
+
+    public void setDosage(Dosage dosage) {
+        this.dosage = dosage;
+    }
+
+    public UnitInPackage getUnitInPackage() {
+        return unitInPackage;
+    }
+
+    public void setUnitInPackage(UnitInPackage unitInPackage) {
+        this.unitInPackage = unitInPackage;
     }
 
     @Override
@@ -96,27 +123,16 @@ public class Medicine extends Entity {
 
         if (medicineId != medicine.medicineId) return false;
         if (quantityPackages != medicine.quantityPackages) return false;
-        if (isNeedRecipe != medicine.isNeedRecipe) return false;
-        if (analogId != medicine.analogId) return false;
         if (quantityInPackage != medicine.quantityInPackage) return false;
-        if (releaseFormId != medicine.releaseFormId) return false;
-        if (producerId != medicine.producerId) return false;
+        if (isNeedRecipe != medicine.isNeedRecipe) return false;
         if (name != null ? !name.equals(medicine.name) : medicine.name != null) return false;
-        return price != null ? price.equals(medicine.price) : medicine.price == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (medicineId ^ (medicineId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + quantityPackages;
-        result = 31 * result + (isNeedRecipe ? 1 : 0);
-        result = 31 * result + (int) (analogId ^ (analogId >>> 32));
-        result = 31 * result + quantityInPackage;
-        result = 31 * result + (int) (releaseFormId ^ (releaseFormId >>> 32));
-        result = 31 * result + (int) (producerId ^ (producerId >>> 32));
-        return result;
+        if (price != null ? !price.equals(medicine.price) : medicine.price != null) return false;
+        if (analog != null ? !analog.equals(medicine.analog) : medicine.analog != null) return false;
+        if (releaseForm != null ? !releaseForm.equals(medicine.releaseForm) : medicine.releaseForm != null)
+            return false;
+        if (producer != null ? !producer.equals(medicine.producer) : medicine.producer != null) return false;
+        if (dosage != null ? !dosage.equals(medicine.dosage) : medicine.dosage != null) return false;
+        return unitInPackage == medicine.unitInPackage;
     }
 
     @Override
@@ -126,11 +142,30 @@ public class Medicine extends Entity {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantityPackages=" + quantityPackages +
-                ", isNeedRecipe=" + isNeedRecipe +
-                ", analogId=" + analogId +
                 ", quantityInPackage=" + quantityInPackage +
-                ", releaseFormId=" + releaseFormId +
-                ", producerId=" + producerId +
+                ", isNeedRecipe=" + isNeedRecipe +
+                ", analog=" + analog +
+                ", releaseForm=" + releaseForm +
+                ", producer=" + producer +
+                ", dosage=" + dosage +
+                ", unitInPackage=" + unitInPackage +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (medicineId ^ (medicineId >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + quantityPackages;
+        result = 31 * result + quantityInPackage;
+        result = 31 * result + (isNeedRecipe ? 1 : 0);
+        result = 31 * result + (analog != null ? analog.hashCode() : 0);
+        result = 31 * result + (releaseForm != null ? releaseForm.hashCode() : 0);
+        result = 31 * result + (producer != null ? producer.hashCode() : 0);
+        result = 31 * result + (dosage != null ? dosage.hashCode() : 0);
+        result = 31 * result + (unitInPackage != null ? unitInPackage.hashCode() : 0);
+        return result;
+
     }
 }

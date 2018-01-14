@@ -1,12 +1,10 @@
 package by.teplouhova.chemist.dao.mysql;
 
 import by.teplouhova.chemist.dao.UserDAO;
-import by.teplouhova.chemist.entity.RoleType;
-import by.teplouhova.chemist.dao.AbstractDAO;
+import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.pool.ConnectionPool;
 import by.teplouhova.chemist.entity.impl.User;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,10 +25,10 @@ public class MySqlUserDAO extends UserDAO {
     private final static String SQL_UPDATE_USER =
             "UPDATE chemist.user SET u_name =?, u_surname=?, u_login=?, u_password=?, u_account=?, u_phone=? WHERE u_user_id=?";
 
-    private final static String SQL_FIND_USER_BY_LOGIN =
+    private final static String SQL_SELECT_USER_BY_LOGIN =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
 
-   public final static String SQL_FIND_USER_BY_LOGIN_PASSWORD =
+   public final static String SQL_SELECT_USER_BY_LOGIN_PASSWORD =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
 
@@ -48,7 +46,7 @@ public class MySqlUserDAO extends UserDAO {
 //            ResultSet result = st.executeQuery();
 //            if (result.next()) {
 //                user = new User();
-//                user.setUsedId(result.getLong("u_user_id"));
+//                user.setUserId(result.getLong("u_user_id"));
 //                user.setName(result.getString("u_name"));
 //                user.setSurname(result.getString("u_surname"));
 //                user.setLogin(result.getString("u_login"));
@@ -81,7 +79,7 @@ public class MySqlUserDAO extends UserDAO {
             st.execute();
             ResultSet result = st.getGeneratedKeys();
 //            if (result.next()) {
-//                entity.setUsedId(result.getLong(1));
+//                entity.setUserId(result.getLong(1));
 //            }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -104,7 +102,7 @@ public class MySqlUserDAO extends UserDAO {
             st.setString(4, entity.getPassword());
             st.setBigDecimal(5, entity.getAccount());
             st.setString(6, entity.getPhone());
-            st.setLong(7, entity.getUsedId());
+            st.setLong(7, entity.getUserId());
             st.executeUpdate();
         } catch (SQLException e) {
            throw new DAOException(e);
@@ -119,17 +117,17 @@ public class MySqlUserDAO extends UserDAO {
         PreparedStatement st = null;
         User user = null;
         try {
-            st = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+            st = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN);
             st.setString(1, login);
             ResultSet result = st.executeQuery();
             if (result.next()) {
                 user = new User();
-                user.setUsedId(result.getLong("u_user_id"));
+                user.setUserId(result.getLong("u_user_id"));
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
                 user.setLogin(result.getString("u_login"));
                 user.setPassword(result.getString("u_password"));
-                user.setAccount(result.getBigDecimal("u_account"));
+//                user.setAccount(result.getBigDecimal("u_account"));
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
             }
@@ -148,13 +146,13 @@ public class MySqlUserDAO extends UserDAO {
         PreparedStatement statement = null;
         User user=null;
         try {
-            statement=connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_PASSWORD);
+            statement=connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet result=statement.executeQuery();
             if(result.next()){
                 user=new User();
-                user.setUsedId(result.getLong("u_user_id"));
+                user.setUserId(result.getLong("u_user_id"));
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
                 user.setLogin(result.getString("u_login"));

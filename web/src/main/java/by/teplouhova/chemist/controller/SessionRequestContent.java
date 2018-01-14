@@ -1,10 +1,15 @@
 package by.teplouhova.chemist.controller;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
 
 public class SessionRequestContent {
+    private static final Logger LOGGER= LogManager.getLogger();
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, String[]> requestParameters;
     private HashMap<String, Object> sessionAttributes;
@@ -36,6 +41,10 @@ public class SessionRequestContent {
 
     public void setRequestAttributes(String name, Object value) {
        requestAttributes.put(name, value);
+    }
+
+    public boolean isContainParameter(String name){
+        return requestParameters.containsKey(name);
     }
 
     public void extractValues(HttpServletRequest request) {

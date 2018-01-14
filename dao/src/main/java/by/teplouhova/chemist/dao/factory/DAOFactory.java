@@ -1,9 +1,6 @@
 package by.teplouhova.chemist.dao.factory;
 
-import by.teplouhova.chemist.dao.MedicineDAO;
-import by.teplouhova.chemist.dao.PrescriptionDAO;
-import by.teplouhova.chemist.dao.UserDAO;
-import by.teplouhova.chemist.entity.impl.Prescription;
+import by.teplouhova.chemist.dao.*;
 
 public abstract class DAOFactory {
 
@@ -15,8 +12,13 @@ public abstract class DAOFactory {
     public abstract UserDAO getUserDAO();
 
     public abstract MedicineDAO getMedicineDAO();
-
     public abstract PrescriptionDAO getPrescriptionDAO();
+    public abstract OrderDAO getOrderDAO();
+    public abstract ReleaseFormDAO getReleaseFormDAO();
+    public abstract ProducerDAO getProducerDAO();
+    public abstract DosageDAO getDosageDAO();
+    public abstract PrescripDetailDAO getPrescripDetailDAO();
+
 
     public static DAOFactory getDAOFactory(String type) {
         if (factory == null) {

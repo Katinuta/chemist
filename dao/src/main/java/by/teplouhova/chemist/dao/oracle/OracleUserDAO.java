@@ -24,4 +24,9 @@ public class OracleUserDAO extends UserDAO {
     public User findByLoginPassword(String login, String password) throws DAOException {
         return null;
     }
+
+    @Override
+    public User findByLogin(String login) throws DAOException {
+        return null;
+    }
 }

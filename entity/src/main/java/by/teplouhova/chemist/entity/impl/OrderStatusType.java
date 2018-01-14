@@ -1,6 +1,6 @@
-package by.teplouhova.chemist.entity;
+package by.teplouhova.chemist.entity.impl;
 
-public enum StatusOrderType {
+public enum OrderStatusType {
 
     IN_PROCESSING("in processing"),
     APPROVED("approved"),
@@ -12,7 +12,7 @@ public enum StatusOrderType {
     //'in processing', 'approved', 'paid', 'ready to receive', 'received', 'canceled'
     private String status;
 
-    StatusOrderType(String status) {
+    OrderStatusType(String status) {
         this.status = status;
     }
 

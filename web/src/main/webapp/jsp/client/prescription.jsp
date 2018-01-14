@@ -20,10 +20,20 @@
         <c:import url="/css/main.css"/>
         <c:import url="/css/footer.css"></c:import>
     </style>
+    <script type="application/javascript">
+
+
+    </script>
 </head>
 <body>
 <div class="container">
     <h2><fmt:message bundle="${bundle}" key="ref.prescription"/></h2>
+<c:if test="${empty count }">
+    <c:out value="empty"></c:out>
+</c:if>
+    <c:if test="${count }">
+        <c:out value="not empty"></c:out>
+    </c:if>
 
     <table class="table table-hover">
         <thead>
@@ -39,8 +49,8 @@
         <c:forEach var="prescription" items="${prescriptions}">
             <tr>
                 <c:url var="detailprescription" value="/controller">
-                    <c:param name="command" value="detailprescription"/>
-                    <c:param name="prescription" value="${prescription.prescriptionId}"/>
+                    <c:param name="command" value="openprescription"/>
+                    <c:param name="prescriptionId" value="${prescription.prescriptionId}"/>
                 </c:url>
                 <td><a href="${detailprescription}">${prescription.prescriptionId}</a></td>
                 <td>${prescription.doctor.name} ${prescription.doctor.surname}</td>
@@ -48,14 +58,28 @@
                 <td>${prescription.dateEnd}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${prescription.isActive}">
+                        <c:when test="${prescription.status=='ACTIVE'}">
                             <fmt:message bundle="${bundle}" key="label.prescription.active"/>
+                        </c:when>
+                        <c:when test="${prescription.status=='EXTAND'}">
+                            <fmt:message bundle="${bundle}" key="label.prescription.extand"/>
+                        </c:when>
+                        <c:when test="${prescription.status=='USED'}">
+                            <fmt:message bundle="${bundle}" key="label.prescription.used"/>
                         </c:when>
                         <c:otherwise>
                             <fmt:message bundle="${bundle}" key="label.prescription.notactive"/>
+                        <c:url var="extandprescription" value="/controller">
+                            <c:param name="command" value="extendprescription"/>
+                            <c:param name="prescriptionId" value="${prescription.prescriptionId}"/>
+                        </c:url>
+                            <a href="${extandprescription}"><fmt:message bundle="${bundle}" key="button.extend"/>
+                            </a>
+
                         </c:otherwise>
                     </c:choose>
                 </td>
+                <%--${message+prescription.prescriptionId}--%>
             </tr>
         </c:forEach>
         </tbody>

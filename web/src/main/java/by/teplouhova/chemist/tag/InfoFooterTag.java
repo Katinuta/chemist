@@ -11,11 +11,11 @@ import java.util.Locale;
 public class InfoFooterTag extends TagSupport {
 
     public int doStartTag() throws JspException {
-        String date = "<hr> Date: <b>" + LocalDate.now() + "</b></hr>";
-        String locale = "<hr> Date: <b>" + Locale.getDefault() + "</b></hr>";
+        String brand = "<span>" + "Chemist" + "<span></hr>";
+//        String locale = "<hr> Date: <b>" + Locale.getDefault() + "</b></hr>";
         JspWriter out = pageContext.getOut();
         try {
-            out.write(date + locale);
+            out.write(brand );
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }

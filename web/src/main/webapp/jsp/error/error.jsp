@@ -7,6 +7,7 @@
 <title>error</title>
 </head>
 <body>
+<jsp:expression>exception.toString()</jsp:expression>
    ${error}
 </body>
 </html>

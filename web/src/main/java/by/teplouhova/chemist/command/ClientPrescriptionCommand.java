@@ -29,10 +29,9 @@ public class ClientPrescriptionCommand implements Command {
         CommandResult.ResponseType responseType;
         User user= (User) content.getSessionAttribute("user");
         try {
-            Set<Prescription> prescriptions= service.getClientPrescriptions(user.getUsedId());
+            Set<Prescription> prescriptions= service.getClientPrescriptions(user.getUserId());
             if(prescriptions!=null){
                 content.setRequestAttributes(ATTR_PRESCRIPTIONS,prescriptions);
-            LOGGER.log(Level.DEBUG,prescriptions);
             }else{
                 content.setRequestAttributes("error","Prescriptions was not found");
             }
@@ -40,8 +39,9 @@ public class ClientPrescriptionCommand implements Command {
             page="/jsp/client/main.jsp";
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (ServiceException e) {
+            LOGGER.log(Level.ERROR,e);
             page = "/jsp/error/error.jsp";
-            LOGGER.log(Level.DEBUG,e);
+
             responseType= CommandResult.ResponseType.REDIRECT;
         }
 

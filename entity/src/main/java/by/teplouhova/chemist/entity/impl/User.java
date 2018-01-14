@@ -1,12 +1,11 @@
 package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
-import by.teplouhova.chemist.entity.RoleType;
 
 import java.math.BigDecimal;
 
 public class User extends Entity {
-    private long usedId;
+    private long userId;
     private String name;
     private String surname;
     private String login;
@@ -28,8 +27,8 @@ public class User extends Entity {
         this.phone = phone;
     }
 
-    public User(long usedId, String name, String surname, String login, String password, BigDecimal account, RoleType role, String phone) {
-        this.usedId = usedId;
+    public User(long userId, String name, String surname, String login, String password, BigDecimal account, RoleType role, String phone) {
+        this.userId = userId;
         this.name = name;
         this.surname = surname;
         this.login = login;
@@ -39,12 +38,16 @@ public class User extends Entity {
         this.phone = phone;
     }
 
-    public long getUsedId() {
-        return usedId;
+    public User(long userId) {
+        this.userId = userId;
     }
 
-    public void setUsedId(long usedId) {
-        this.usedId = usedId;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -110,7 +113,7 @@ public class User extends Entity {
 
         User user = (User) o;
 
-        if (usedId != user.usedId) return false;
+        if (userId != user.userId) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
@@ -122,7 +125,7 @@ public class User extends Entity {
 
     @Override
     public int hashCode() {
-        int result = (int) (usedId ^ (usedId >>> 32));
+        int result = (int) (userId ^ (userId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (login != null ? login.hashCode() : 0);
@@ -136,7 +139,7 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "usedId=" + usedId +
+                "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +

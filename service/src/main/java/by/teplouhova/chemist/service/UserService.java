@@ -1,16 +1,19 @@
 package by.teplouhova.chemist.service;
 
+import by.teplouhova.chemist.dao.OrderDAO;
 import by.teplouhova.chemist.dao.TransactionManager;
 import by.teplouhova.chemist.dao.UserDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
-import by.teplouhova.chemist.entity.RoleType;
+import by.teplouhova.chemist.entity.impl.RoleType;
+import by.teplouhova.chemist.entity.impl.Order;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class UserService {
     private final static Logger LOGGER = LogManager.getLogger();
@@ -53,15 +56,27 @@ public class UserService {
         User user = null;
         try {
 //            User user = new User(name, surname, login, password, account, RoleType.CLIENT, phone);
-            MySqlUserDAO mySqlUserDAO = new MySqlUserDAO();
+            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             TransactionManager transaction = new TransactionManager();
-            transaction.beginTransaction(mySqlUserDAO);
-            mySqlUserDAO.create(new User(name, surname, login, password, account, RoleType.CLIENT, phone));
-            user = mySqlUserDAO.findByLogin(login);
+            transaction.beginTransaction(userDAO);
+            userDAO.create(new User(name, surname, login, password, account, RoleType.CLIENT, phone));
+            user = userDAO.findByLogin(login);
             transaction.endTransaction();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return user;
+    }
+
+    public List<Order> getOrders(){
+
+        return null;
+    }
+
+    public Order buyMedicine(){
+        TransactionManager manager=new TransactionManager();
+        OrderDAO orderDAO=DAOFactory.getDAOFactory().getOrderDAO();
+
+        return null;
     }
 }

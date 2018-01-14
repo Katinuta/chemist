@@ -1,4 +1,4 @@
-package test.by.teplouhova.chemist;
+package test.by.teplouhova.chemist.chemist;
 
 import org.testng.annotations.Test;
 

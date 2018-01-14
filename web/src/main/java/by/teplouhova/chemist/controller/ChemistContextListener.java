@@ -25,7 +25,7 @@ public class ChemistContextListener implements ServletContextListener {
         try {
             DriverManager.deregisterDriver(DriverManager.getDriver("com.mysql.cj.jdbc.Driver"));
         } catch (SQLException e) {
-            LOGGER.log(Level.ERROR,"Connection driver is not deregistered ");
+//            LOGGER.log(Level.ERROR,"Connection driver is not deregistered ");
 
         }
     }

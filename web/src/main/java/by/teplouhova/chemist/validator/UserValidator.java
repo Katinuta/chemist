@@ -1,40 +1,22 @@
 package by.teplouhova.chemist.validator;
 
-import java.math.BigDecimal;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class UserValidator {
+    private  Validator validator;
 
-    private static final String REGEXP_NAME="[A-Za-zА-Яа-яЁё]{2,}+";
-
-    public boolean validateUser(String name,String surname){
-        if(!validateName(name)){
-            return false;
-        }
-        if(!validateName(surname)){
-            return false;
-        }
-     return validateName(name);
+    public UserValidator() {
+        validator=new Validator();
     }
 
-    private boolean validateName(String name){
-        if(name==null||name.isEmpty()){
-            return  false;
-        }
-        Pattern pattern =Pattern.compile(REGEXP_NAME);
-        String matchString=null;
-        Matcher matcher = pattern.matcher(name.trim());
-        if(matcher.find()){
-            matchString=matcher.group();
-        }
-        if(matcher==null){
+    public boolean validateUser(String name, String surname){
+        if(!validator.validateRequired(name,Validator.REGEXP_NAME)){
             return false;
-        }else{
-            return  matchString.length()==name.length();
         }
-
-
+//        if(!validator.validateRequired(surname,Validator.REGEXP_MONEY_PARAM)){
+//            return false;
+//        }
+     return validator.validateRequired(surname,Validator.REGEXP_NAME);
     }
+
+
 
 }

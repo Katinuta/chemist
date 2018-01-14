@@ -1,7 +1,6 @@
 package by.teplouhova.chemist.command;
 
 import by.teplouhova.chemist.controller.SessionRequestContent;
-import by.teplouhova.chemist.entity.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.service.ServiceException;
 import by.teplouhova.chemist.service.UserService;
@@ -44,7 +43,7 @@ public class CreateUserCommand implements Command {
             content.setSessionAttribute("user",user);
             page="/jsp/client/main.jsp";
             responseType= CommandResult.ResponseType.REDIRECT;
-            LOGGER.log(Level.INFO,page+ responseType);
+
 
         } catch (ServiceException e) {
             content.setRequestAttributes("error","User didn't created");

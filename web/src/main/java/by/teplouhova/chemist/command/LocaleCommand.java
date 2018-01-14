@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.jsp.jstl.fmt.LocalizationContext;
+import java.util.ResourceBundle;
+
 public class LocaleCommand implements Command {
     private static final Logger LOGGER= LogManager.getLogger();
 
@@ -17,6 +20,8 @@ public class LocaleCommand implements Command {
         String locale=content.getParameter(PARAM_NEWLOCALE);
         String page=content.getParameter(PARAM_PAGE);
         content.setSessionAttribute(ATTR_LOCALE,locale);
+//        ResourceBundle bundle= ((LocalizationContext) content.getSessionAttribute("bundle")).getResourceBundle();
+//        LOGGER.log(Level.DEBUG,bundle);
         return new CommandResult(CommandResult.ResponseType.FORWARD,page);
     }
 }

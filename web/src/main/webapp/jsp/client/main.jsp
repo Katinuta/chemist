@@ -21,16 +21,21 @@
     <script type="application/javascript">
         $(document).ready(function(){
 
-            $("button").click(function () {
-                var medicineForAdd= $(this).val();
+            $("#medicineForAdd").click(function () {
+                var button=$(this);
+                var medicineForAdd= button.val();
 
                 $.ajax({url: "/controllerAjax",
                     type : "get",
                     data:{
-                        medicineForAdd:medicineForAdd
+                        medicineForAdd:medicineForAdd,
+                        command:"addproduct"
                     },
-                    success: function(){
-                        location.reload();
+                    success: function(response){
+                        $('#cartvalue').text(response.size);
+                        button.text("Product was added");
+
+                      button.addClass("disabled");
                     }});
             })
         });
@@ -48,16 +53,21 @@
                     <c:param name="command" value="allclientprescription"/>
                 </c:url>
                 <li><a href="${allclientprescription}"><fmt:message bundle="${bundle}" key="ref.prescription"/></a></li>
-                <c:url var="openbasket" value="/controller">
-                    <c:param name="command" value="openbasket"/>
+                <c:url var="allclientpurchases" value="/controller">
+                    <c:param name="command" value="clientpurchases"/>
                 </c:url>
-                <li><a href="${openbasket}" id="basket"><i class="fa fa-cart-arrow-down"
-                                                           style="font-size:40px;color:black">
-
-                </i></a>
-                    <span  id="basketvalue" style="font-size: medium; margin-left: -20%;">${fn:length(basket)}</span></li>
+                <li><a href="${allclientpurchases}"><fmt:message bundle="${bundle}" key="ref.purchase"/></a></li>
+                <c:url var="opencart" value="/controller">
+                    <c:param name="command" value="opencart"/>
+                </c:url>
+                <li>
+                    <a href="${opencart}" id="cart">
+                        <i class="fa fa-cart-arrow-down"  style="font-size:40px;color:black"></i>
+                    </a> <span  id="cartvalue" style="font-size: medium; margin-left: -20%;">${fn:length(cart)}</span>
+                </li>
 
             </ul>
+
             <form class="navbar-form navbar-right" action="/controller">
                 <input name="command" type="hidden" value="findmedicine"/>
                 <div class="input-group">
@@ -74,13 +84,11 @@
     </nav>
 </header>
 <main>
-    <c:if test="${ not flagFind}">
+    <c:if test="${ not flagFind and empty prescriptions}">
 
             <c:if test="${  currentpage ==null}">
                 <c:set var="currentpage" value="1"/>
             </c:if>
-
-
         <c:import url="/controller">
             <c:param name="command" value="allmedicine"/>
 
@@ -90,9 +98,10 @@
 
     </c:if>
 
-    <c:if test="${not empty medicines }">
+    <c:if test="${flagfind}">
         <c:import url="medicine.jsp"/>
     </c:if>
+
     <c:if test="${not empty prescriptions }">
         <c:import url="prescription.jsp"/>
     </c:if>
