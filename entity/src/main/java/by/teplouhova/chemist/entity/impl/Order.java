@@ -4,6 +4,8 @@ import by.teplouhova.chemist.entity.Entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order extends Entity {
     private long orderId;
@@ -12,6 +14,11 @@ public class Order extends Entity {
     private User user;
     private long issuePointId;
     private BigDecimal total;
+    private List<OrderDetail> details;
+
+    public Order() {
+        details=new ArrayList<>();
+    }
 
     public long getOrderId() {
         return orderId;
@@ -63,6 +70,14 @@ public class Order extends Entity {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public List<OrderDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<OrderDetail> details) {
+        this.details = details;
     }
 
     @Override

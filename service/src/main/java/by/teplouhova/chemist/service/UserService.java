@@ -73,9 +73,12 @@ public class UserService {
         return null;
     }
 
-    public Order buyMedicine(){
+    public BigDecimal getBalanceAccount(){
         TransactionManager manager=new TransactionManager();
-        OrderDAO orderDAO=DAOFactory.getDAOFactory().getOrderDAO();
+        UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
+        manager.beginTransaction(userDAO);
+
+
 
         return null;
     }

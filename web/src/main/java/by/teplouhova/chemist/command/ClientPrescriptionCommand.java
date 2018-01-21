@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,7 +30,7 @@ public class ClientPrescriptionCommand implements Command {
         CommandResult.ResponseType responseType;
         User user= (User) content.getSessionAttribute("user");
         try {
-            Set<Prescription> prescriptions= service.getClientPrescriptions(user.getUserId());
+            List<Prescription> prescriptions= service.getClientPrescriptions(user.getUserId());
             if(prescriptions!=null){
                 content.setRequestAttributes(ATTR_PRESCRIPTIONS,prescriptions);
             }else{

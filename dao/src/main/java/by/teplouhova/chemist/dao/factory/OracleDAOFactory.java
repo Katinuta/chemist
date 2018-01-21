@@ -56,4 +56,9 @@ public class OracleDAOFactory extends DAOFactory {
     public PrescripDetailDAO getPrescripDetailDAO() {
         return null;
     }
+
+    @Override
+    public OrderDetailDAO getOrderDetailDAO() {
+        return null;
+    }
 }

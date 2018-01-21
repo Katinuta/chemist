@@ -132,7 +132,6 @@ public class MedicineService {
         MedicineDAO medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
         DosageDAO dosageDAO=DAOFactory.getDAOFactory().getDosageDAO();
         manager.beginTransaction(medicineDAO,dosageDAO);
-        LOGGER.log(Level.DEBUG,"begin");
         try{
             BigDecimal dosageSize=medicine.getDosage().getSize();
 
@@ -164,7 +163,6 @@ public class MedicineService {
         MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         DosageDAO dosageDAO = DAOFactory.getDAOFactory().getDosageDAO();
         manager.beginTransaction(medicineDAO, dosageDAO);
-        LOGGER.log(Level.DEBUG, "begin");
         try {
             BigDecimal dosageSize = medicine.getDosage().getSize();
             String dosageUnit = medicine.getDosage().getUnit();
@@ -199,6 +197,8 @@ public class MedicineService {
             manager.endTransaction();
         }
     }
+
+
 
 
 }

@@ -9,7 +9,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 public class SessionRequestContent {
-    private static final Logger LOGGER= LogManager.getLogger();
+
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, String[]> requestParameters;
     private HashMap<String, Object> sessionAttributes;
@@ -42,9 +42,15 @@ public class SessionRequestContent {
     public void setRequestAttributes(String name, Object value) {
        requestAttributes.put(name, value);
     }
+    public void removeSessionAttribute(String name){
+        sessionAttributes.remove(name);
+    }
 
     public boolean isContainParameter(String name){
         return requestParameters.containsKey(name);
+    }
+    public boolean isContainsAttributesStartWith(String name){
+        return requestAttributes.keySet().stream().anyMatch(key-> key.startsWith(name));
     }
 
     public void extractValues(HttpServletRequest request) {

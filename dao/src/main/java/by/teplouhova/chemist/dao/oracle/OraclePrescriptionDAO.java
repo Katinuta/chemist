@@ -9,7 +9,7 @@ import java.util.List;
 
 public class OraclePrescriptionDAO extends PrescriptionDAO {
     @Override
-    public HashSet<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
+    public List<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
         return null;
     }
 

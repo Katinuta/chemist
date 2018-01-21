@@ -3,6 +3,7 @@ package test.by.teplouhova.chemist.chemist;
 import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,14 +17,14 @@ import java.util.ResourceBundle;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-@Test(groups = "database")
+//@Ignore
+//@Test(groups = "database")
 public class UserDAOTest {
 
     private Connection connection;
     private MySqlUserDAO mySqlUserDAO;
 
-    @BeforeClass
+//    @BeforeClass
     public void setUp(){
         mySqlUserDAO =new MySqlUserDAO();
         ResourceBundle bundle = ResourceBundle.getBundle("testdatabase");
@@ -43,7 +44,7 @@ public class UserDAOTest {
 
     }
 
-    @DataProvider(name = "user")
+//    @DataProvider(name = "user")
     public Object[][] createUser(){
         return new Object[][]{
                 {
@@ -56,7 +57,7 @@ public class UserDAOTest {
         };
     }
 
-    @Test(dataProvider = "user")
+//    @Test(dataProvider = "user")
     public void findUserByIdTest(long id,User expected, boolean result){
         User actual= mySqlUserDAO.findById(id);
         assertEquals(expected.equals(actual),result);

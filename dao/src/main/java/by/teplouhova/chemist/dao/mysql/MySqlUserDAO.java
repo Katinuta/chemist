@@ -8,6 +8,7 @@ import by.teplouhova.chemist.entity.impl.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,7 @@ public class MySqlUserDAO extends UserDAO {
    public final static String SQL_SELECT_USER_BY_LOGIN_PASSWORD =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
+   public final static String SQL_SELECT_ACCOUNT_BY_USER_ID="SELECT u_account FROM user WHERE u_user_id=?";
 
     public MySqlUserDAO() {
 
@@ -126,8 +128,8 @@ public class MySqlUserDAO extends UserDAO {
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
                 user.setLogin(result.getString("u_login"));
-                user.setPassword(result.getString("u_password"));
-//                user.setAccount(result.getBigDecimal("u_account"));
+//                user.setPassword(result.getString("u_password"));
+                user.setAccount(result.getBigDecimal("u_account"));
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
             }
@@ -169,6 +171,21 @@ public class MySqlUserDAO extends UserDAO {
 
         }
         return user;
+    }
+
+    public BigDecimal findBalanceByUserId(long userId) throws DAOException {
+        PreparedStatement statement=null;
+        BigDecimal balance=null;
+        try {
+            statement=connection.prepareStatement(SQL_SELECT_ACCOUNT_BY_USER_ID);
+            statement.setLong(1,userId);
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            close(statement);
+        }
+        return
     }
 
 

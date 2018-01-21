@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 public class ExtendPrescriptionCommand implements Command {
 
@@ -38,7 +39,7 @@ public class ExtendPrescriptionCommand implements Command {
         CommandResult.ResponseType responseType = CommandResult.ResponseType.FORWARD;
         long id = Long.parseLong(content.getParameter(PARAM_PRESCRIPTION_ID));
         User user = (User) content.getSessionAttribute(ATTR_USER);
-        HashSet<Prescription> prescriptions;
+        List<Prescription> prescriptions;
         Prescription prescription = null;
         try {
             prescription = service.getPriscription(id);

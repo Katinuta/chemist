@@ -13,6 +13,7 @@ public class MySqlDAOFactory extends DAOFactory {
     private ProducerDAO producerDAO=new MySqlProducerDAO();
     private DosageDAO dosageDAO=new MySqlDosageDAO();
     private PrescripDetailDAO prescripDetailDAO=new MySqlPrescripDetailDAO();
+    private OrderDetailDAO orderDetailDAO= new MySqlOrderDetailDAO();
 
     @Override
     public UserDAO getUserDAO() {
@@ -52,5 +53,10 @@ public class MySqlDAOFactory extends DAOFactory {
     @Override
     public PrescripDetailDAO getPrescripDetailDAO() {
         return this.prescripDetailDAO;
+    }
+
+    @Override
+    public OrderDetailDAO getOrderDetailDAO() {
+        return this.orderDetailDAO;
     }
 }

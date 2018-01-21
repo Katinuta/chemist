@@ -8,4 +8,5 @@ import java.util.List;
 public abstract class PrescripDetailDAO extends AbstractDAO<PrescriptionDetail> {
 
     public  abstract List<PrescriptionDetail> findAllByPrescriptionId(long id) throws DAOException;
+    public abstract PrescriptionDetail findByPrescripIdMedicineId(long prescriptionId, long medicineId) throws DAOException;
 }

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class OpenPrescripCommand implements Command{
     private static final Logger LOGGER= LogManager.getLogger();
@@ -32,7 +33,7 @@ public class OpenPrescripCommand implements Command{
         CommandResult.ResponseType responseType= CommandResult.ResponseType.FORWARD;
         long id=Long.parseLong(content.getParameter(PARAM_PRESCRIPTION_ID));
         User user= (User) content.getSessionAttribute(ATTR_USER);
-        HashSet<Prescription> prescriptions;
+        List<Prescription> prescriptions;
          try {
              Prescription prescription=service.getPriscription(id);
 

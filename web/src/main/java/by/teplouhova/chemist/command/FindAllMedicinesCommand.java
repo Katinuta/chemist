@@ -59,7 +59,7 @@ public class FindAllMedicinesCommand implements Command {
 
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (Exception e) {
-            LOGGER.log(Level.ERROR,"Error in findall command" +e);
+            LOGGER.log(Level.ERROR,"Error in findall command", e);
             page = "/jsp/error/error.jsp";
             responseType= CommandResult.ResponseType.REDIRECT;
         }

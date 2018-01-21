@@ -159,6 +159,18 @@
     <table class="table table-hover">
         <thead>
         <tr>
+            <td>
+                <fmt:message bundle="${bundle}" key="table.column.number"/>
+            </td>
+            <td>${order.orderId}</td>
+        </tr>
+        <tr>
+            <td>
+                <fmt:message bundle="${bundle}" key="table.order.column.date"/>
+            </td>
+            <td>${order.dateCreating}</td>
+        </tr>
+        <tr>
             <th><fmt:message bundle="${bundle}" key="table.medicine.column.name"/></th>
             <th><fmt:message bundle="${bundle}" key="table.medicine.column.price"/></th>
             <th><fmt:message bundle="${bundle}" key="table.medicine.column.quantity"/></th>
@@ -167,33 +179,14 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="entry" items="${cart}">
-            <tr id="row_${entry.key.medicineId}">
-                <td>${entry.key.name}</td>
-                <td class="price_product">${entry.key.price}</td>
-                <td>
-                    <div>
-                        <button class="minus" value="${entry.key.medicineId}">
-                            <fmt:message bundle="${bundle}" key="table.minus"/>
-                        </button>
-                        <input type="text" name="amount" id="${entry.key.medicineId}" value="${entry.value}"/>
-
-                        <button class="plus" value="${entry.key.medicineId}">
-                            <fmt:message bundle="${bundle}" key="table.plus"/>
-                        </button>
-                        <span class="messagecount_${entry.key.medicineId}"></span>
-                        <span class="messageprescrip_${entry.key.medicineId}"></span>
-                    </div>
+        <c:forEach var="detail" items="${order.details}">
+            <tr>
+                <td>${detail.medicine.name}</td>
+                <td >${detail.price}</td>
+                <td>${detail.quantity}</td>
+                <td> ${detail.amount}
                 </td>
 
-                <td class="sum_product">
-                        ${entry.value*entry.key.price}
-                </td>
-                <td>
-                    <button class="close" value="${entry.key.medicineId}">
-                        <i class="fa fa-close"></i>
-                    </button>
-                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -202,7 +195,7 @@
             <td><fmt:message bundle="${bundle}" key="table.cart.foot.total"/></td>
             <td></td>
             <td></td>
-            <td class="sum_total"></td>
+            <td>${order.total}</td>
         </tr>
         </tfoot>
     </table>

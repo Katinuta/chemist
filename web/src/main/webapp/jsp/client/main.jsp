@@ -19,9 +19,10 @@
         <c:import url="/css/footer.css"></c:import>
     </style>
     <script type="application/javascript">
+
         $(document).ready(function(){
 
-            $("#medicineForAdd").click(function () {
+            $(".medicineForAdd").click(function () {
                 var button=$(this);
                 var medicineForAdd= button.val();
 
@@ -33,12 +34,43 @@
                     },
                     success: function(response){
                         $('#cartvalue').text(response.size);
+
                         button.text("Product was added");
 
                       button.addClass("disabled");
                     }});
             })
+
+
         });
+        $(window).on('load',function () {
+            $.ajax({url: "/controllerAjax",
+                    type : "get",
+                    data:{
+
+                        command:"getCartIdProducts"
+                    },
+                    success: function(response){
+                        var idsArray=response.ids;
+                        if(response.ids!=null){
+                            idsArray.forEach(function(item, i, idsArray){
+                                var buttons=$('button.medicineForAdd').toArray();
+                                console.log(buttons);
+                                buttons.forEach(function (button, i, buttons) {
+
+                                    if(button.value==item){
+                                        button.textContent="Product was added";
+                                        button.classList.add("disabled");
+                                    }
+                                });
+//
+                            })
+                        }
+                    }}
+
+            )
+        });
+
     </script>
 </head>
 <body>
@@ -84,6 +116,7 @@
     </nav>
 </header>
 <main>
+
     <c:if test="${ not flagFind and empty prescriptions}">
 
             <c:if test="${  currentpage ==null}">

@@ -23,7 +23,7 @@ public class ChemistContextListener implements ServletContextListener {
 
         ConnectionPool.getInstance().closePoolConnections();
         try {
-            DriverManager.deregisterDriver(DriverManager.getDriver("com.mysql.cj.jdbc.Driver"));
+            DriverManager.deregisterDriver(DriverManager.getDriver("com.mysql.jdbc.Driver"));
         } catch (SQLException e) {
 //            LOGGER.log(Level.ERROR,"Connection driver is not deregistered ");
 
@@ -33,7 +33,7 @@ public class ChemistContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         try {
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             ConnectionPool.getInstance();
 
 
@@ -41,6 +41,5 @@ public class ChemistContextListener implements ServletContextListener {
             LOGGER.log(Level.FATAL,"Connection driver is not registered ");
             new RuntimeException( "Connection driver is not registered",e);
         }
-
     }
 }

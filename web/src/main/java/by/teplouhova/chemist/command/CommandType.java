@@ -14,7 +14,7 @@ public enum CommandType {
     NEXTPAGE(new NextPage()),
     OPENCART(new OpenCartCommand()),
 DOCTORPRESCRIPTION(new DoctorPrescriptionCommand(new PrescriptionService())),
-    //BUY(new BuyCommand(new UserService())),
+    BUY(new BuyCommand(new OrderService(),new MedicineService(),new PrescriptionService())),
     NEWMEDICINE(new NewMedicineCommand()),
     EDITMEDICINE(new EditMedicineCommand(new MedicineService())),
     DELETEMEDICINE(new DeleteMedicineCommand(new MedicineService())),

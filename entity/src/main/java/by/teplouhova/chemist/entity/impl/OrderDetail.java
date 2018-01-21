@@ -71,7 +71,6 @@ public class OrderDetail extends Entity {
 
         OrderDetail that = (OrderDetail) o;
 
-        if (recordId != that.recordId) return false;
         if (quantity != that.quantity) return false;
         if (medicine != null ? !medicine.equals(that.medicine) : that.medicine != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
@@ -81,8 +80,7 @@ public class OrderDetail extends Entity {
 
     @Override
     public int hashCode() {
-        int result = (int) (recordId ^ (recordId >>> 32));
-        result = 31 * result + (medicine != null ? medicine.hashCode() : 0);
+        int result = medicine != null ? medicine.hashCode() : 0;
         result = 31 * result + quantity;
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (amount != null ? amount.hashCode() : 0);

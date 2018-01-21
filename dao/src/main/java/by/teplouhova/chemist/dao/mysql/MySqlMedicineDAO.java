@@ -98,7 +98,7 @@ public class MySqlMedicineDAO extends MedicineDAO {
                 medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
 
             }
-            LOGGER.log(Level.DEBUG, medicine);
+
         } catch (SQLException e) {
             throw new DAOException("" + e);
         } finally {

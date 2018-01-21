@@ -13,14 +13,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class ClientService {
     private static final Logger LOGGER= LogManager.getLogger();
-    public HashSet<Prescription> getClientPrescriptions(long userId) throws ServiceException {
+    public List<Prescription> getClientPrescriptions(long userId) throws ServiceException {
         TransactionManager transaction = new TransactionManager();
         PrescriptionDAO prescriptionDAO = DAOFactory.getDAOFactory().getPrescriptionDAO();
         transaction.beginTransaction(prescriptionDAO);
-        HashSet<Prescription> prescriptions;
+        List<Prescription> prescriptions;
         try {
 
             prescriptions=prescriptionDAO.findPrescriptionByClientId(userId);

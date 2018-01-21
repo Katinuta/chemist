@@ -42,8 +42,8 @@ public class MySqlPrescriptionDAO extends PrescriptionDAO {
                     "JOIN chemist.user ON prescription.u_user_id=user.u_user_id " +
                     "WHERE prescription.u_doctor_id=? ORDER BY p_status";
 
-    public HashSet<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
-        HashSet<Prescription> prescriptions = new HashSet<>();
+    public List<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
+        List<Prescription> prescriptions = new ArrayList<>();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SELECT_PRESCRIPTION_BY_CLIENT_ID);

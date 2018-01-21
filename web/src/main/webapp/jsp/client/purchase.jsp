@@ -98,7 +98,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><fmt:message bundle="${bundle}" key="table.order.column.number"/></th>
+                <th><fmt:message bundle="${bundle}" key="table.column.number"/></th>
                 <th><fmt:message bundle="${bundle}" key="table.order.column.date"/></th>
                 <th><fmt:message bundle="${bundle}" key="table.order.column.status"/></th>
                 <th><fmt:message bundle="${bundle}" key="table.column.amount"/></th>

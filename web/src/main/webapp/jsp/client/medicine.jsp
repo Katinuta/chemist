@@ -59,9 +59,31 @@
                     </c:choose>
                 </td>
                 <td>
-                    <button class="btn btn-default" name="medicineForAdd" id="medicineForAdd" value="${medicine.medicineId}">
-                        <fmt:message bundle="${bundle}" key="button.addtocart"/>
-                    </button>
+                    <%--<c:choose>--%>
+                        <%--<c:when test="${not empty cart}">--%>
+                            <%--<c:forEach var="entry" items="${cart}">--%>
+                                <%--<c:choose>--%>
+                                    <%--<c:when test="${entry.key.medicineId==medicine.medicineId}">--%>
+                                        <%--<button class="btn btn-default disabled" name="medicineForAdd" value="${medicine.medicineId}">--%>
+                                            <%--<fmt:message bundle="${bundle}" key="button.added"/> empty but yes--%>
+                                        <%--</button>--%>
+                                    <%--</c:when>--%>
+                                    <%--<c:otherwise>--%>
+                                        <button class="btn btn-default medicineForAdd" name="medicineForAdd" value="${medicine.medicineId}">
+                                            <fmt:message bundle="${bundle}" key="button.addtocart"/> not empty but not
+                                        </button>
+                                    <%--</c:otherwise>--%>
+                                <%--</c:choose>--%>
+                            <%--</c:forEach>--%>
+                        <%--</c:when>--%>
+                        <%--<c:otherwise>--%>
+                            <%--<button class="btn btn-default medicineForAdd" name="medicineForAdd" value="${medicine.medicineId}">--%>
+                                <%--<fmt:message bundle="${bundle}" key="button.addtocart"/> empty--%>
+                            <%--</button>--%>
+                        <%--</c:otherwise>--%>
+                    <%--</c:choose>--%>
+
+
                 </td>
             </tr>
         </c:forEach>
@@ -73,7 +95,8 @@
     <div class="container">
         <ul class="pagination">
             <c:forEach begin="1" end="${countpages}" step="1" var="i">
-                <li class="page-item"><a class="page-link" href="/controller?command=nextpage&currentpage=${i}">${i}</a></li>
+                <li class="page-item"><a class="page-link" href="/controller?command=nextpage&currentpage=${i}">${i}</a>
+                </li>
             </c:forEach>
         </ul>
     </div>

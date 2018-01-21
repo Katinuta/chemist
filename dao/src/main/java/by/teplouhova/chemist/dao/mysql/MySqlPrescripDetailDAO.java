@@ -41,6 +41,10 @@ public class MySqlPrescripDetailDAO extends PrescripDetailDAO {
             "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
                     " FROM chemist.prescription_detail " +
                     " WHERE pd_record_id=? ";
+    private static final  String SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID=
+            "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
+            " FROM chemist.prescription_detail " +
+            " WHERE m_medicine_id=? AND prescription_detail.p_prescription_id = ? ";
 
     @Override
     public PrescriptionDetail findById(long id) throws DAOException {
@@ -120,5 +124,31 @@ public class MySqlPrescripDetailDAO extends PrescripDetailDAO {
         }
 
         return !details.isEmpty() ? details : null;
+    }
+
+    public PrescriptionDetail findByPrescripIdMedicineId(long prescriptionId, long medicineId) throws DAOException {
+        PrescriptionDetail detail=null;
+        PreparedStatement statement=null;
+        try {
+            statement=connection.prepareStatement(SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID);
+            statement.setLong(1,prescriptionId);
+            statement.setLong(2,medicineId);
+            ResultSet result=statement.executeQuery();
+            if(result.next()){
+                detail=new PrescriptionDetail();
+                detail.setDetailId(result.getLong("pd_record_id"));
+                detail.setQuantityPack(result.getInt("pd_quantity_pack"));
+                detail.setMedicine(new Medicine(result.getLong("m_medicine_id")));
+                detail.setStatus(PrescriptionStatus.valueOf(result.getString("pd_status").toUpperCase()));
+                detail.setPrescription(new Prescription(result.getLong("p_prescription_id")));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            close(statement);
+        }
+
+        return detail;
+
     }
 }

@@ -18,6 +18,7 @@ public abstract class DAOFactory {
     public abstract ProducerDAO getProducerDAO();
     public abstract DosageDAO getDosageDAO();
     public abstract PrescripDetailDAO getPrescripDetailDAO();
+    public abstract OrderDetailDAO getOrderDetailDAO();
 
 
     public static DAOFactory getDAOFactory(String type) {

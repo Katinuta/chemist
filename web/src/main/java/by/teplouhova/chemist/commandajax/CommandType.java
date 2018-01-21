@@ -9,7 +9,8 @@ public enum CommandType {
     DELETEMEDICINECART(new DeleteMedicineCart()),
     BUYCOMMAND(new BuyCommand(new UserService())),
     RELEASEFORM(new ReleaseFormCommand(new ReleaseFormService(),new ProducerService(),new DosageService(),
-            new MedicineService()));
+            new MedicineService())),
+    GETCARTIDPRODUCTS(new GetCartIdProductsCommand());
 
     private Command command;
 
