@@ -16,7 +16,7 @@ import java.sql.Statement;
 
 
 public class MySqlUserDAO extends UserDAO {
-    private final static Logger LOGGER= LogManager.getLogger();
+    private final static Logger LOGGER = LogManager.getLogger();
     private final static String SQL_SELECT_USER_BY_ID =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_user_id=?";
 
@@ -29,10 +29,10 @@ public class MySqlUserDAO extends UserDAO {
     private final static String SQL_SELECT_USER_BY_LOGIN =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
 
-   public final static String SQL_SELECT_USER_BY_LOGIN_PASSWORD =
+    public final static String SQL_SELECT_USER_BY_LOGIN_PASSWORD =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
-   public final static String SQL_SELECT_ACCOUNT_BY_USER_ID="SELECT u_account FROM user WHERE u_user_id=?";
+    public final static String SQL_SELECT_ACCOUNT_BY_USER_ID = "SELECT u_account FROM user WHERE u_user_id=?";
 
     public MySqlUserDAO() {
 
@@ -107,7 +107,7 @@ public class MySqlUserDAO extends UserDAO {
             st.setLong(7, entity.getUserId());
             st.executeUpdate();
         } catch (SQLException e) {
-           throw new DAOException(e);
+            throw new DAOException(e);
         } finally {
             close(st);
 
@@ -135,7 +135,7 @@ public class MySqlUserDAO extends UserDAO {
             }
 
         } catch (SQLException e) {
-           throw new DAOException(e);
+            throw new DAOException(e);
         } finally {
             close(st);
         }
@@ -146,14 +146,14 @@ public class MySqlUserDAO extends UserDAO {
 
     public User findByLoginPassword(String login, String password) throws DAOException {
         PreparedStatement statement = null;
-        User user=null;
+        User user = null;
         try {
-            statement=connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_PASSWORD);
+            statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
-            ResultSet result=statement.executeQuery();
-            if(result.next()){
-                user=new User();
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                user = new User();
                 user.setUserId(result.getLong("u_user_id"));
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
@@ -165,8 +165,8 @@ public class MySqlUserDAO extends UserDAO {
             }
         } catch (SQLException e) {
 
-           throw new DAOException(e);
-        }finally {
+            throw new DAOException(e);
+        } finally {
             close(statement);
 
         }
@@ -174,18 +174,21 @@ public class MySqlUserDAO extends UserDAO {
     }
 
     public BigDecimal findBalanceByUserId(long userId) throws DAOException {
-        PreparedStatement statement=null;
-        BigDecimal balance=null;
+        PreparedStatement statement = null;
+        BigDecimal balance = null;
         try {
-            statement=connection.prepareStatement(SQL_SELECT_ACCOUNT_BY_USER_ID);
-            statement.setLong(1,userId);
-
+            statement = connection.prepareStatement(SQL_SELECT_ACCOUNT_BY_USER_ID);
+            statement.setLong(1, userId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                balance = result.getBigDecimal("u_account");
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
-        }finally {
+        } finally {
             close(statement);
         }
-        return
+        return balance;
     }
 
 

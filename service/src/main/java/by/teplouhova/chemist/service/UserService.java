@@ -77,6 +77,8 @@ public class UserService {
         TransactionManager manager=new TransactionManager();
         UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
         manager.beginTransaction(userDAO);
+        BigDecimal balance=null;
+      balance=  userDAO.
 
 
 

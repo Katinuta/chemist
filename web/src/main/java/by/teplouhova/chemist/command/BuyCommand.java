@@ -58,6 +58,7 @@ public class BuyCommand implements Command {
                 !content.isContainsAttributesStartWith(ATTR_MESSAGE_COUNT)){
             BigDecimal balance=userService.getBalanceAccount();
             Order order=new OrderCreator().createOrder(user,cart);
+
 //            if(user.getAccount().compareTo(order.getTotal())==1){
                 orderService.create(order);
                 content.setSessionAttribute("order",order);
