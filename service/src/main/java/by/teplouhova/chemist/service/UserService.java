@@ -1,11 +1,9 @@
 package by.teplouhova.chemist.service;
 
-import by.teplouhova.chemist.dao.OrderDAO;
 import by.teplouhova.chemist.dao.TransactionManager;
 import by.teplouhova.chemist.dao.UserDAO;
 import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
-import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.Order;
 import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
@@ -17,53 +15,57 @@ import java.util.List;
 
 public class UserService {
     private final static Logger LOGGER = LogManager.getLogger();
+    private  static final int  RECORDS_PER_PAGE=10;
+
+    private UserDAO userDAO;
+
+    public UserService() {
+        userDAO = DAOFactory.getDAOFactory().getUserDAO();
+    }
 
     public boolean checkUser(String login, String password) throws ServiceException {
         User user;
-        TransactionManager transaction;
-
+        TransactionManager transaction = new TransactionManager();
         try {
-            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
-            transaction = new TransactionManager();
             transaction.beginTransaction(userDAO);
             user = userDAO.findByLoginPassword(login, password);
             transaction.endTransaction();
-
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Exception in method checkUser ",e);
+        }finally {
+            transaction.endTransaction();
         }
         return user != null ? true : false;
     }
 
     public User getUser(String login) throws ServiceException {
         User user;
-
+        TransactionManager transaction = new TransactionManager();
         try {
-            MySqlUserDAO mySqlUserDAO = new MySqlUserDAO();
-            TransactionManager transaction = new TransactionManager();
-            transaction.beginTransaction(mySqlUserDAO);
-            user = mySqlUserDAO.findByLogin(login);
+            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
+            transaction.beginTransaction(userDAO);
+            user = userDAO.findByLogin(login);
             transaction.endTransaction();
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Exception in getUser method ",e);
+        }finally {
+            transaction.endTransaction();
         }
         return user;
     }
 
-    public User createUser(String name, String surname, BigDecimal account,
-                           String login, String password, String phone) throws ServiceException {
+    public User createUser(User user) throws ServiceException {
 
-        User user = null;
-        try {
-//            User user = new User(name, surname, login, password, account, RoleType.CLIENT, phone);
             UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             TransactionManager transaction = new TransactionManager();
             transaction.beginTransaction(userDAO);
-            userDAO.create(new User(name, surname, login, password, account, RoleType.CLIENT, phone));
-            user = userDAO.findByLogin(login);
+        try {
+            userDAO.create(user);
             transaction.endTransaction();
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Exception in createUser method ",e);
+        }finally {
+            transaction.endTransaction();
         }
         return user;
     }
@@ -73,15 +75,71 @@ public class UserService {
         return null;
     }
 
-    public BigDecimal getBalanceAccount(){
+    public BigDecimal getBalanceAccount(long userId) throws ServiceException {
         TransactionManager manager=new TransactionManager();
         UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
         manager.beginTransaction(userDAO);
-        BigDecimal balance=null;
-      balance=  userDAO.
+        BigDecimal balance;
+        try {
+            balance=  userDAO.findBalanceByUserId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }finally {
+            manager.endTransaction();
+        }
+        return balance;
+    }
+
+    public List<User> getAllClients(String role,int currentPage,int[] countPages) throws ServiceException {
+        TransactionManager manager=new TransactionManager();
+        UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
+        manager.beginTransaction(userDAO);
+        List<User> clients;
+        try {
+            int begin=(currentPage-1)*RECORDS_PER_PAGE;
+            clients=  userDAO.findByRole(role,begin,RECORDS_PER_PAGE);
+            if(clients==null){
+                throw new ServiceException("Clients are not found");
+            }
+            countPages[0]= (int) Math.ceil(userDAO.getCountByRole(role)/(double)RECORDS_PER_PAGE);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }finally {
+            manager.endTransaction();
+        }
+
+        return  clients;
+    }
+
+    public User getById(long userId) throws ServiceException {
+        User user;
+        TransactionManager transaction = new TransactionManager();
+        try {
+            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
+            transaction.beginTransaction(userDAO);
+            user = userDAO.findById(userId);
+            if(user==null){
+                throw new ServiceException("User is not found by id "+ userId);
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }finally {
+            transaction.endTransaction();
+        }
+        return user;
+    }
 
 
-
-        return null;
+    public void update(User user) throws ServiceException {
+        TransactionManager transaction = new TransactionManager();
+        try {
+            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
+            transaction.beginTransaction(userDAO);
+            userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in method update",e);
+        }finally {
+            transaction.endTransaction();
+        }
     }
 }

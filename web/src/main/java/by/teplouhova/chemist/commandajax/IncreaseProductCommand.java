@@ -17,9 +17,9 @@ public class IncreaseProductCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private MedicineService medicineService;
-    private static final String PARAM_ID ="id";
-    private static final String PARAM_AMOUNT="amount";
-    private static final String ATRR_CART="cart";
+    private static final String PARAM_ID = "id";
+    private static final String PARAM_AMOUNT = "amount";
+    private static final String ATRR_CART = "cart";
 
     public IncreaseProductCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
@@ -27,24 +27,31 @@ public class IncreaseProductCommand implements Command {
 
     @Override
     public JSONObject execute(SessionRequestContent content) {
-        Long id=Long.parseLong(content.getParameter(PARAM_ID));
-        Integer amount=Integer.parseInt(content.getParameter(PARAM_AMOUNT));
-        HashMap<Medicine,Integer> cart= (HashMap<Medicine, Integer>) content.getSessionAttribute(ATRR_CART);
-        JSONObject json=new JSONObject();
+        Long id = Long.parseLong(content.getParameter(PARAM_ID));
+        Integer amount = Integer.parseInt(content.getParameter(PARAM_AMOUNT));
+        HashMap<Medicine, Integer> cart = (HashMap<Medicine, Integer>) content.getSessionAttribute(ATRR_CART);
+        JSONObject json = new JSONObject();
         try {
-            int currentBalance=medicineService.getMedicineBalance(id);
-            if(currentBalance>amount){
-                Medicine medicine=cart.keySet().stream().filter(key->key.getMedicineId()==id).findFirst().get();
-                cart.put(medicine,amount);
-                content.setSessionAttribute(ATRR_CART,cart);
+            int currentBalance = medicineService.getMedicineBalance(id);
+            Medicine medicine = cart.keySet().stream().filter(key -> key.getMedicineId() == id).findFirst().get();
+            if (currentBalance >=amount &&currentBalance!=0) {
+                cart.put(medicine, amount);
+            } else {
+                if (currentBalance != 0) {
+                    json.put("message", "Not enough product");
+                } else {
+                    json.put("message", "In archive");
+                    amount = 0;
+                    cart.put(medicine, amount);
+                }
 
-            }else{
-                json.put("message","Not enough product");
             }
-            int cartSize=cart.values().stream().reduce((s1,s2)->s1+s2).get();
-            json.put("size",cartSize);
+            content.setSessionAttribute(ATRR_CART, cart);
+            int cartSize = cart.values().stream().reduce((s1, s2) -> s1 + s2).get();
+            json.put("size", cartSize);
+            json.put("amount", amount);
         } catch (ServiceException e) {
-            LOGGER.log(Level.ERROR,""+e);
+            LOGGER.log(Level.ERROR, "" + e);
         }
 
         return json;

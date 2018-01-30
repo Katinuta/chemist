@@ -50,10 +50,10 @@ public class ExtendPrescripDetailCommand implements Command {
             detail=detailService.getPrescripDetail(id);
 
             if(detail!=null){
-                prescription=prescriptionService.getPriscription(detail.getPrescription().getPrescriptionId());
-                detail.setStatus(PrescriptionStatus.EXTAND);
+                prescription=prescriptionService.getPrescription(detail.getPrescription().getPrescriptionId());
+                detail.setStatus(PrescriptionStatus.EXTEND);
                 if(prescription!=null){
-                    prescription.setStatus(PrescriptionStatus.EXTAND);
+                    prescription.setStatus(PrescriptionStatus.EXTEND);
 //                    prescription.setClient(user);
                     detail.setPrescription(prescription);
 
@@ -65,7 +65,7 @@ public class ExtendPrescripDetailCommand implements Command {
                 content.setRequestAttributes("error","Request to extend is not sent.Detail is is not found");
 
             }
-            prescription=prescriptionService.getPriscription(detail.getPrescription().getPrescriptionId());
+            prescription=prescriptionService.getPrescription(detail.getPrescription().getPrescriptionId());
             content.setRequestAttributes(ATTR_PRESCRIPTION,prescription);
             page="/jsp/client/prescriptionDetail.jsp";
             responseType= CommandResult.ResponseType.FORWARD;

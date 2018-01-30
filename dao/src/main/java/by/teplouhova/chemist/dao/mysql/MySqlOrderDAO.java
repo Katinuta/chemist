@@ -18,7 +18,7 @@ public class MySqlOrderDAO extends OrderDAO {
     private static final Logger LOGGER= LogManager.getLogger();
 
     private final static String SQL_INSERT_ORDER =
-            "INSERT INTO chemist.order (u_user_id,o_date_created,o_total_sum) VALUES ( ?,CURDATE(),?)";
+            "INSERT INTO chemist.order (u_user_id,o_date_created,o_total_sum,o_status) VALUES ( ?,CURDATE(),?,?)";
     private static final String SQL_SELECT_ORDERS_BY_CLIENT_ID =
             "SELECT o_order_id,o_date_created,o_status,o_total_sum FROM chemist.order WHERE u_user_id =?";
 
@@ -55,6 +55,7 @@ public class MySqlOrderDAO extends OrderDAO {
             statement = connection.prepareStatement(SQL_INSERT_ORDER,Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, entity.getUser().getUserId());
             statement.setBigDecimal(2, entity.getTotal());
+            statement.setString(3,entity.getStatus().name().toLowerCase());
            statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {

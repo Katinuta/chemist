@@ -6,11 +6,12 @@ import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.service.UserService;
 import by.teplouhova.chemist.service.ServiceException;
 import by.teplouhova.chemist.entity.impl.User;
+import by.teplouhova.chemist.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class LoginCommand implements Command {
 
@@ -20,6 +21,9 @@ public class LoginCommand implements Command {
     private static final String PARAM_PASSWORD = "password";
     private static final String ATTR_USER="user";
     private static final String ATTR_CART="cart";
+    private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+    private static final String ATTR_ERROR="error";
+    private static final String ATTR_ERROR_FORMAT="error_";
 
 
     private UserService userService;
@@ -30,33 +34,48 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page = null;
-        CommandResult.ResponseType responseType=null;
+        String page = PageConstant.PAGE_COMMON_LOGIN;
+        CommandResult.ResponseType responseType=CommandResult.ResponseType.FORWARD;
+        HashMap<String,String> userParams=new HashMap<>();
         try {
-            String login = content.getParameter(PARAM_LOGIN);
-            String password = content.getParameter(PARAM_PASSWORD);
-
-            if (userService.checkUser(login, password)) {
-                User user = userService.getUser(login);
-                if(user.getRole().equals(RoleType.CLIENT)){
-                    page = "/jsp/client/main.jsp";
+            userParams.put(PARAM_PASSWORD,content.getParameter(PARAM_PASSWORD));
+            userParams.put(PARAM_LOGIN,content.getParameter(PARAM_LOGIN));
+            ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
+            UserValidator validator=new UserValidator(bundle);
+            if(validator.isUserValid(userParams)){
+                String login = userParams.get(PARAM_LOGIN);
+                String password = userParams.get(PARAM_PASSWORD);
+                if (userService.checkUser(login, password)) {
+                    User user = userService.getUser(login);
+                    if(user.getRole().equals(RoleType.CLIENT)){
+                        page =PageConstant.PAGE_CLIENT_MAIN;
+                        content.setSessionAttribute(ATTR_CART,new HashMap<Medicine,Integer>());
+                    }
+                    if(user.getRole().equals(RoleType.PHARMACIST)){
+                        page =PageConstant.PAGE_PHARMACIST_MAIN;
+                    }
+                    if(user.getRole().equals(RoleType.DOCTOR)){
+                        page =PageConstant.PAGE_DOCTOR_MAIN;
+                    }
+                    content.setSessionAttribute(ATTR_USER, user);
+                    responseType= CommandResult.ResponseType.REDIRECT;
+                }else{
+                    content.setRequestAttributes(ATTR_ERROR,bundle.getString("message.wrong.login") );
+                    userParams.entrySet()
+                            .forEach(entry -> content.setRequestAttributes(entry.getKey(),entry.getValue()));
                 }
-                if(user.getRole().equals(RoleType.PHARMACIST)){
-                    page = "/jsp/pharmacist/main.jsp";
-                }
-                if(user.getRole().equals(RoleType.DOCTOR)){
-                    page = "/jsp/doctor/main.jsp";
-                }
-                content.setSessionAttribute(ATTR_USER, user);
-                content.setSessionAttribute(ATTR_CART,new HashMap<Medicine,Integer>());
-                responseType= CommandResult.ResponseType.REDIRECT;
             }else{
-                content.setRequestAttributes("error", "Incorrect login or password");
-                page="/index.jsp";
+                userParams.entrySet()
+                        .forEach(entry -> content.setRequestAttributes(entry.getKey(),entry.getValue()));
+                content.setRequestAttributes(ATTR_ERROR,bundle.getString("message.wrong.login") );
+//                validator.gerSetErrors()
+//                        .forEach(entry -> content.setRequestAttributes(ATTR_ERROR_FORMAT+entry.getKey(),entry.getValue()));
             }
 
         } catch (ServiceException e) {
-            page = "/jsp/error/error.jsp";
+            page = PageConstant.PAGE_ERROR;
+            responseType= CommandResult.ResponseType.REDIRECT;
+            LOGGER.catching(e);
         }
         return new CommandResult(responseType, page);
     }

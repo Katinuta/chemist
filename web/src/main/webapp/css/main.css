@@ -1,71 +1,156 @@
-div.container{
-	position: relative;
-	width: 100%;
-	color: green;
-}
-table{
-	color: green;
-}
-body {
-	margin: 0;
-	font-family: 'Quicksand', sans-serif;
-	/*font-family: 'Abril Fatface', cursive;*/
-	background-color: #00cc99;
-	padding: 0% 20%;
-	overflow: auto;
-}
-nav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-
-}
-nav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #00cc99;
-
-}
-
-a{
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 2% 1%;
-	text-decoration: none;
-	float: left;
-	font-size: 18px;
-	border-radius: 10px;}
-
-#cart{
-	padding: 5px 15px;
-}
-main {
-	display: block;
-	background-color: white;
-	border-radius: 10px;
-	/*height: 90vh;*/
-
-
-}
-a:hover:not(.email),.nav>li>a:hover {
-	background-color: #009973;
-	color: white;
-}
-label.required:after,label.required:after {
-	color: red;
-	content: "*";
-}
-.email{
-	float:none;
-	display: inline;
-}
 .navbar{
-	margin-bottom: 0px;
+	background-color: #00cc99;
+	font-size: 16px;
+	border: none;
+	border-radius: 0;
+	padding: 0 15%;
+	margin-bottom: 10px;
 }
+.navbar-inverse .navbar-brand {
+	color: white;
+}
+.navbar-inverse .navbar-nav>li>a{
+	color: white
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+	background-color: #009973;
+}
+li.active>a{
+	background-color: #009973;
+}
+.form{
+	color:#737373;
+	/*margin-top: 10px;*/
+	background-color:  #f2f2f2;
+	/*padding: 1% 1%;*/
+	border: 1px solid #a7c1cd;
+	border-radius: 20px;
+
+}
+body{
+	background-color:#e6fff9;
+
+}
+footer > span{
+	display: block;
+	text-decoration: none;
+	font-size: 13px;
+
+}
+footer.container-fluid{
+	color:  #00cc99 ;
+	padding: 0;
+	position: fixed; /* Фиксированное положение */
+	left: 0;
+	bottom: 0;
+	width: 100%;
+
+
+}
+
 *{
-	font-family: 'Quicksand', sans-serif;
+	font-family: Quicksand, sans-serif;
+
+}
+.dropbtn {
+	background-color:  #00cc99;
+	color: white;
+	/*padding: 16px;*/
+	/*font-size: 16px;*/
+	border: none;
+	/*width: 150px;*/
+
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 143px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {background-color: #f2f2f2}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: #009973;
+}
+a.dropbtn{
+	color: white;
+	position: relative;
+	display: block;
+	padding: 15px 15px;
+
+	line-height: 20px;
+}
+a:hover{
+	text-decoration: none;
+
+}
+#cartvalue{
+	font-size: medium;
+	padding: 5px 0 0;
+	margin-left: -130%;
+}
+.input-group-btn>.btn{
+	height: 34px;
+}
+.container-fluid{
+	padding-right: 0;
+	padding-left: 0;
+}
+.tbody{
+	font-size: 14px;
+}
+.medicineForAdd{
+	font-size: 12px;
+}
+.table{
+	 margin-bottom: 0;
+ }
+h2{
+	margin-top: 0px;
+}
+span.error{
+	color: red;
+	font-size: 12px;
+}
+.edit{
+	margin-bottom: 0;
+}
+label.required:after {
+	color: red;
+	content: " *";
+}
+.helper {
+	position: relative;
+	display: block;
+	color: #999;
+	font-size: 10px;
+	/*top: -6px;*/
+	left: 1%;
+}
+h2{
+	color: #737373;
+}
+.pagination>.active>a{
+	background-color:  #00cc99;
+
 }

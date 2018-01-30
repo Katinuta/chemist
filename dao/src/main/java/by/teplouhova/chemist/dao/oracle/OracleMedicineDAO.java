@@ -34,32 +34,44 @@ public class OracleMedicineDAO extends MedicineDAO {
     }
 
     @Override
+    public ArrayList<Medicine> findAllByRelevance(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public int getCountByName() throws DAOException {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    public int getCountByNameByRelevance() throws DAOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int getBalanceById(long id) throws DAOException {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Medicine findByIdEdit(long id) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ArrayList<String> findUnitsInPack() throws DAOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public HashSet<Long> findAllId() throws DAOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void delete(Medicine medicine) throws DAOException {
 
+
+    @Override
+    public ArrayList<Medicine> findByPrescripNeed(boolean isNeedPrescrip) throws DAOException {
+        return null;
     }
 }

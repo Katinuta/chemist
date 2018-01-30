@@ -46,6 +46,9 @@ public class MySqlPrescripDetailDAO extends PrescripDetailDAO {
             " FROM chemist.prescription_detail " +
             " WHERE m_medicine_id=? AND prescription_detail.p_prescription_id = ? ";
 
+    private static final String SQL_INSERT_PRESCRIPTION_DETAIL=
+            "INSERT INTO chemist.prescription_detail (pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status) " +
+            " VALUES (?, ?, ?, ?)";
     @Override
     public PrescriptionDetail findById(long id) throws DAOException {
         PreparedStatement statement = null;
@@ -74,7 +77,19 @@ public class MySqlPrescripDetailDAO extends PrescripDetailDAO {
 
     @Override
     public void create(PrescriptionDetail entity) throws DAOException {
-
+        PreparedStatement statement=null;
+        try {
+            statement=connection.prepareStatement(SQL_INSERT_PRESCRIPTION_DETAIL);
+            statement.setInt(1,entity.getQuantityPack());
+            statement.setLong(2,entity.getPrescription().getPrescriptionId());
+            statement.setLong(3,entity.getMedicine().getMedicineId());
+            statement.setString(4, entity.getStatus().getNameStatus());
+            statement.execute();
+        } catch (SQLException e) {
+            throw  new DAOException(e);
+        }finally {
+            close(statement);
+        }
     }
 
     @Override

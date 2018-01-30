@@ -1,0 +1,52 @@
+.form {
+    margin-top: 0;
+    padding: 2% 5%;
+}
+
+label.required:after {
+    color: red;
+    content: " *";
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+label {
+    margin-bottom: 2px;
+}
+
+.btn-default {
+    background-color: #00cc99;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+.btn-default:active, .btn-default:hover {
+    background-color: #009973;
+    color: white;
+    border: none;
+}
+form{
+    margin-bottom:0px;
+
+}
+h2 {
+    color: #737373;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

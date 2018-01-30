@@ -5,14 +5,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Set;
 
 public class SessionRequestContent {
-
+    private final static Logger LOGGER = LogManager.getLogger();
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, String[]> requestParameters;
     private HashMap<String, Object> sessionAttributes;
+    private boolean isNeedInvalidate;
 
     public SessionRequestContent() {
         requestAttributes = new HashMap<>();
@@ -78,7 +81,20 @@ public class SessionRequestContent {
     }
 
     public void insertAttributes(HttpServletRequest request) {
-        requestAttributes.entrySet().forEach(entry -> request.setAttribute(entry.getKey(), entry.getValue()));
-        sessionAttributes.entrySet().forEach(entry -> request.getSession().setAttribute(entry.getKey(), entry.getValue()));
+
+        if(!requestAttributes.containsKey("invalid")){
+            requestAttributes.entrySet().forEach(entry -> request.setAttribute(entry.getKey(), entry.getValue()));
+            sessionAttributes.entrySet().forEach(entry -> request.getSession().setAttribute(entry.getKey(), entry.getValue()));
+        }else{
+            HttpSession session=request.getSession(false);
+            if(session!=null){
+                session.invalidate();
+            }
+        }
+
+    }
+
+    public Set<String> getParameterNames(){
+        return requestParameters.keySet();
     }
 }

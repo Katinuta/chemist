@@ -10,13 +10,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class DoctorPrescriptionCommand implements Command {
     private static final Logger LOGGER=  LogManager.getLogger();
 
-    private String ATTR_PRESRIPTIONS="prescriptions";
-    private String ATTR_USER="user";
-    private String ATTR_ERROR="error";
+    private static final String ATTR_PRESRIPTIONS="prescriptions";
+    private static final String ATTR_USER="user";
+    private static final String ATTR_MESSAGE="message";
+    private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
+
 
     private PrescriptionService prescriptionService;
 
@@ -29,17 +33,19 @@ public class DoctorPrescriptionCommand implements Command {
         String page="/jsp/doctor/prescription.jsp";
         CommandResult.ResponseType responseType=CommandResult.ResponseType.FORWARD;
         User user= (User) content.getSessionAttribute(ATTR_USER);
+        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
-            List<Prescription> prescriptions=prescriptionService.getDoctorPrescriptions(user.getUserId());
+            List<Prescription> prescriptions=prescriptionService.getDoctorPrescriptions(user.getUserId(),false);
             if(!prescriptions.isEmpty()){
                 content.setRequestAttributes(ATTR_PRESRIPTIONS,prescriptions);
             }else{
-                content.setRequestAttributes(ATTR_ERROR,"Prescriptions is not found");
+                content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.prescrip.emty"));
             }
 
 
         } catch (ServiceException e) {
-            content.setRequestAttributes(ATTR_ERROR,"Error finding rescriptions");
+            page=PageConstant.PAGE_ERROR;
+            responseType= CommandResult.ResponseType.REDIRECT;
             LOGGER.log(Level.ERROR,e);
         }
         return new CommandResult(responseType,page);

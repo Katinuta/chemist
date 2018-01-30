@@ -7,7 +7,8 @@
 <title>error</title>
 </head>
 <body>
-<jsp:expression>exception.toString()</jsp:expression>
+<%--<jsp:expression>exception.get</jsp:expression>--%>
    ${error}
+${message}
 </body>
 </html>

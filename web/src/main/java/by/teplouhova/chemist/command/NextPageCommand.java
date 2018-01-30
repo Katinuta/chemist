@@ -4,7 +4,7 @@ import by.teplouhova.chemist.controller.SessionRequestContent;
 import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
 
-public class NextPage implements Command {
+public class NextPageCommand implements Command {
     private static final String ATTR_PAGE="currentpage";
     private static final String ATTR_USER="user";
 
@@ -14,12 +14,18 @@ public class NextPage implements Command {
     User user= (User) content.getSessionAttribute(ATTR_USER);
     content.setRequestAttributes(ATTR_PAGE,numberPage);
     String page=null;
-        if(user.getRole().equals(RoleType.CLIENT)){
-            page = "/jsp/client/main.jsp";
+    RoleType role=user.getRole();
+    switch (role){
+        case CLIENT:{
+            page = PageConstant.PAGE_CLIENT_MAIN;
+            break;
         }
-        if(user.getRole().equals(RoleType.PHARMACIST)){
-            page = "/jsp/pharmacist/main.jsp";
+        case PHARMACIST:{
+            page = PageConstant.PAGE_PHARMACIST_MAIN;
+            break;
         }
+    }
+
         return new CommandResult(CommandResult.ResponseType.FORWARD,page);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class OrderCreator {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public Order createOrder(User user, HashMap<Medicine, Integer> cart) {
+    public Order create(User user, HashMap<Medicine, Integer> cart) {
         Order order = new Order();
         order.setUser(user);
         List<OrderDetail> details = new ArrayList<>();
@@ -26,12 +26,14 @@ public class OrderCreator {
             detail.setAmount(medicine.getPrice().multiply(BigDecimal.valueOf(quantity)));
             details.add(detail);
         }
+
         order.setDetails(details);
         BigDecimal total = new BigDecimal(0);
         for (OrderDetail detail:details ) {
             total=total.add(detail.getAmount());
         }
         order.setTotal(total);
+
         return order;
     }
 }

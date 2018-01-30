@@ -28,7 +28,7 @@ public class EditMedicineCommand implements Command {
         try {
             Medicine medicine=medicineService.getMedicineEdit(id);
             content.setRequestAttributes(ATTR_MEDICINE,medicine);
-            page="/jsp/pharmacist/medicineedit.jsp";
+            page="/jsp/pharmacist/medicineEdit.jsp";
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR,"Error edit medicine "+e);

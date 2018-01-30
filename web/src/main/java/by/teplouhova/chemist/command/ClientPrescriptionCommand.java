@@ -17,7 +17,7 @@ public class ClientPrescriptionCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger();
 
     private static final String ATTR_PRESCRIPTIONS="prescriptions";
-    private static final String ATTR_FLAG_FIND="flagFind";
+    private static final String ATTR_USER="user";
     private ClientService service;
 
     public ClientPrescriptionCommand(ClientService service) {
@@ -28,7 +28,7 @@ public class ClientPrescriptionCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page;
         CommandResult.ResponseType responseType;
-        User user= (User) content.getSessionAttribute("user");
+        User user= (User) content.getSessionAttribute(ATTR_USER);
         try {
             List<Prescription> prescriptions= service.getClientPrescriptions(user.getUserId());
             if(prescriptions!=null){
@@ -36,8 +36,7 @@ public class ClientPrescriptionCommand implements Command {
             }else{
                 content.setRequestAttributes("error","Prescriptions was not found");
             }
-            content.setRequestAttributes(ATTR_FLAG_FIND,true);
-            page="/jsp/client/main.jsp";
+            page=PageConstant.PAGE_CLIENT_MAIN;
             responseType= CommandResult.ResponseType.FORWARD;
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR,e);

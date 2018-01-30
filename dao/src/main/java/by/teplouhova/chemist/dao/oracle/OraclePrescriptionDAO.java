@@ -19,6 +19,11 @@ public class OraclePrescriptionDAO extends PrescriptionDAO {
     }
 
     @Override
+    public List<Prescription> findPrescripByDoctorIdExtand(long doctorId) throws DAOException {
+        return null;
+    }
+
+    @Override
     public Prescription findById(long id) {
         return null;
     }

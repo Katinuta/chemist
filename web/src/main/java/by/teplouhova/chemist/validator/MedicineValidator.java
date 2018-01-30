@@ -4,50 +4,41 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+
 public class MedicineValidator {
-    private static final Logger LOGGER= LogManager.getLogger();
+
+
     private Validator validator;
+    private HashMap<String,String> errors;
 
     public MedicineValidator() {
         validator = new Validator();
+        errors=new HashMap<>();
     }
 
-    public boolean validateMedicine(String medicineId, String name, String price, String quantityPackages,
-                                    String analogId, String unitDosage, String dosageSize, String quantityInPack,
-                                    String unitInPack, String releaseFormId,
-                                    String producerId) {
+    public boolean isMedicineValid(String medicineId, String name, String price, String quantityPackages,
+                                   String analogId, String unitDosage, String dosageSize, String quantityInPack,
+                                   String unitInPack, String releaseFormId,
+                                   String producerId) {
+
      if(analogId!=null&&analogId.isEmpty()){
         analogId=null;
 
      }
-        if (!validator.validateRequired(medicineId, Validator.REGEXP_ID)) {
+        validator.validateRequired("medicineId",medicineId, Validator.REGEXP_ID,errors);
 
-            return false;
-        }
-        if (!validator.validateRequired(name, Validator.REGEXP_NAME)) {
-            return false;
-        }
-        if (!validator.validateRequired(price, Validator.REGEXP_BIGDECIMAL_PARAM)) {
-            return false;
-        }
-        if (!validator.validateRequired(quantityPackages, Validator.REGEXP_QUANTITY)) {
-            return false;
-        }
+        validator.validateRequired("name",name, Validator.REGEXP_NAME,errors);
+        validator.validateRequired("price",price, Validator.REGEXP_BIGDECIMAL_PARAM,errors);
+        validator.validateRequired("quantityPackages",quantityPackages, Validator.REGEXP_QUANTITY,errors);
 
-        if (!validator.validateRequired(quantityInPack, Validator.REGEXP_QUANTITY)) {
-            return false;
-        }
-        if (!validator.validateRequired(unitInPack, Validator.REGEXP_UNIT_IN_PACK)) {
-            return false;
-        }
-        if (!validator.validateRequired(releaseFormId, Validator.REGEXP_ID)) {
-            return false;
-        }
-        if (!validator.validateNotRequired(analogId, Validator.REGEXP_ID)) {
-            return false;
-        }
-        if (!validator.validateNotRequired(dosageSize, Validator.REGEXP_BIGDECIMAL_PARAM) ||
-                !validator.validateNotRequired(unitDosage, Validator.REGEXP_DOSAGE_UNIT)) {
+       validator.validateRequired("quantityInPack",quantityInPack, Validator.REGEXP_QUANTITY,errors);
+        validator.validateRequired("unitInPack",unitInPack, Validator.REGEXP_UNIT_IN_PACK,errors);
+        validator.validateRequired("releaseFormId",releaseFormId, Validator.REGEXP_ID,errors);
+       validator.validateNotRequired("analogId",analogId, Validator.REGEXP_ID,errors);
+        validator.validateRequired("producerId",producerId, Validator.REGEXP_ID,errors);
+        if (!validator.validateNotRequired("dosageSize",dosageSize, Validator.REGEXP_BIGDECIMAL_PARAM,errors) ||
+                !validator.validateNotRequired("unitDosage",unitDosage, Validator.REGEXP_DOSAGE_UNIT,errors)) {
             return false;
         } else {
 
@@ -58,45 +49,45 @@ public class MedicineValidator {
                 unitDosage = null;
             }
             if (dosageSize == null && unitDosage != null||dosageSize != null && unitDosage == null) {
-                return false;
+               errors.put("dosage","Dosage is described wrong");
             }
         }
-        return validator.validateRequired(producerId, Validator.REGEXP_ID);
+        return errors.isEmpty()?true:false ;
     }
 
 
-    public boolean validateMedicine( String name, String price, String quantityPackages,
-                                    String analogId, String unitDosage, String dosageSize, String quantityInPack,
-                                    String unitInPack, String releaseFormId,
-                                    String producerId) {
+    public boolean isMedicineValid(String name, String price, String quantityPackages,
+                                   String analogId, String unitDosage, String dosageSize, String quantityInPack,
+                                   String unitInPack, String releaseFormId,
+                                   String producerId) {
         if(analogId!=null&&analogId.isEmpty()){
             analogId=null;
 
         }
-        if (!validator.validateRequired(name, Validator.REGEXP_NAME)) {
+        if (!validator.validateRequired("name",name, Validator.REGEXP_NAME,errors)) {
             return false;
         }
-        if (!validator.validateRequired(price, Validator.REGEXP_BIGDECIMAL_PARAM)) {
+        if (!validator.validateRequired("price",price, Validator.REGEXP_BIGDECIMAL_PARAM,errors)) {
             return false;
         }
-        if (!validator.validateRequired(quantityPackages, Validator.REGEXP_QUANTITY)) {
+        if (!validator.validateRequired("quantityPackages",quantityPackages, Validator.REGEXP_QUANTITY,errors)) {
             return false;
         }
 
-        if (!validator.validateRequired(quantityInPack, Validator.REGEXP_QUANTITY)) {
+        if (!validator.validateRequired("quantityInPack",quantityInPack, Validator.REGEXP_QUANTITY,errors)) {
             return false;
         }
-        if (!validator.validateRequired(unitInPack, Validator.REGEXP_UNIT_IN_PACK)) {
+        if (!validator.validateRequired("unitInPack",unitInPack, Validator.REGEXP_UNIT_IN_PACK,errors)) {
             return false;
         }
-        if (!validator.validateRequired(releaseFormId, Validator.REGEXP_ID)) {
+        if (!validator.validateRequired("releaseFormId",releaseFormId, Validator.REGEXP_ID,errors)) {
             return false;
         }
-        if (!validator.validateNotRequired(analogId, Validator.REGEXP_ID)) {
+        if (!validator.validateNotRequired("analogId",analogId, Validator.REGEXP_ID,errors)) {
             return false;
         }
-        if (!validator.validateNotRequired(dosageSize, Validator.REGEXP_BIGDECIMAL_PARAM) ||
-                !validator.validateNotRequired(unitDosage, Validator.REGEXP_DOSAGE_UNIT)) {
+        if (!validator.validateNotRequired("dosageSize",dosageSize, Validator.REGEXP_BIGDECIMAL_PARAM,errors) ||
+                !validator.validateNotRequired("unitDosage",unitDosage, Validator.REGEXP_DOSAGE_UNIT,errors)) {
             return false;
         } else {
             if (unitDosage!=null&&unitDosage.isEmpty()) {
@@ -111,6 +102,6 @@ public class MedicineValidator {
                 return false;
             }
         }
-        return validator.validateRequired(producerId, Validator.REGEXP_ID);
+        return validator.validateRequired("producerId",producerId, Validator.REGEXP_ID,errors);
     }
 }

@@ -11,17 +11,12 @@ public class PrescriptionDetail extends Entity {
     private PrescriptionStatus status;
 
     public PrescriptionDetail() {
+    medicine=new Medicine();
+    status=PrescriptionStatus.ACTIVE;
     }
 
-    public PrescriptionDetail(long recordId, int quantity,
-                              Prescription prescription, Medicine medicine,
-                              PrescriptionStatus status) {
-        this.detailId = recordId;
-        this.quantityPack = quantity;
-        this.prescription = prescription;
-        this.medicine = medicine;
-        this.status = status;
-    }
+
+
 
     public long getDetailId() {
         return detailId;

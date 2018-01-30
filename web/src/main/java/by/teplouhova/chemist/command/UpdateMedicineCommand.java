@@ -52,7 +52,7 @@ public class UpdateMedicineCommand implements Command {
         String releaseFormId = content.getParameter(PARAM_RELEASE_FORM_ID);
         String producerId = content.getParameter(PARAM_PRODUCER_ID);
         String analogId = content.getParameter(PARAM_ANALOG_ID);
-        boolean isValid = new MedicineValidator().validateMedicine(
+        boolean isValid = new MedicineValidator().isMedicineValid(
                 medicineId, name, price, quantityPackages,
                 analogId, unitDosage, dosageSize, quantityInPack,
                 unitInPack, releaseFormId,
@@ -65,14 +65,14 @@ public class UpdateMedicineCommand implements Command {
                         unitInPack, isNeedPrescription, releaseFormId,
                         producerId);
                 medicineService.update(medicine);
-                page = "/jsp/pharmacist/main.jsp";
+                page = PageConstant.PAGE_SUCCESS_MEDICINE_EDIT;
                 responseType = CommandResult.ResponseType.REDIRECT;
             } else {
                 Medicine medicine = medicineService.getMedicineEdit(id);
 
                 content.setRequestAttributes(ATTR_ERROR, "Invalid data");
                 content.setRequestAttributes(ATTR_MEDICINE, medicine);
-                page = "/jsp/pharmacist/medicinenew.jsp";
+                page = PageConstant.PAGE_PHARMACIST_MEDICINE_EDIT;
                 responseType = CommandResult.ResponseType.FORWARD;
             }
         } catch (ServiceException e) {

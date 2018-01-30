@@ -20,11 +20,13 @@ public class Prescription extends Entity {
 
     public Prescription() {
         details=new ArrayList<>();
+        status=PrescriptionStatus.ACTIVE;
     }
 
     public Prescription(long prescriptionId) {
         this.prescriptionId = prescriptionId;
         details=new ArrayList<>();
+        status=PrescriptionStatus.ACTIVE;
     }
 
     public long getPrescriptionId() {

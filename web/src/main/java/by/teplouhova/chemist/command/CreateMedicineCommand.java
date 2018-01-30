@@ -48,7 +48,7 @@ public class CreateMedicineCommand implements Command {
         String producerId = content.getParameter(PARAM_PRODUCER_ID);
         String analogId = content.getParameter(PARAM_ANALOG_ID);
 
-        boolean isValid = new MedicineValidator().validateMedicine( name, price, quantityPackages,
+        boolean isValid = new MedicineValidator().isMedicineValid( name, price, quantityPackages,
                 analogId, unitDosage, dosageSize, quantityInPack,
                 unitInPack, releaseFormId,
                 producerId);
@@ -60,18 +60,18 @@ public class CreateMedicineCommand implements Command {
                         unitInPack, isNeedPrescription, releaseFormId,
                         producerId);
                 medicineService.create(medicine);
-                page = "/jsp/pharmacist/main.jsp";
+                page =PageConstant.PAGE_SUCCESS_MEDICINE_NEW;
                 responseType = CommandResult.ResponseType.REDIRECT;
             } else {
 
                 content.setRequestAttributes(ATTR_ERROR, "Invalid data");
-                page = "/jsp/pharmacist/medicinenew.jsp";
+                page =PageConstant.PAGE_PHARMACIST_MEDICINE_NEW;
                 responseType = CommandResult.ResponseType.FORWARD;
             }
         } catch (ServiceException e) {
-            page = "/jsp/error/error.jsp";
+            page = "/jsp/error/error.jsp";// TODO: 26-Jan-18
             responseType = CommandResult.ResponseType.REDIRECT;
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e);//TODO
         }
 
         return new CommandResult(responseType, page);

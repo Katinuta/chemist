@@ -15,11 +15,16 @@ import java.util.HashSet;
 
 public class MedicineService {
     private final static Logger LOGGER = LogManager.getLogger();
-    private  static final int  RECORDS_PER_PAGE=15;
+    private  static final int  RECORDS_PER_PAGE=10;
+
+    private MedicineDAO medicineDAO;
+
+    public MedicineService (){
+        medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
+    }
 
     public ArrayList<Medicine> getMedicinesByName(String name) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         ArrayList<Medicine> medicines;
         manager.beginTransaction(medicineDAO);
         try {
@@ -32,16 +37,20 @@ public class MedicineService {
         return medicines;
     }
 
-    public ArrayList<Medicine> getMedicines(int numberPage,int[] countPages) throws ServiceException {
+    public ArrayList<Medicine> getMedicines(int numberPage,int[] countPages,boolean isRelevance) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
         ArrayList<Medicine> medicines;
         try {
             int begin=(numberPage-1)*RECORDS_PER_PAGE;
-
-            medicines = medicineDAO.findAll(begin,RECORDS_PER_PAGE);
-            countPages[0]= (int) Math.ceil(medicineDAO.getCountByName()/(double)RECORDS_PER_PAGE);
+            if(isRelevance){
+                medicines=medicineDAO.findAllByRelevance(begin,RECORDS_PER_PAGE);
+                countPages[0]= (int) Math.ceil(medicineDAO.getCountByNameByRelevance()/(double)RECORDS_PER_PAGE);
+            }else {
+                medicines = medicineDAO.findAll(begin,RECORDS_PER_PAGE);
+                countPages[0]= (int) Math.ceil(medicineDAO.getCountByName()/(double)RECORDS_PER_PAGE);
+            }
+            LOGGER.log(Level.DEBUG , medicines.size());
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -53,11 +62,10 @@ public class MedicineService {
       public Medicine getMedicine(long id) throws ServiceException {
 
         TransactionManager manager=new TransactionManager();
-        MedicineDAO dao= DAOFactory.getDAOFactory().getMedicineDAO();
-        manager.beginTransaction(dao);
+        manager.beginTransaction(medicineDAO);
         Medicine medicine;
         try {
-            medicine = dao.findById(id);
+            medicine = medicineDAO.findById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }finally {
@@ -69,7 +77,6 @@ public class MedicineService {
 
     public int getMedicineBalance(long id) throws ServiceException {
         TransactionManager manager=new TransactionManager();
-        MedicineDAO medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
         int balance;
         try {
@@ -84,9 +91,8 @@ public class MedicineService {
 
     public  Medicine getMedicineEdit(long id) throws ServiceException {
         TransactionManager manager=new TransactionManager();
-        MedicineDAO medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
-        Medicine medicine=null;
+        Medicine medicine;
         try {
             medicine=medicineDAO.findByIdEdit(id);
         } catch (DAOException e) {
@@ -114,7 +120,6 @@ public class MedicineService {
     }
     public HashSet<Long> getMedicinesId() throws ServiceException {
         TransactionManager manager=new TransactionManager();
-        MedicineDAO medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
         HashSet<Long> setIds;
         try {
@@ -129,7 +134,6 @@ public class MedicineService {
 
     public void update(Medicine medicine) throws ServiceException {
         TransactionManager manager=new TransactionManager();
-        MedicineDAO medicineDAO=DAOFactory.getDAOFactory().getMedicineDAO();
         DosageDAO dosageDAO=DAOFactory.getDAOFactory().getDosageDAO();
         manager.beginTransaction(medicineDAO,dosageDAO);
         try{
@@ -160,7 +164,6 @@ public class MedicineService {
     }
     public void create(Medicine medicine) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         DosageDAO dosageDAO = DAOFactory.getDAOFactory().getDosageDAO();
         manager.beginTransaction(medicineDAO, dosageDAO);
         try {
@@ -178,7 +181,7 @@ public class MedicineService {
 
         } catch (DAOException e) {
             manager.rollback();
-            throw new ServiceException("Medicine is not created: " + e);
+            throw new ServiceException("Medicine is not created " , e);
         } finally {
             manager.endTransaction();
         }
@@ -190,7 +193,13 @@ public class MedicineService {
         MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
         manager.beginTransaction(medicineDAO);
         try {
-            medicineDAO.delete(medicine);
+            medicine=medicineDAO.findByIdEdit(medicine.getMedicineId());
+            if(medicine!=null){
+                medicine.setDeleted(true);
+                medicineDAO.update(medicine);
+            }else{
+                throw new ServiceException("Medicine for deleting is not found");
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }finally {
@@ -198,7 +207,22 @@ public class MedicineService {
         }
     }
 
-
+    public ArrayList<Medicine> getMedicinesByPrescrip(boolean isNeedPrescription) throws ServiceException {
+        TransactionManager manager = new TransactionManager();
+        ArrayList<Medicine> medicines;
+        manager.beginTransaction(medicineDAO);
+        try {
+            medicines = medicineDAO.findByPrescripNeed(isNeedPrescription);
+            if(medicines==null){
+                throw new ServiceException("Medicines by prescription are not found");
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        } finally {
+            manager.endTransaction();
+        }
+        return medicines;
+    }
 
 
 }

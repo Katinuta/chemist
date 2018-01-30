@@ -22,7 +22,11 @@ public class DeleteMedicineCart implements Command {
         Medicine medicine=cart.keySet().stream().filter(key->key.getMedicineId()==id).findFirst().get();
         cart.remove(medicine);
         content.setSessionAttribute(ATRR_CART,cart);
-        int cartSize=cart.values().stream().reduce((s1,s2)->s1+s2).get();
+        int cartSize=0;
+        if(!cart.isEmpty()){
+           cartSize=cart.values().stream().reduce((s1,s2)->s1+s2).get();
+        }
+
         json.put("size",cartSize);
         return json;
     }

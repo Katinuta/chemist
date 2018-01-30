@@ -47,7 +47,7 @@ public class ClientService {
         manager.beginTransaction(prescriptionDAO);
         try {
             Prescription prescription=prescriptionDAO.findById(id);
-            prescription.setStatus(PrescriptionStatus.EXTAND);
+            prescription.setStatus(PrescriptionStatus.EXTEND);
             prescriptionDAO.update(prescription);
         } catch (DAOException e) {
             throw new ServiceException(e);

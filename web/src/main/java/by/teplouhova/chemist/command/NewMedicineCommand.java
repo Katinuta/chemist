@@ -9,6 +9,6 @@ public class NewMedicineCommand implements Command {
     @Override
     public CommandResult execute(SessionRequestContent content) {
 
-        return new CommandResult(CommandResult.ResponseType.FORWARD,"/jsp/pharmacist/medicinenew.jsp");
+        return new CommandResult(CommandResult.ResponseType.FORWARD,"/jsp/pharmacist/medicineNew.jsp");
     }
 }

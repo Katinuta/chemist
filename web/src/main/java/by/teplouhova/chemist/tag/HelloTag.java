@@ -8,14 +8,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
 
-public class InfoFooterTag extends TagSupport {
+public class HelloTag extends TagSupport {
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int doStartTag() throws JspException {
-        String brand = "<span>" + "Chemist" + "<span></hr>";
+//        String brand = "<span>" + "Chemist" + "<span></hr>";
 //        String locale = "<hr> Date: <b>" + Locale.getDefault() + "</b></hr>";
-        JspWriter out = pageContext.getOut();
+//        JspWriter out = pageContext.getOut();
         try {
-            out.write(brand );
+            pageContext.getOut().write("<span>" + "Welcome,  "+name+ "</span>");
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }

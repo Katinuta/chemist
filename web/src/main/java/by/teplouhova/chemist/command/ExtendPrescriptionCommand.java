@@ -3,69 +3,56 @@ package by.teplouhova.chemist.command;
 
 import by.teplouhova.chemist.controller.SessionRequestContent;
 import by.teplouhova.chemist.entity.impl.Prescription;
-import by.teplouhova.chemist.entity.impl.PrescriptionDetail;
 import by.teplouhova.chemist.entity.impl.PrescriptionStatus;
-import by.teplouhova.chemist.entity.impl.User;
 import by.teplouhova.chemist.service.ClientService;
 import by.teplouhova.chemist.service.PrescriptionService;
 import by.teplouhova.chemist.service.ServiceException;
+import by.teplouhova.chemist.validator.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.ResourceBundle;
 
 public class ExtendPrescriptionCommand implements Command {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PARAM_PRESCRIPTION_ID = "prescriptionId";
-    private static final String ATTR_PRESCRIPTION = "prescription";
-    private static final String ATTR_USER = "user";
-    private static final String ATTR_PRESCRIPTIONS = "prescriptions";
-    private PrescriptionService service;
-    private ClientService clientService;
+    private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+    private static final String ATTR_MESSEGE="message";
+    private PrescriptionService prescriptionService;
 
-    public ExtendPrescriptionCommand(PrescriptionService service, ClientService clientService) {
-        this.service = service;
-        this.clientService = clientService;
+
+    public ExtendPrescriptionCommand(PrescriptionService prescriptionService) {
+        this.prescriptionService = prescriptionService;
+
     }
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page = "/jsp/client/main.jsp";
+        String page;
         CommandResult.ResponseType responseType = CommandResult.ResponseType.FORWARD;
-        long id = Long.parseLong(content.getParameter(PARAM_PRESCRIPTION_ID));
-        User user = (User) content.getSessionAttribute(ATTR_USER);
-        List<Prescription> prescriptions;
-        Prescription prescription = null;
+        String prescriptionId = content.getParameter(PARAM_PRESCRIPTION_ID);
+        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
-            prescription = service.getPriscription(id);
-            if (prescription != null) {
-//                prescription.setClient(user);
-                prescription.setStatus(PrescriptionStatus.EXTAND);
-                if (!prescription.isEmptyDetails()) {
-                    Iterator<PrescriptionDetail> iterator = prescription.getDetailsIterator();
-                    while (iterator.hasNext()) {
-                        PrescriptionDetail detail = iterator.next();
-                        if (PrescriptionStatus.INACTIVE.equals(detail.getStatus())) {
-                            detail.setStatus(PrescriptionStatus.EXTAND);
-                        }
-                    }
-                    service.updatePriscription(prescription);
-
-                } else {
-                    //detail empty!!!  TODO
-                }
-
+            if (new Validator().validateRequired(prescriptionId, Validator.REGEXP_ID)){
+                Prescription prescription=new Prescription(Long.parseLong(prescriptionId));
+                prescription.setStatus(PrescriptionStatus.EXTEND);
+                prescriptionService.update(prescription);
+                page=PageConstant.PAGE_CLIENT_SUCCESS_PRESCRIPTION;
+                responseType= CommandResult.ResponseType.REDIRECT;
+            }else{
+               content.setRequestAttributes(ATTR_MESSEGE,bundle.getString("message.parameter.wrong"));
+               page=PageConstant.PAGE_ERROR;
             }
-            prescriptions = clientService.getClientPrescriptions(user.getUserId());
-            content.setRequestAttributes(ATTR_PRESCRIPTIONS, prescriptions);
-        } catch (ServiceException e) {
-            content.setRequestAttributes("error", "Prescription is not extended");
 
+
+        } catch (ServiceException e) {
+            page=PageConstant.PAGE_ERROR;
+            //todo
+            content.setRequestAttributes(ATTR_MESSEGE, "Prescription is not extended");
+//todo message
             //responseType = CommandResult.ResponseType.REDIRECT;
             LOGGER.log(Level.ERROR, e);
         }

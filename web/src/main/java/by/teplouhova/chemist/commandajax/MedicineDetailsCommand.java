@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class ReleaseFormCommand implements Command {
+public class MedicineDetailsCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private ReleaseFormService releaseFormService;
@@ -20,7 +20,7 @@ public class ReleaseFormCommand implements Command {
     private DosageService dosageService;
     private MedicineService medicineService;
 
-    public ReleaseFormCommand(ReleaseFormService releaseFormService, ProducerService producerService, DosageService dosageService, MedicineService medicineService) {
+    public MedicineDetailsCommand(ReleaseFormService releaseFormService, ProducerService producerService, DosageService dosageService, MedicineService medicineService) {
         this.releaseFormService = releaseFormService;
         this.producerService = producerService;
         this.dosageService = dosageService;

@@ -20,41 +20,64 @@ public class MySqlMedicineDAO extends MedicineDAO {
             "IF(m_unit_in_package ='шт', " +
             "CONCAT('N',  medicine.m_quantity_in_pack), " +
             "CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
-            "AS fullname,m_price, m_quantity_packages,m_is_need_prescrip " +
+            "AS fullname,m_price, m_quantity_packages,m_is_need_prescrip,p_name " +
             "FROM chemist.medicine " +
             "JOIN chemist.release_form USING(rf_release_form_id) " +
             "LEFT JOIN chemist.dosage USING(d_dosage_id) " +
-            "    WHERE m_name=? AND m_quantity_packages>0 " +
+            "JOIN chemist.producer USING(p_producer_id)  " +
+            "    WHERE m_name=?  " +
             "ORDER BY medicine.m_name";
     private static final String SQL_SELECT_ALL_MEDICINES = "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', \n" +
-            "IFNULL( IF(dosage.d_dosage_size > 1, " +
-            "            FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
-            "            IFNULL(dosage.d_dosage_unit,'' ),' ', \n" +
-            "                        IF(m_unit_in_package ='шт', " +
-            "            CONCAT('N',  medicine.m_quantity_in_pack), " +
-            "            CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
-            "            AS fullname,m_price, m_quantity_packages,m_is_need_prescrip " +
-            "            FROM chemist.medicine " +
-            "            JOIN chemist.release_form USING(rf_release_form_id) " +
-//            "           JOIN chemist.unit_in_package USING(un_unit_in_package_id) " +
-            "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
-            "            WHERE m_quantity_packages>0 " +
-            "                              ORDER BY fullname " +
-            "                  LIMIT ?,?;";
-    private static final String SQL_SELECT_MEDICINE_BY_ID = "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
             "IFNULL( IF(dosage.d_dosage_size > 1, " +
             "            FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
             "            IFNULL(dosage.d_dosage_unit,'' ),' ', " +
             "                        IF(m_unit_in_package ='шт', " +
             "            CONCAT('N',  medicine.m_quantity_in_pack), " +
             "            CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
-            "            AS fullname,m_price, m_quantity_packages,m_is_need_prescrip " +
+            "            AS fullname,m_price, m_quantity_packages,m_is_need_prescrip, p_name, m_is_deleted" +
             "            FROM chemist.medicine " +
             "            JOIN chemist.release_form USING(rf_release_form_id) " +
+            "            JOIN chemist.producer USING(p_producer_id) " +
             "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
-            "           WHERE m_medicine_id=? AND  m_quantity_packages>0 ";
-    private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_NAME = "SELECT count(m_name)  as count FROM chemist.medicine WHERE m_quantity_packages>0";
-    private static final String SQL_SELECT_BALANCE_MEDICINE_BY_ID = "SELECT m_quantity_packages as balance FROM chemist.medicine WHERE m_medicine_id=?";
+            "             " +
+            "                              ORDER BY fullname " +
+            "                  LIMIT ?,?;";
+    private static final String SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE=
+            "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', \n" +
+            "IFNULL( IF(dosage.d_dosage_size > 1, " +
+            "            FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
+            "            IFNULL(dosage.d_dosage_unit,'' ),' ', " +
+            "                        IF(m_unit_in_package ='шт', " +
+            "            CONCAT('N',  medicine.m_quantity_in_pack), " +
+            "            CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
+            "            AS fullname,m_price, m_quantity_packages,m_is_need_prescrip, p_name, m_is_deleted" +
+            "            FROM chemist.medicine " +
+            "            JOIN chemist.release_form USING(rf_release_form_id) " +
+            "            JOIN chemist.producer USING(p_producer_id) " +
+            "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
+            " WHERE m_quantity_packages>0 AND m_is_deleted=b'0'"+
+            "                              ORDER BY fullname " +
+            "                  LIMIT ?,?;";
+    private static final String SQL_SELECT_MEDICINE_BY_ID =
+            "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
+            "IFNULL( IF(dosage.d_dosage_size > 1, " +
+            "            FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
+            "            IFNULL(dosage.d_dosage_unit,'' ),' ', " +
+            "                        IF(m_unit_in_package ='шт', " +
+            "            CONCAT('N',  medicine.m_quantity_in_pack), " +
+            "            CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
+            "            AS fullname,m_price, m_quantity_packages,m_is_need_prescrip, p_name " +
+            "            FROM chemist.medicine " +
+            "            JOIN chemist.release_form USING(rf_release_form_id) " +
+            "            JOIN chemist.producer USING(p_producer_id)  " +
+            "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
+            "           WHERE m_medicine_id=?  ";
+    private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_NAME =
+            "SELECT count(m_name)  as count FROM chemist.medicine ";
+    private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE=
+            "SELECT count(m_name)  as count FROM chemist.medicine WHERE m_quantity_packages>0 AND m_is_deleted=b'0'";
+    private static final String SQL_SELECT_BALANCE_MEDICINE_BY_ID =
+            "SELECT m_quantity_packages as balance FROM chemist.medicine WHERE m_medicine_id=?";
     private static final String SQL_SELECT_BY_MEDICINE_ID_EDIT = "SELECT m_medicine_id,d_dosage_unit,m_name,m_price,m_quantity_packages,m_is_need_prescrip," +
             "m_quantity_in_pack,m_analog_id,m_unit_in_package, " +
             "rf_release_form_id,rf_name, " +
@@ -72,6 +95,7 @@ public class MySqlMedicineDAO extends MedicineDAO {
             "UPDATE chemist.medicine SET m_name=?, m_price=?, m_quantity_packages=?," +
                     "m_is_need_prescrip=?, m_quantity_in_pack=?, rf_release_form_id=?, " +
                     "p_producer_id=?, d_dosage_id= ?, m_analog_id=?, m_unit_in_package=?" +
+                    "m_is_deleted=?"+
                     " WHERE m_medicine_id =?";
 
     private static final String SQL_INSERT_MEDICINE =
@@ -79,7 +103,20 @@ public class MySqlMedicineDAO extends MedicineDAO {
                     "(m_name, m_price, m_quantity_packages, m_is_need_prescrip, m_quantity_in_pack, " +
                     "rf_release_form_id, p_producer_id,d_dosage_id,m_analog_id, m_unit_in_package) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-    private  static final String SQL_DELETE_MEDICINE="DELETE FROM chemist.medicine WHERE m_medicine_id=?";
+    private static final String SQL_SELECT_BY_IS_NEED_PRESCRIPTION="SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
+            "IFNULL( IF(dosage.d_dosage_size > 1, " +
+            "            FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
+            "            IFNULL(dosage.d_dosage_unit,'' ),' ', " +
+            "                        IF(m_unit_in_package ='шт', " +
+            "            CONCAT('N',  medicine.m_quantity_in_pack), " +
+            "            CONCAT(medicine.m_quantity_in_pack, medicine.m_unit_in_package,' N1')))  " +
+            "            AS fullname " +
+            "            FROM chemist.medicine " +
+            "            JOIN chemist.release_form USING(rf_release_form_id) " +
+            "            JOIN chemist.producer USING(p_producer_id)  " +
+            "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
+            "           WHERE m_is_need_prescrip=? " +
+            "ORDER BY fullname";
 
     @Override
     public Medicine findById(long id) throws DAOException {
@@ -94,13 +131,16 @@ public class MySqlMedicineDAO extends MedicineDAO {
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
                 medicine.setPrice(result.getBigDecimal("m_price"));
+                Producer producer=new Producer();
+                producer.setName(result.getString("p_name"));
+                medicine.setProducer(producer);
                 medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
                 medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
 
             }
 
         } catch (SQLException e) {
-            throw new DAOException("" + e);
+            throw new DAOException("Error in findById ", e);
         } finally {
             close(statement);
 
@@ -165,7 +205,8 @@ public class MySqlMedicineDAO extends MedicineDAO {
                 statement.setNull(9, Types.NULL);
             }
             statement.setString(10, entity.getUnitInPackage().name().toLowerCase());
-            statement.setLong(11, entity.getMedicineId());
+            statement.setBoolean(11,entity.getIsDeleted());
+            statement.setLong(12, entity.getMedicineId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -188,10 +229,12 @@ public class MySqlMedicineDAO extends MedicineDAO {
                 Medicine medicine = new Medicine();
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
+                Producer producer=new Producer();
+                producer.setName(result.getString("p_name"));
+                medicine.setProducer(producer);
                 medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
                 medicine.setPrice(result.getBigDecimal("m_price"));
                 medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
-
                 medicines.add(medicine);
             }
 
@@ -217,12 +260,16 @@ public class MySqlMedicineDAO extends MedicineDAO {
                 Medicine medicine = new Medicine();
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
+                Producer producer=new Producer();
+                producer.setName(result.getString("p_name"));
+                medicine.setProducer(producer);
                 medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
                 medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
                 medicine.setPrice(result.getBigDecimal("m_price"));
+                medicine.setDeleted(result.getBoolean("m_is_deleted"));
                 medicines.add(medicine);
             }
-
+LOGGER.log(Level.DEBUG , medicines.size());
         } catch (SQLException e) {
             throw new DAOException("findAll(int begin, int end)" + e);
         } finally {
@@ -230,6 +277,38 @@ public class MySqlMedicineDAO extends MedicineDAO {
         }
         return !medicines.isEmpty()?medicines:null;
     }
+
+    @Override
+    public ArrayList<Medicine> findAllByRelevance(int begin, int end) throws DAOException {
+        PreparedStatement statement = null;
+        ArrayList<Medicine> medicines = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE);
+            statement.setInt(1, begin);
+            statement.setInt(2, end);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Medicine medicine = new Medicine();
+                medicine.setMedicineId(result.getLong("m_medicine_id"));
+                medicine.setName(result.getString("fullname"));
+                Producer producer=new Producer();
+                producer.setName(result.getString("p_name"));
+                medicine.setProducer(producer);
+                medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
+                medicine.setPrice(result.getBigDecimal("m_price"));
+                medicine.setDeleted(result.getBoolean("m_is_deleted"));
+                medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
+                medicines.add(medicine);
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("Exception in findAllByRelevance method", e);
+        } finally {
+            close(statement);
+        }
+        return !medicines.isEmpty()?medicines:null;
+    }
+
 
     @Override
     public int getCountByName() throws DAOException {
@@ -244,7 +323,26 @@ public class MySqlMedicineDAO extends MedicineDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in getCountByName method",e);
+        } finally {
+            close(statement);
+        }
+        return count;
+    }
+
+    @Override
+    public int getCountByNameByRelevance() throws DAOException {
+        Statement statement = null;
+        Integer count = 0;
+        try {
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE);
+            if (result.next()) {
+                count = result.getInt("count");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("Exception in getCountByNameByRelevance method",e);
         } finally {
             close(statement);
         }
@@ -340,18 +438,29 @@ public class MySqlMedicineDAO extends MedicineDAO {
         return !setIds.isEmpty()?setIds:null;
     }
 
+
     @Override
-    public void delete(Medicine medicine) throws DAOException {
-        PreparedStatement statement=null;
+    public ArrayList<Medicine> findByPrescripNeed(boolean isNeedPrescrip) throws DAOException {
+        PreparedStatement statement = null;
+       ArrayList<Medicine> medicines =new ArrayList<>();
         try {
-            statement=connection.prepareStatement(SQL_DELETE_MEDICINE);
-            statement.setLong(1,medicine.getMedicineId());
-            statement.execute();
+            statement = connection.prepareStatement(SQL_SELECT_BY_IS_NEED_PRESCRIPTION);
+            statement.setBoolean(1, isNeedPrescrip);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+               Medicine medicine = new Medicine();
+                medicine.setMedicineId(result.getLong("m_medicine_id"));
+                medicine.setName(result.getString("fullname"));
+                medicines.add(medicine);
+            }
+LOGGER.log(Level.DEBUG,medicines.size());
         } catch (SQLException e) {
-            throw  new DAOException(e);
-        }finally {
+            throw new DAOException("Error in findByPrescripNeed ", e);
+        } finally {
             close(statement);
+
         }
+        return !medicines.isEmpty()?medicines:null;
     }
 
 

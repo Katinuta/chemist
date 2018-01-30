@@ -28,7 +28,7 @@ public abstract class AbstractDAO <T extends Entity>  {
             try {
                 st.close();
             } catch (SQLException e) {
-            LOGGER.log(Level.DEBUG,""+e);
+            LOGGER.catching(e);
             }
         }
     }

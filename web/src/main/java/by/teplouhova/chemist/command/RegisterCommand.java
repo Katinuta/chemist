@@ -15,6 +15,6 @@ public class RegisterCommand implements Command{
     @Override
     public CommandResult execute(SessionRequestContent content) {
 
-        return new CommandResult(CommandResult.ResponseType.FORWARD,"/jsp/common/registration.jsp");
+        return new CommandResult(CommandResult.ResponseType.FORWARD,PageConstant.PAGE_COMMON_SIGN_UP);
     }
 }

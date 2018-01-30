@@ -115,6 +115,7 @@ public class Order extends Entity {
                 ", user=" + user +
                 ", issuePointId=" + issuePointId +
                 ", total=" + total +
+                ", details=" + details +
                 '}';
     }
 }

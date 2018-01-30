@@ -9,9 +9,14 @@
     <uri>customtags</uri>
 
     <tag>
-        <name>footer-tag</name>
-        <tag-class>by.teplouhova.chemist.tag.InfoFooterTag</tag-class>
+        <name>hello-tag</name>
+        <tag-class>by.teplouhova.chemist.tag.HelloTag</tag-class>
         <body-content>empty</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 
 </taglib>

@@ -2,9 +2,10 @@ package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Medicine extends Entity {
+public class Medicine extends Entity implements Serializable {
     private long medicineId;
     private String name;
     private BigDecimal price;
@@ -16,6 +17,7 @@ public class Medicine extends Entity {
     private Producer producer;
     private Dosage dosage;
     private UnitInPackage unitInPackage;
+    private boolean isDeleted;
 
     public Medicine() {
     }
@@ -114,6 +116,14 @@ public class Medicine extends Entity {
         this.unitInPackage = unitInPackage;
     }
 
+    public boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,6 +135,7 @@ public class Medicine extends Entity {
         if (quantityPackages != medicine.quantityPackages) return false;
         if (quantityInPackage != medicine.quantityInPackage) return false;
         if (isNeedRecipe != medicine.isNeedRecipe) return false;
+        if (isDeleted != medicine.isDeleted) return false;
         if (name != null ? !name.equals(medicine.name) : medicine.name != null) return false;
         if (price != null ? !price.equals(medicine.price) : medicine.price != null) return false;
         if (analog != null ? !analog.equals(medicine.analog) : medicine.analog != null) return false;
@@ -133,6 +144,23 @@ public class Medicine extends Entity {
         if (producer != null ? !producer.equals(medicine.producer) : medicine.producer != null) return false;
         if (dosage != null ? !dosage.equals(medicine.dosage) : medicine.dosage != null) return false;
         return unitInPackage == medicine.unitInPackage;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (medicineId ^ (medicineId >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + quantityPackages;
+        result = 31 * result + quantityInPackage;
+        result = 31 * result + (isNeedRecipe ? 1 : 0);
+        result = 31 * result + (analog != null ? analog.hashCode() : 0);
+        result = 31 * result + (releaseForm != null ? releaseForm.hashCode() : 0);
+        result = 31 * result + (producer != null ? producer.hashCode() : 0);
+        result = 31 * result + (dosage != null ? dosage.hashCode() : 0);
+        result = 31 * result + (unitInPackage != null ? unitInPackage.hashCode() : 0);
+        result = 31 * result + (isDeleted ? 1 : 0);
+        return result;
     }
 
     @Override
@@ -150,22 +178,5 @@ public class Medicine extends Entity {
                 ", dosage=" + dosage +
                 ", unitInPackage=" + unitInPackage +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (medicineId ^ (medicineId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + quantityPackages;
-        result = 31 * result + quantityInPackage;
-        result = 31 * result + (isNeedRecipe ? 1 : 0);
-        result = 31 * result + (analog != null ? analog.hashCode() : 0);
-        result = 31 * result + (releaseForm != null ? releaseForm.hashCode() : 0);
-        result = 31 * result + (producer != null ? producer.hashCode() : 0);
-        result = 31 * result + (dosage != null ? dosage.hashCode() : 0);
-        result = 31 * result + (unitInPackage != null ? unitInPackage.hashCode() : 0);
-        return result;
-
     }
 }

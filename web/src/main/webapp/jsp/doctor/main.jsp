@@ -16,52 +16,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         <c:import url="/css/main.css"/>
-        <c:import url="/css/footer.css"></c:import>
+        .flex-container {
+            display: flex;
+            justify-content: center;
+
+        }
+        form{
+            margin-bottom: 0;
+        }
 
     </style>
-    <script src="../../js/jquery.toastmessage.js"></script>
 
 
 </head>
 <body>
-<header>
-    <nav class="navbar ">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/jsp/pharmacist/main.jsp"><fmt:message bundle="${bundle}" key="ref.brand"/></a>
-            </div>
-            <ul class="nav navbar-nav">
-                <c:url var="newmedicine" value="/controller">
-                    <c:param name="command" value="newprescription"/>
-                </c:url>
-                <li>
-                    <a href="${newmedicine}"><fmt:message bundle="${bundle}" key="ref.newprescription"/></a>
-                </li>
+<nav class="navbar navbar-inverse ">
+    <c:import url="navbar.jsp"/>
+</nav>
+<c:choose>
+    <c:when test="${empty clients}">
+        <c:choose>
+            <c:when test="${empty extending}">
+                <c:import url="/controller">
+                    <c:param name="command" value="doctorprescription"/>
+                </c:import>
+            </c:when>
+            <c:otherwise>
+                <c:import url="prescription.jsp"/>
+            </c:otherwise>
+        </c:choose>
 
-            </ul>
+    </c:when>
+    <c:otherwise>
+        <c:import url="client.jsp"/>
+    </c:otherwise>
 
-            <form class="navbar-form navbar-right" action="/controller">
-                <input name="command" type="hidden" value="findmedicine"/>
-                <div class="input-group">
-                    <input type="text" name="name" class="form-control"
-                           placeholder=<fmt:message bundle="${bundle}" key="placeholder.search"/>>
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </nav>
-</header>
-${message}
-<main>
-        <c:import url="/controller">
-            <c:param name="command" value="doctorprescription"/>
-        </c:import>
-</main>
-<footer>
+</c:choose>
+
+
+<footer class="container-fluid text-center">
     <c:import url="/jsp/common/footer.jsp"/>
 </footer>
 

@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebListener
 public class ChemistContextListener implements ServletContextListener {
@@ -24,6 +25,7 @@ public class ChemistContextListener implements ServletContextListener {
         ConnectionPool.getInstance().closePoolConnections();
         try {
             DriverManager.deregisterDriver(DriverManager.getDriver("com.mysql.jdbc.Driver"));
+//
         } catch (SQLException e) {
 //            LOGGER.log(Level.ERROR,"Connection driver is not deregistered ");
 

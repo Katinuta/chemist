@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MySqlUserDAO extends UserDAO {
@@ -24,7 +26,7 @@ public class MySqlUserDAO extends UserDAO {
             "INSERT INTO chemist.user (u_name, u_surname, u_login, u_password, u_account, u_phone, u_role) VALUES ( ?, ?, ?,MD5(?), ?, ?,?)";
 
     private final static String SQL_UPDATE_USER =
-            "UPDATE chemist.user SET u_name =?, u_surname=?, u_login=?, u_password=?, u_account=?, u_phone=? WHERE u_user_id=?";
+            "UPDATE chemist.user SET u_password=MD5(?) WHERE u_user_id=?";
 
     private final static String SQL_SELECT_USER_BY_LOGIN =
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=?";
@@ -33,36 +35,39 @@ public class MySqlUserDAO extends UserDAO {
             "SELECT user.u_user_id,user.u_name, user.u_surname,user.u_login,user.u_password,user.u_role,user.u_phone, user.u_account FROM chemist.user WHERE user.u_login=? AND u_password=MD5(?)";
 
     public final static String SQL_SELECT_ACCOUNT_BY_USER_ID = "SELECT u_account FROM user WHERE u_user_id=?";
+    public final static String SQL_SELECT_USER_BY_ROLE="SELECT u_user_id, u_name , u_surname, u_phone FROM user " +
+            "WHERE u_role=? ORDER BY u_surname,u_name LIMIT ?,? ";
+    public final static String SQL_SELECT_COUNT_USER_BY_ROLE="SELECT count(u_name) AS count FROM user " +
+            "WHERE u_role=?";
 
     public MySqlUserDAO() {
 
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(long id) throws DAOException {
         PreparedStatement st = null;
         User user = null;
-//        try {
-//            st = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
-//            st.setLong(1, id);
-//            ResultSet result = st.executeQuery();
-//            if (result.next()) {
-//                user = new User();
-//                user.setUserId(result.getLong("u_user_id"));
-//                user.setName(result.getString("u_name"));
-//                user.setSurname(result.getString("u_surname"));
+        try {
+            st = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
+            st.setLong(1, id);
+            ResultSet result = st.executeQuery();
+            if (result.next()) {
+                user = new User();
+                user.setUserId(result.getLong("u_user_id"));
+                user.setName(result.getString("u_name"));
+                user.setSurname(result.getString("u_surname"));
 //                user.setLogin(result.getString("u_login"));
 //                user.setPassword(result.getString("u_password"));
 //                user.setAccount(result.getBigDecimal("u_account"));
-//                user.setPhone(result.getString("u_phone"));
-//                user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        close(st);
-//        ConnectionPool.getInstance().releaseConnection(connection);
+                user.setPhone(result.getString("u_phone"));
+                user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        close(st);
         return user;
     }
 
@@ -70,7 +75,7 @@ public class MySqlUserDAO extends UserDAO {
     public void create(User entity) throws DAOException {
         PreparedStatement st = null;
         try {
-            st = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            st = connection.prepareStatement(SQL_INSERT_USER);
             st.setString(1, entity.getName());
             st.setString(2, entity.getSurname());
             st.setString(3, entity.getLogin());
@@ -79,15 +84,11 @@ public class MySqlUserDAO extends UserDAO {
             st.setString(6, entity.getPhone());
             st.setString(7, entity.getRole().getName());
             st.execute();
-            ResultSet result = st.getGeneratedKeys();
-//            if (result.next()) {
-//                entity.setUserId(result.getLong(1));
-//            }
+
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in create method",e);
         } finally {
             close(st);
-            ConnectionPool.getInstance().releaseConnection(connection);
         }
 
 
@@ -98,13 +99,13 @@ public class MySqlUserDAO extends UserDAO {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_UPDATE_USER);
-            st.setString(1, entity.getName());
-            st.setString(2, entity.getSurname());
-            st.setString(3, entity.getLogin());
-            st.setString(4, entity.getPassword());
-            st.setBigDecimal(5, entity.getAccount());
-            st.setString(6, entity.getPhone());
-            st.setLong(7, entity.getUserId());
+//            st.setString(1, entity.getName());
+//            st.setString(2, entity.getSurname());
+//            st.setString(3, entity.getLogin());
+            st.setString(1, entity.getPassword());
+//            st.setBigDecimal(4, entity.getAccount());
+//            st.setString(5, entity.getPhone());
+            st.setLong(2, entity.getUserId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -129,7 +130,7 @@ public class MySqlUserDAO extends UserDAO {
                 user.setSurname(result.getString("u_surname"));
                 user.setLogin(result.getString("u_login"));
 //                user.setPassword(result.getString("u_password"));
-                user.setAccount(result.getBigDecimal("u_account"));
+//                user.setAccount(result.getBigDecimal("u_account"));
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
             }
@@ -158,7 +159,7 @@ public class MySqlUserDAO extends UserDAO {
                 user.setName(result.getString("u_name"));
                 user.setSurname(result.getString("u_surname"));
                 user.setLogin(result.getString("u_login"));
-                user.setPassword(result.getString("u_password"));
+//                user.setPassword(result.getString("u_password"));
                 user.setAccount(result.getBigDecimal("u_account"));
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
@@ -189,6 +190,50 @@ public class MySqlUserDAO extends UserDAO {
             close(statement);
         }
         return balance;
+    }
+
+    @Override
+    public List<User> findByRole(String role,int begin, int end) throws DAOException {
+        List<User> users=new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement=connection.prepareStatement(SQL_SELECT_USER_BY_ROLE);
+            statement.setString(1,role);
+            statement.setInt(2,begin);
+            statement.setInt(3,end);
+            ResultSet result=statement.executeQuery();
+            while(result.next()){
+                User user=new User();
+                user.setUserId(result.getLong("u_user_id"));
+                user.setName(result.getString("u_name"));
+                user.setSurname(result.getString("u_surname"));
+                user.setPhone(result.getString("u_phone"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            close(statement);
+        }
+        return !users.isEmpty()?users:null;
+    }
+
+    public int getCountByRole(String role) throws DAOException {
+        int count=0;
+        PreparedStatement statement=null;
+        try {
+            statement=connection.prepareStatement(SQL_SELECT_COUNT_USER_BY_ROLE);
+            statement.setString(1,role);
+            ResultSet result=statement.executeQuery();
+            if(result.next()){
+                count=result.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            close(statement);
+        }
+        return count;
     }
 
 

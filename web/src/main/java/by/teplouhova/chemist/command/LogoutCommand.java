@@ -5,12 +5,18 @@ import by.teplouhova.chemist.controller.SessionRequestContent;
 
 public class LogoutCommand implements Command {
 
+    private static final String ATTR_USER = "user";
 
-    public LogoutCommand(UserService userService) {
+
+    public LogoutCommand() {
     }
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        return null;
+        String page = PageConstant.PAGE_INDEX;
+        CommandResult.ResponseType responseType= CommandResult.ResponseType.REDIRECT;
+//        content.removeSessionAttribute(ATTR_USER);
+        content.setRequestAttributes("invalid","true");
+        return new CommandResult(responseType,page);
     }
 }

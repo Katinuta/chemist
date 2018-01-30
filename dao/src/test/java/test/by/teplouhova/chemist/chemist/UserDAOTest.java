@@ -59,8 +59,8 @@ public class UserDAOTest {
 
 //    @Test(dataProvider = "user")
     public void findUserByIdTest(long id,User expected, boolean result){
-        User actual= mySqlUserDAO.findById(id);
-        assertEquals(expected.equals(actual),result);
+      //  User actual= mySqlUserDAO.findById(id);
+      //  assertEquals(expected.equals(actual),result);
     }
 
 }

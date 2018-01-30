@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/controller")
@@ -33,7 +34,8 @@ public class Controller extends HttpServlet {
 
         String commandName = request.getParameter("command");
         Command command = CommandFactory.defineCommand(commandName);
-//    LOGGER.log(Level.DEBUG,command);
+        request.getSession().setAttribute("refererUrl", request.getHeader("referer"));
+
         SessionRequestContent requestContent = new SessionRequestContent();
         requestContent.extractValues(request);
         CommandResult page = command.execute(requestContent);
@@ -42,9 +44,9 @@ public class Controller extends HttpServlet {
         if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
+
             response.sendRedirect(request.getContextPath() + page.getPage());
         }
-
 
     }
 }

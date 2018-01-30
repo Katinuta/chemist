@@ -17,7 +17,7 @@ public class FindMedicineCommand implements Command {
 
     private static final Logger LOGGER= LogManager.getLogger();
 
-    private static final String PARAM_NAME="name";
+    private static final String PARAM_SERACH="search";
     private static final String ATTR_MEDICINES="medicines";
     private static final String ATTR_FLAG_FIND="flagFind";
     private static final String ATTR_USER="user";
@@ -32,9 +32,10 @@ public class FindMedicineCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page=null ;
         CommandResult.ResponseType responseType;
-        String name=content.getParameter(PARAM_NAME);
+        String name=content.getParameter(PARAM_SERACH);
         try {
             ArrayList<Medicine> medicines=service.getMedicinesByName(name.toUpperCase());
+            LOGGER.log(Level.DEBUG,medicines);
             if(medicines!=null){
                 content.setRequestAttributes(ATTR_MEDICINES,medicines);
                 content.setRequestAttributes(ATTR_FLAG_FIND,true);
@@ -49,6 +50,7 @@ public class FindMedicineCommand implements Command {
                 page = "/jsp/pharmacist/main.jsp";
             }
             responseType= CommandResult.ResponseType.FORWARD;
+            LOGGER.log(Level.DEBUG,page);
 
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR,"find medicine"+e);

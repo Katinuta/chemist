@@ -38,7 +38,9 @@ public class ControllerAjax extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String commandName = request.getParameter("command");
+        LOGGER.debug(commandName);
         Command command = CommandFactory.defineCommand(commandName);
+        LOGGER.debug(command);
         SessionRequestContent requestContent = new SessionRequestContent();
         requestContent.extractValues(request);
         JSONObject result = command.execute(requestContent);

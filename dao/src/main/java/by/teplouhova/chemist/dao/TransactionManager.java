@@ -25,7 +25,7 @@ public class TransactionManager {
                 itemDAO.setConnection(connection);
             });
         } catch (SQLException e) {
-           LOGGER.log(Level.ERROR,"Transaction don't begin" +e);
+           LOGGER.log(Level.ERROR,"Transaction wasn't begun " ,e);
         }
     }
 
@@ -40,7 +40,7 @@ public class TransactionManager {
         try {
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+          LOGGER.log(Level.ERROR,"Transaction wasn't commited ",e);
         }
     }
 
