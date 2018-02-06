@@ -19,13 +19,13 @@
         </a>
     </div>
 
-    <form class="navbar-form navbar-left" action="/controller">
-        <input name="command" type="hidden" value="findmedicine"/>
+    <form class="navbar-form navbar-left" action="/pharmacist">
+        <input name="command" type="hidden" value="find_medicine"/>
         <div class="input-group">
-            <input type="text" class="form-control" name="search"
+            <input type="text" class="form-control" name="medicine_name"
                    placeholder="<fmt:message bundle="${bundle}" key="placeholder.search"/>"/>
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit">
+                <button class="btn btn-default search" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </div>
@@ -38,45 +38,47 @@
             <div class="dropdown">
                 <a class="dropbtn disabled"><span class="glyphicon glyphicon-user"></span> Your account</a>
                 <div class="dropdown-content">
-                    <c:url var="newmedicine" value="/controller">
-                        <c:param name="command" value="newmedicine"/>
+                    <c:url var="to_new_medicine" value="/pharmacist">
+                        <c:param name="command" value="to_new_medicine"/>
                     </c:url>
 
-                    <a href="${newmedicine}"><fmt:message bundle="${bundle}" key="ref.newmedicine"/></a>
-
-                    <c:url var="logout" value="/controller">
-                        <c:param name="command" value="logout"/>
+                    <a href="${to_new_medicine}"><fmt:message bundle="${bundle}" key="ref.newmedicine"/></a>
+                    <c:url var="to_edit_password" value="/pharmacist">
+                        <c:param name="command" value="to_edit_password"/>
                     </c:url>
-                    <a href="${logout}"><fmt:message bundle="${bundle}" key="ref.logout"/></a>
+
+                    <a href="${to_edit_password}"><fmt:message bundle="${bundle}" key="ref.change.password"/></a>
+
+                    <c:url var="sign_out" value="/pharmacist">
+                        <c:param name="command" value="sign_out"/>
+                    </c:url>
+                    <a href="${sign_out}"><fmt:message bundle="${bundle}" key="ref.signout"/></a>
                 </div>
             </div>
         </li>
 
-        <c:url var="englishLang" value="/controller">
-            <c:param name="newlocale" value="en-EN"/>
-            <c:param name="command" value="locale"/>
-            <c:param name="page" value="${pageContext.request.requestURI}"/>
+        <c:url var="english_lang" value="/pharmacist">
+            <c:param name="new_locale" value="en-EN"/>
+            <c:param name="command" value="change_locale"/>
         </c:url>
 
         <li>
-            <a href="${englishLang}">
+            <a href="${english_lang}">
                 <img src="/image/united-kingdom-flag.png">
             </a>
         </li>
 
 
-        <c:url var="rusLang" value="/controller">
-            <c:param name="command" value="locale"/>
-            <c:param name="newlocale" value="ru-RU"/>
-            <c:param name="page" value="${pageContext.request.requestURI}"/>
-        </c:url>
-        <li>
 
-            <a href="${rusLang}"> <img src="/image/russia-flag.png"></a>
+        <li>
+            <c:url var="rus_lang" value="/pharmacist">
+                <c:param name="command" value="change_locale"/>
+                <c:param name="new_locale" value="ru-RU"/>
+            </c:url>
+            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
         </li>
         <li>
-            <ctg:hello-tag name="${user.name}"></ctg:hello-tag>
+           <span class="hello"><ctg:hello-tag name="${user.name}"/></span>
         </li>
-
     </ul>
 </div>

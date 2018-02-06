@@ -1,0 +1,37 @@
+button,button[type='submit'] {
+    background-color: #00cc99;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+.flex-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.form{
+    padding: 5% 0;
+}
+
+button:hover, button[type='submit']:hover{
+    text-decoration: none;
+    color: white;
+    background-color: #009973;
+
+}
+
+button>a,button>a:hover {
+    color: white;
+}
+
+input:not(.end) {
+    background-color: #f2f2f2;
+    border: none;
+}
+select{
+    padding: 1px 0;
+
+}

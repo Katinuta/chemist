@@ -1,12 +1,8 @@
 package by.teplouhova.chemist.tag;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Locale;
 
 public class HelloTag extends TagSupport {
     private String name;

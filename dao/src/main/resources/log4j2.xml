@@ -6,7 +6,7 @@
         </property>
     </Properties>
     <Appenders>
-        <File name="TxtFile" fileName="logs/text.log" >
+        <File name="TxtFile" fileName="logs/text.log" append="false">
             <PatternLayout pattern ="${pattern}"/>
         </File>
         <Console name="Console" target="SYSTEM_OUT">

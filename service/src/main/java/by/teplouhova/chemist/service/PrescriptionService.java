@@ -3,7 +3,7 @@ package by.teplouhova.chemist.service;
 import by.teplouhova.chemist.dao.PrescripDetailDAO;
 import by.teplouhova.chemist.dao.PrescriptionDAO;
 import by.teplouhova.chemist.dao.TransactionManager;
-import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
 import by.teplouhova.chemist.entity.impl.Medicine;
 import by.teplouhova.chemist.entity.impl.Prescription;
@@ -43,7 +43,7 @@ public class PrescriptionService {
             }
             details.stream().forEach(detail -> prescription.setDetails(detail));
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Prescription is not found ID: " + prescriptionId,e);
         } finally {
             manager.endTransaction();
         }
@@ -92,6 +92,7 @@ public class PrescriptionService {
     public List<Prescription> getDoctorPrescriptions(long doctorId, boolean isExtend) throws ServiceException {
         List<Prescription> prescriptions;
         TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(prescriptionDAO);
         try {
             if (isExtend) {
                 prescriptions = prescriptionDAO.findPrescripByDoctorIdExtand(doctorId);
@@ -99,7 +100,7 @@ public class PrescriptionService {
                 prescriptions = prescriptionDAO.findPrescriptionByDoctorId(doctorId);
             }
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Prescriptions is not found",e);
         } finally {
             manager.endTransaction();
         }
@@ -112,6 +113,7 @@ public class PrescriptionService {
         manager.beginTransaction(prescriptionDAO);
         try {
             List<Prescription> prescriptions = prescriptionDAO.findPrescriptionByClientId(clientId);
+
             prescriptions = prescriptions
                     .stream()
                     .filter(prescription -> prescription.getStatus() == PrescriptionStatus.ACTIVE)
@@ -123,6 +125,7 @@ public class PrescriptionService {
                     PrescriptionDetail detail =
                             prescripDetailDAO
                                     .findByPrescripIdMedicineId(prescription.getPrescriptionId(), medicine.getMedicineId());
+                    LOGGER.debug(detail);
                     if (detail != null) {
                         if (detail.getQuantityPack() >= count) {
                             return true;
@@ -152,7 +155,7 @@ public class PrescriptionService {
             manager.commit();
         } catch (DAOException e) {
             manager.rollback();
-            throw new ServiceException("Exception in method createPrescription", e);
+            throw new ServiceException("Prescription is not created", e);
         } finally {
             manager.endTransaction();
         }

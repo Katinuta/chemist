@@ -7,7 +7,7 @@
 
 </head>
 <body>
-    <jsp:forward page="jsp/common/login.jsp"/>;
+    <jsp:forward page="jsp/common/sign_in.jsp"/>;
 
 </body>
 </html>

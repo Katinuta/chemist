@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/client")
@@ -33,7 +32,7 @@ public class ClientController extends HttpServlet {
 
         String commandName = request.getParameter("command");
         Command command = CommandFactory.defineCommand(commandName);
-        request.getSession().setAttribute("refererUrl", request.getHeader("referer"));
+      //  request.getSession().setAttribute("refererUrl", request.getHeader("referer"));
         SessionRequestContent requestContent = new SessionRequestContent();
         requestContent.extractValues(request);
         CommandResult page = command.execute(requestContent);

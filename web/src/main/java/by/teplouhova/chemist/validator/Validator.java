@@ -1,48 +1,70 @@
 package by.teplouhova.chemist.validator;
 
 import by.teplouhova.chemist.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
 
-
-    public static final String REGEXP_NAME_USER = "(^[A-Za-z]{2,}\\s*$)|(^[А-Яа-яЁё]{2,}\\s*$)";
-    public static final String REGEXP_SURNAME_USER = "(^[A-Za-z]{2,}\\-?([A-Za-z]{2,})?$)|(^[А-Яа-яЁё]{2,}\\-?([А-Яа-яЁё]{2,})?$)";
-    public static final String REGEXP_LOGIN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-    public static final String REGEXP_PASSWORD = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}";
-    public static final String REGEXP_PHONE = "^375(44|29|33|25)\\d{7}";
-    public static final String REGEXP_BIGDECIMAL_PARAM = "\\d*\\.?\\d{0,2}";
-    public static final String REGEXP_ID = "[1-9]+\\d*";
-    public static final String REGEXP_DATE = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
-    public static final String REGEXP_QUANTITY = "[1-9]+\\d*.?0{0,2}";
-//review
-
-    public static final String REGEXP_NAME =
-            "(([A-Za-z]{2,}+\\-?\\s?[A-Za-z]*)|([А-Яа-яЁё]{2,}+\\-?\\s?[А-Яа-яЁё]*))";
-
-
-
-    public static final String REGEXP_DOSAGE_UNIT = "(мг|%)";
-    public static final String REGEXP_UNIT_IN_PACK = "(шт|г|мл)";
-    public static final String REGEXP_BOOLEAN_PARAM = "(true|false)";
-
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private ResourceBundle bundle;
+    private HashMap<String, String> errors;
 
     public Validator() {
         bundle = MessageManager.EN.getBundle();
+        errors = new HashMap<>();
     }
 
 
     public Validator(ResourceBundle bundle) {
         this.bundle = bundle;
+        errors = new HashMap<>();
     }
 
-    public boolean validateRequired(String name, String value, String regexp, HashMap<String, String> errors) {
+    public boolean isValid(HashMap<String, String> paramsMap) {
+//        if(paramsMap.isEmpty()){
+//            errors.put("params", bundle.getString("message.format.incorrect"));
+//
+//        }
+        Set<Map.Entry<String, String>> entrySet = paramsMap.entrySet();
+//        paramsMap.entrySet().stream()
+//                .filter(entry -> entry != null && entry.getValue().isEmpty())
+//                .forEach(entry -> entry.setValue(null));
+        entrySet.forEach(entry -> {
+            String current = entry.getKey();
+            try {
+                FieldName field = FieldName.valueOf(current.toUpperCase());
+                String regexp = field.getRegexp();
+                if (field.isRequired()) {
+                    validateRequired(current, entry.getValue(), regexp);
+                } else {
+                    validateNotRequired(current, entry.getValue(), regexp);
+                }
+
+            } catch (IllegalArgumentException e) {
+                LOGGER.info("Parameter is not field " + current + " value " + entry.getValue());
+            }
+        });
+        return errors.isEmpty() ? true : false;
+    }
+
+    public Set<Map.Entry<String, String>> getEntrySetErrors() {
+        return errors.entrySet();
+    }
+
+    public boolean isExistError(String name) {
+        return errors.containsKey(name);
+    }
+
+    private boolean validateRequired(String name, String value, String regexp) {
         if (value == null || value.isEmpty()) {
             errors.put(name, bundle.getString("message.empty.value"));
             return false;
@@ -59,34 +81,13 @@ public class Validator {
             return false;
         }
 
-        // return matchString != null ? matchString.length() == value.length() : false;
         return true;
 
     }
 
-    public boolean validateRequired(String value, String regexp) {
+
+    private boolean validateNotRequired(String name, String value, String regexp) {
         if (value == null || value.isEmpty()) {
-
-            return false;
-        }
-        value = value.trim();
-        Pattern pattern = Pattern.compile(regexp);
-        Matcher matcher = pattern.matcher(value.trim());
-        String matchString = null;
-        if (matcher.find()) {
-            matchString = matcher.group();
-        }
-//        if(matchString==null||matchString!=null&&matchString.length() != value.length() ){
-//            return false;
-//        }
-
-        return matchString != null ? matchString.length() == value.length() : false;
-
-    }
-
-    public boolean validateNotRequired(String name, String value, String regexp, HashMap<String, String> errors) {
-        if (value == null || value.isEmpty()) {
-
             return true;
         }
         Pattern pattern = Pattern.compile(regexp);
@@ -100,25 +101,7 @@ public class Validator {
             return false;
         }
 
-        // return matchString != null ? matchString.length() == value.length() : false;
         return true;
 
     }
-
-//    boolean validateMoneyParam(String moneyParam){
-//        if(moneyParam==null||moneyParam.isEmpty()){
-//            return  false;
-//        }
-//        Pattern pattern=Pattern.compile(REGEXP_MONEY_PARAM);
-//        String mathString=null;
-//        Matcher matcher=pattern.matcher(mathString.trim());
-//        if(matcher.find()){
-//            moneyParam=matcher.group();
-//        }
-//        if(matcher==null){
-//            return false;
-//        }else{
-//            return  moneyParam.length()==money.length();
-//        }
-//    }
 }

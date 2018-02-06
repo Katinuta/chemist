@@ -1,6 +1,5 @@
 package by.teplouhova.chemist.pool;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -77,7 +76,7 @@ public class ConnectionPool {
             }
             connection = connections.take();
         } catch (InterruptedException e) {
-            LOGGER.log(Level.ERROR, "Thread is interrupted");
+            LOGGER.catching(e);
         }
         return connection;
     }
@@ -90,7 +89,7 @@ public class ConnectionPool {
 
             connections.offer(connection);
         } catch (SQLException e) {
-            LOGGER.log(Level.WARN, "Connection is not released", e);
+            LOGGER.catching(e);
         }
     }
 
@@ -99,7 +98,7 @@ public class ConnectionPool {
             try {
                 connection.closeConnection();
             } catch (SQLException e) {
-                LOGGER.log(Level.ERROR, "Connection didn't close", e);
+                LOGGER.catching(e);
             }
         });
     }

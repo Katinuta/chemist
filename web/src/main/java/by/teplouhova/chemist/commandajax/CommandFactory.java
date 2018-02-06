@@ -1,13 +1,23 @@
 package by.teplouhova.chemist.commandajax;
 
-import by.teplouhova.chemist.commandajax.Command;
-import by.teplouhova.chemist.commandajax.CommandType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CommandFactory {
+    private static final Logger LOGGER = LogManager.getLogger();
 
         public static Command defineCommand(String commandName){
-            CommandType type=CommandType.valueOf(commandName.toUpperCase());
-            Command current=type.getCommand();
+            Command current;
+            commandName = commandName != null ? commandName : CommandType.EMPTY.name();
+            try{
+                CommandType type = CommandType.valueOf(commandName.toUpperCase());
+                current = type.getCommand();
+            }catch (IllegalArgumentException e){
+                current= CommandType.EMPTY.getCommand();
+                LOGGER.log(Level.ERROR,"Command name is wrong ",e);
+            }
+
             return current;
         }
 

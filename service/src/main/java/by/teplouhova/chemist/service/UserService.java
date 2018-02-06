@@ -2,11 +2,9 @@ package by.teplouhova.chemist.service;
 
 import by.teplouhova.chemist.dao.TransactionManager;
 import by.teplouhova.chemist.dao.UserDAO;
-import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
-import by.teplouhova.chemist.entity.impl.Order;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +29,7 @@ public class UserService {
             user = userDAO.findByLoginPassword(login, password);
             transaction.endTransaction();
         } catch (DAOException e) {
-            throw new ServiceException("Exception in method checkUser ",e);
+            throw new ServiceException("User is not found by login" + login,e);
         }finally {
             transaction.endTransaction();
         }
@@ -42,12 +40,11 @@ public class UserService {
         User user;
         TransactionManager transaction = new TransactionManager();
         try {
-            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             transaction.beginTransaction(userDAO);
             user = userDAO.findByLogin(login);
             transaction.endTransaction();
         } catch (DAOException e) {
-            throw new ServiceException("Exception in getUser method ",e);
+            throw new ServiceException("User is not found by login" + login,e);
         }finally {
             transaction.endTransaction();
         }
@@ -56,58 +53,37 @@ public class UserService {
 
     public User createUser(User user) throws ServiceException {
 
-            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             TransactionManager transaction = new TransactionManager();
             transaction.beginTransaction(userDAO);
         try {
             userDAO.create(user);
             transaction.endTransaction();
         } catch (DAOException e) {
-            throw new ServiceException("Exception in createUser method ",e);
+            throw new ServiceException("User is not added",e);
         }finally {
             transaction.endTransaction();
         }
         return user;
     }
 
-    public List<Order> getOrders(){
 
-        return null;
-    }
 
-    public BigDecimal getBalanceAccount(long userId) throws ServiceException {
+    public List<User> getUserByRoleByPage(String role, int currentPage, int[] countPages) throws ServiceException {
         TransactionManager manager=new TransactionManager();
-        UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
-        manager.beginTransaction(userDAO);
-        BigDecimal balance;
-        try {
-            balance=  userDAO.findBalanceByUserId(userId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }finally {
-            manager.endTransaction();
-        }
-        return balance;
-    }
-
-    public List<User> getAllClients(String role,int currentPage,int[] countPages) throws ServiceException {
-        TransactionManager manager=new TransactionManager();
-        UserDAO userDAO=DAOFactory.getDAOFactory().getUserDAO();
         manager.beginTransaction(userDAO);
         List<User> clients;
         try {
             int begin=(currentPage-1)*RECORDS_PER_PAGE;
             clients=  userDAO.findByRole(role,begin,RECORDS_PER_PAGE);
             if(clients==null){
-                throw new ServiceException("Clients are not found");
+                throw new ServiceException("Users are not found by role: "+role);
             }
             countPages[0]= (int) Math.ceil(userDAO.getCountByRole(role)/(double)RECORDS_PER_PAGE);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Users are not found by role: "+role);
         }finally {
             manager.endTransaction();
         }
-
         return  clients;
     }
 
@@ -115,14 +91,15 @@ public class UserService {
         User user;
         TransactionManager transaction = new TransactionManager();
         try {
-            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             transaction.beginTransaction(userDAO);
             user = userDAO.findById(userId);
             if(user==null){
                 throw new ServiceException("User is not found by id "+ userId);
             }
+            user.setAccount(new BigDecimal(0));
+            user.setPassword("");
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("User is not found by id "+ userId,e);
         }finally {
             transaction.endTransaction();
         }
@@ -130,14 +107,22 @@ public class UserService {
     }
 
 
-    public void update(User user) throws ServiceException {
+    public void update(User user,boolean isPasswordUpdate) throws ServiceException {
         TransactionManager transaction = new TransactionManager();
         try {
-            UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
             transaction.beginTransaction(userDAO);
-            userDAO.update(user);
+            User oldUser=userDAO.findById(user.getUserId());
+            if(oldUser==null){
+                throw new ServiceException("User is not found by id "+user.getUserId());
+            }
+            if(isPasswordUpdate){
+                oldUser.setPassword(user.getPassword());
+                userDAO.updatePassword(oldUser);
+            }else{
+                userDAO.update(user);
+            }
         } catch (DAOException e) {
-            throw new ServiceException("Exception in method update",e);
+            throw new ServiceException("User data is not updated",e);
         }finally {
             transaction.endTransaction();
         }

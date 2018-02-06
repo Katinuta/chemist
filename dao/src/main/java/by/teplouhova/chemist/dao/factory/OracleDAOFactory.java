@@ -1,64 +1,57 @@
 package by.teplouhova.chemist.dao.factory;
 
 import by.teplouhova.chemist.dao.*;
-import by.teplouhova.chemist.dao.mysql.MySqlMedicineDAO;
-import by.teplouhova.chemist.dao.mysql.MySqlPrescriptionDAO;
-import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
-import by.teplouhova.chemist.dao.oracle.OracleMedicineDAO;
-import by.teplouhova.chemist.dao.oracle.OraclePrescriptionDAO;
-import by.teplouhova.chemist.dao.oracle.OracleReleaseFormDAO;
-import by.teplouhova.chemist.dao.oracle.OracleUserDAO;
 
 public class OracleDAOFactory extends DAOFactory {
 
-    private UserDAO userDAO = new OracleUserDAO();
-    private MedicineDAO medicineDAO = new OracleMedicineDAO();
-    private PrescriptionDAO prescriptionDAO = new OraclePrescriptionDAO();
-    private ReleaseFormDAO releaseFormDAO=new OracleReleaseFormDAO();
+    private UserDAO userDAO;
+    private MedicineDAO medicineDAO;
+    private PrescriptionDAO prescriptionDAO ;
+    private ReleaseFormDAO releaseFormDAO;
 
 
     @Override
     public UserDAO getUserDAO() {
-        return this.userDAO;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public MedicineDAO getMedicineDAO() {
-        return this.medicineDAO;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public PrescriptionDAO getPrescriptionDAO() {
-        return this.prescriptionDAO;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public OrderDAO getOrderDAO() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ReleaseFormDAO getReleaseFormDAO() {
-        return this.releaseFormDAO;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ProducerDAO getProducerDAO() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public DosageDAO getDosageDAO() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public PrescripDetailDAO getPrescripDetailDAO() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public OrderDetailDAO getOrderDetailDAO() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

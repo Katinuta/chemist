@@ -15,8 +15,8 @@ public class CommandFactory {
             CommandType type = CommandType.valueOf(commandName.toUpperCase());
           current = type.getCommand();
         }catch (IllegalArgumentException e){
-            current=CommandType.EMPTY.getCommand();
             LOGGER.log(Level.ERROR,"Command name is wrong ",e);
+            current=CommandType.EMPTY.getCommand();
         }
 
         return current;

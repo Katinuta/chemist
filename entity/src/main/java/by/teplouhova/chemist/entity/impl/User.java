@@ -15,6 +15,7 @@ public class User extends Entity {
     private String phone;
 
     public User() {
+        role=RoleType.CLIENT;
     }
 
     public User(String name, String surname, String login, String password, BigDecimal account, RoleType role, String phone) {

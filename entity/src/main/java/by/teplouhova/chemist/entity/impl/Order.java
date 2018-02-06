@@ -18,6 +18,7 @@ public class Order extends Entity {
 
     public Order() {
         details=new ArrayList<>();
+        total=new BigDecimal(0);
     }
 
     public long getOrderId() {

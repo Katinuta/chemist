@@ -3,8 +3,6 @@ package by.teplouhova.chemist.controller;
 import by.teplouhova.chemist.command.Command;
 import by.teplouhova.chemist.command.CommandFactory;
 import by.teplouhova.chemist.command.CommandResult;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

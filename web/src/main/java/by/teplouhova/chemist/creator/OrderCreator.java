@@ -1,7 +1,9 @@
 package by.teplouhova.chemist.creator;
 
-import by.teplouhova.chemist.entity.impl.*;
-import org.apache.logging.log4j.Level;
+import by.teplouhova.chemist.entity.impl.Medicine;
+import by.teplouhova.chemist.entity.impl.Order;
+import by.teplouhova.chemist.entity.impl.OrderDetail;
+import by.teplouhova.chemist.entity.impl.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

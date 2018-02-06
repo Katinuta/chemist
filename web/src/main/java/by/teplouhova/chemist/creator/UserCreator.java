@@ -1,18 +1,17 @@
 package by.teplouhova.chemist.creator;
 
-import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.validator.Validator;
+import by.teplouhova.chemist.validator.FieldName;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static by.teplouhova.chemist.validator.FieldConstant.*;
-
 public class UserCreator {
-
+    private static final Logger LOGGER = LogManager.getLogger();
     private User user;
 
     public UserCreator() {
@@ -20,41 +19,48 @@ public class UserCreator {
     }
 
     public User create(HashMap<String, String> userParams) {
-        user.setRole(RoleType.CLIENT);
         Set<Map.Entry<String, String>> keySet = userParams.entrySet();
-        keySet.forEach(entry -> fillField(entry.getKey(), entry.getValue()));
+        keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
+            String current=entry.getKey();
+            try{
+                FieldName field=FieldName.valueOf(current.toUpperCase());
+                fillField(field,entry.getValue());
+            }catch (IllegalArgumentException e){
+                LOGGER.info("Parameter is not field  : " +current );
+            }
+        });
         return user;
     }
 
-    private void fillField(String name, String value) {
+    private void fillField(FieldName name, String value) {
 
         switch (name) {
-            case USER_FIELD_NAME: {
+            case USER_NAME: {
                 user.setName(value);
                 break;
             }
-            case USER_FIELD_SURNAME: {
+            case SURNAME: {
                 user.setSurname(value);
                 break;
             }
-            case USER_FIELD_LOGIN: {
+            case LOGIN: {
                 user.setLogin(value);
                 break;
             }
-            case USER_FIELD_PASSWORD: {
+            case PASSWORD: {
                 user.setPassword(value);
                 break;
             }
-            case USER_FIELD_PHONE: {
+            case PHONE: {
                 user.setPhone(value);
                 break;
             }
-            case USER_FIELD_ACCOUNT: {
+            case ACCOUNT: {
                 user.setAccount(new BigDecimal(value));
                 break;
             }
             default:{
-                //todo
+                LOGGER.info("Parameter is not field  " + name +" for class " + user.getClass().getSimpleName() );
             }
 
         }

@@ -1,8 +1,5 @@
 package by.teplouhova.chemist.dao;
 
-import by.teplouhova.chemist.dao.AbstractDAO;
-import by.teplouhova.chemist.dao.exception.DAOException;
-import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
 
 import java.math.BigDecimal;
@@ -14,4 +11,5 @@ public abstract class UserDAO extends AbstractDAO<User> {
     public abstract BigDecimal findBalanceByUserId(long userId) throws DAOException;
     public abstract List<User> findByRole(String role,int begin, int end) throws DAOException;
     public abstract int getCountByRole(String role) throws DAOException;
+    public abstract void updatePassword(User entity) throws DAOException;
 }

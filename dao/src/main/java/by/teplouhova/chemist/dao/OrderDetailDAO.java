@@ -1,7 +1,5 @@
 package by.teplouhova.chemist.dao;
 
-import by.teplouhova.chemist.dao.AbstractDAO;
-import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.entity.impl.OrderDetail;
 
 import java.util.List;

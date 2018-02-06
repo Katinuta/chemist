@@ -1,0 +1,61 @@
+.flex-container {
+    display: flex;
+    justify-content: center;
+
+}
+.right-justify {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+}
+.message {
+    margin-top: 7%;
+}
+.form{
+    padding: 5%;
+}
+.form-group {
+    margin-bottom: 0;
+}
+button.close>i{
+    color: red;
+    opacity: 0.8;
+}
+button.close>i:hover,button.close>i:active{
+    color: red;
+    opacity: 1;
+}
+.fa-plus-square,.fa-minus-square{
+    color: #00cc99;
+    font-size:26px
+}
+.fa-plus-square:hover,.fa-minus-square:hover{
+    color: #009973;
+}
+button.plus,button.minus{
+    border:none;
+    background-color: #f2f2f2;
+}
+button.plus:focus,button.minus:focus{
+    outline: none;
+}
+input[type=number]{
+    border:none;
+    width:50px;
+    background-color: inherit;
+    margin-bottom:5px;
+    text-align:center;
+}
+input[type=submit]{
+    font-size: 20px;
+    padding: 10px 15px;
+    background-color: #00cc99;
+    color: white ;
+    border: none;
+    border-radius: 10px;
+}
+input[type=submit]:hover{
+    color: #009973;
+    color: white ;
+}

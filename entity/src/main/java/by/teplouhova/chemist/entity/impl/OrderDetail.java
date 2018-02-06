@@ -14,6 +14,8 @@ public class OrderDetail extends Entity {
     private Order order;
 
     public OrderDetail() {
+        order=new Order();
+        medicine=new Medicine();
     }
 
     public long getRecordId() {

@@ -1,10 +1,12 @@
 package by.teplouhova.chemist.controller;
 
 import by.teplouhova.chemist.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 @WebListener
@@ -14,6 +16,7 @@ public class SessionInitListener implements HttpSessionListener {
         ResourceBundle bundle= MessageManager.EN.getBundle();
         httpSessionEvent.getSession().setAttribute("messageBundle",bundle);
         httpSessionEvent.getSession().setAttribute("locale","en-EN");
+
     }
 
     @Override

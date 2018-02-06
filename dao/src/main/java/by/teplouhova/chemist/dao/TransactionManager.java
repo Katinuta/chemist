@@ -3,7 +3,6 @@ package by.teplouhova.chemist.dao;
 
 import by.teplouhova.chemist.pool.ConnectionPool;
 import by.teplouhova.chemist.pool.ProxyConnection;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,11 +20,11 @@ public class TransactionManager {
 
             connection.setAutoCommit(false);
             dao.setConnection(connection);
-            Arrays.stream(listDAO).forEach(itemDAO -> {
-                itemDAO.setConnection(connection);
-            });
+            Arrays.stream(listDAO).forEach(itemDAO ->
+                itemDAO.setConnection(connection)
+            );
         } catch (SQLException e) {
-           LOGGER.log(Level.ERROR,"Transaction wasn't begun " ,e);
+           LOGGER.catching(e);
         }
     }
 
@@ -40,7 +39,7 @@ public class TransactionManager {
         try {
             connection.commit();
         } catch (SQLException e) {
-          LOGGER.log(Level.ERROR,"Transaction wasn't commited ",e);
+          LOGGER.catching(e);
         }
     }
 
@@ -48,7 +47,7 @@ public class TransactionManager {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.catching(e);
         }
     }
 
@@ -56,7 +55,7 @@ public class TransactionManager {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.catching(e);
         }
         ConnectionPool.getInstance().releaseConnection(connection);
     }

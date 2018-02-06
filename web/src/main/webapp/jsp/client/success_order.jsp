@@ -50,9 +50,9 @@
         </div>
 
         <div class="flex-container" >
-            <form>
-                <input type="hidden" name="command" value="clientpurchases"/>
-                <button class="button"><fmt:message bundle="${bundle}" key="ref.purchase"/></button>
+            <form action="/client">
+                <input type="hidden" name="command" value="show_all_orders"/>
+                <button class="button"><fmt:message bundle="${bundle}" key="ref.orders"/></button>
             </form>
         </div>
     </div>

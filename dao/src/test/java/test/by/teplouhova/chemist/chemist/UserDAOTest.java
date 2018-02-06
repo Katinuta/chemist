@@ -1,12 +1,8 @@
 package test.by.teplouhova.chemist.chemist;
 
+import by.teplouhova.chemist.dao.impl.UserDAOImpl;
 import by.teplouhova.chemist.entity.impl.RoleType;
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.dao.mysql.MySqlUserDAO;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -14,19 +10,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 //@Ignore
 //@Test(groups = "database")
 public class UserDAOTest {
 
     private Connection connection;
-    private MySqlUserDAO mySqlUserDAO;
+    private UserDAOImpl mySqlUserDAO;
 
 //    @BeforeClass
     public void setUp(){
-        mySqlUserDAO =new MySqlUserDAO();
+        mySqlUserDAO =new UserDAOImpl();
         ResourceBundle bundle = ResourceBundle.getBundle("testdatabase");
         String url = bundle.getString("url") + "?" +
                 "useUnicode=" + bundle.getString("useUnicode") + "&" +

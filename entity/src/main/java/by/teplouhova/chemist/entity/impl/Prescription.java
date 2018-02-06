@@ -4,10 +4,8 @@ import by.teplouhova.chemist.entity.Entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Prescription extends Entity {
     private long prescriptionId;
@@ -21,6 +19,8 @@ public class Prescription extends Entity {
     public Prescription() {
         details=new ArrayList<>();
         status=PrescriptionStatus.ACTIVE;
+        client=new User();
+        doctor=new User();
     }
 
     public Prescription(long prescriptionId) {

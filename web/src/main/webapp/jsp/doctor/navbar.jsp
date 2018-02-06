@@ -26,50 +26,49 @@
                     <fmt:message bundle="${bundle}" key="ref.account"/>
                 </a>
                 <div class="dropdown-content">
-                    <c:url var="allclients" value="/doctor">
-                        <c:param name="command" value="allclients"/>
-                        <c:param name="currentPage" value="1"/>
+                    <c:url var="show_all_clients" value="/doctor">
+                        <c:param name="command" value="show_all_clients"/>
+                        <c:param name="current_page" value="1"/>
                     </c:url>
 
-                    <a href="${allclients}"><fmt:message bundle="${bundle}" key="ref.clients"/></a>
-                    <c:url var="prescriptionstoextend" value="/doctor">
-                        <c:param name="command" value="prescriptoextend"/>
+                    <a href="${show_all_clients}"><fmt:message bundle="${bundle}" key="ref.clients"/></a>
+                    <c:url var="show_prescriptions_to_extend" value="/doctor">
+                        <c:param name="command" value="show_prescriptions_to_extend"/>
                     </c:url>
-                    <a href="${prescriptionstoextend}"><fmt:message bundle="${bundle}" key="ref.request.prescriptions"/></a>
-                    <c:url var="editpassword" value="/doctor">
-                        <c:param name="command" value="editpassword"/>
+                    <a href="${show_prescriptions_to_extend}"><fmt:message bundle="${bundle}" key="ref.request.prescriptions"/></a>
+                    <c:url var="to_edit_password" value="/doctor">
+                        <c:param name="command" value="to_edit_password"/>
                     </c:url>
 
-                    <a href="${editpassword}"><fmt:message bundle="${bundle}" key="ref.change.password"/></a>
+                    <a href="${to_edit_password}"><fmt:message bundle="${bundle}" key="ref.change.password"/></a>
 
-                    <c:url var="logout" value="/controller">
-                        <c:param name="command" value="logout"/>
+                    <c:url var="sign_out" value="/doctor">
+                        <c:param name="command" value="sign_out"/>
                     </c:url>
-                    <a href="${logout}"><fmt:message bundle="${bundle}" key="ref.logout"/></a>
+                    <a href="${sign_out}"><fmt:message bundle="${bundle}" key="ref.signout"/></a>
                 </div>
             </div>
         </li>
 
-        <c:url var="englishLang" value="/controller">
-            <c:param name="newlocale" value="en-EN"/>
-            <c:param name="command" value="locale"/>
-            <c:param name="page" value="${pageContext.request.requestURI}"/>
+        <c:url var="eng_lang" value="/doctor">
+            <c:param name="new_locale" value="en-EN"/>
+            <c:param name="command" value="change_locale"/>
         </c:url>
 
         <li>
-            <a href="${englishLang}">
+            <a href="${eng_lang}">
                 <img src="/image/united-kingdom-flag.png">
             </a>
         </li>
 
 
-        <c:url var="rusLang" value="/controller">
-            <c:param name="command" value="locale"/>
-            <c:param name="newlocale" value="ru-RU"/>
+        <c:url var="rus_lang" value="/doctor">
+            <c:param name="command" value="change_locale"/>
+            <c:param name="new_locale" value="ru-RU"/>
         </c:url>
         <li>
 
-            <a href="${rusLang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
         </li>
         <li>
             <ctg:hello-tag name="${user.name}"></ctg:hello-tag>

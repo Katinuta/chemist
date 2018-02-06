@@ -11,11 +11,10 @@ public class PrescriptionDetail extends Entity {
     private PrescriptionStatus status;
 
     public PrescriptionDetail() {
-    medicine=new Medicine();
-    status=PrescriptionStatus.ACTIVE;
+        medicine = new Medicine();
+        status = PrescriptionStatus.ACTIVE;
+        prescription = new Prescription();
     }
-
-
 
 
     public long getDetailId() {

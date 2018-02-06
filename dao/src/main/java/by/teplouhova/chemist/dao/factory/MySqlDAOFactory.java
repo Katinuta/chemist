@@ -1,19 +1,19 @@
 package by.teplouhova.chemist.dao.factory;
 
 import by.teplouhova.chemist.dao.*;
-import by.teplouhova.chemist.dao.mysql.*;
+import by.teplouhova.chemist.dao.impl.*;
 
 public class MySqlDAOFactory extends DAOFactory {
 
-    private  UserDAO userDAO=new MySqlUserDAO();
-    private  MedicineDAO medicineDAO=new MySqlMedicineDAO();
-    private PrescriptionDAO prescriptionDAO=new MySqlPrescriptionDAO();
-    private OrderDAO orderDAO=new MySqlOrderDAO();
-    private ReleaseFormDAO releaseFormDAO=new MySqlReleaseFormDAO();
-    private ProducerDAO producerDAO=new MySqlProducerDAO();
-    private DosageDAO dosageDAO=new MySqlDosageDAO();
-    private PrescripDetailDAO prescripDetailDAO=new MySqlPrescripDetailDAO();
-    private OrderDetailDAO orderDetailDAO= new MySqlOrderDetailDAO();
+    private  UserDAO userDAO=new UserDAOImpl();
+    private  MedicineDAO medicineDAO=new MedicineDAOImpl();
+    private PrescriptionDAO prescriptionDAO=new PrescriptionDAOImpl();
+    private OrderDAO orderDAO=new OrderDAOImpl();
+    private ReleaseFormDAO releaseFormDAO=new ReleaseFormDAOImpl();
+    private ProducerDAO producerDAO=new ProducerDAOImpl();
+    private DosageDAO dosageDAO=new DosageDAOImpl();
+    private PrescripDetailDAO prescripDetailDAO=new PrescripDetailDAOImpl();
+    private OrderDetailDAO orderDetailDAO= new OrderDetailDAOImpl();
 
     @Override
     public UserDAO getUserDAO() {

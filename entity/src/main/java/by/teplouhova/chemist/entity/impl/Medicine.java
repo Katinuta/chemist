@@ -20,10 +20,18 @@ public class Medicine extends Entity implements Serializable {
     private boolean isDeleted;
 
     public Medicine() {
+//        analog=new Medicine();
+        dosage=new Dosage();
+//        releaseForm=new ReleaseForm();
+//        producer=new Producer();
     }
 
     public Medicine(long medicineId) {
         this.medicineId = medicineId;
+//        analog=new Medicine();
+        dosage=new Dosage();
+//        releaseForm=new ReleaseForm();
+//        producer=new Producer();
     }
 
 
@@ -131,14 +139,10 @@ public class Medicine extends Entity implements Serializable {
 
         Medicine medicine = (Medicine) o;
 
-        if (medicineId != medicine.medicineId) return false;
-        if (quantityPackages != medicine.quantityPackages) return false;
         if (quantityInPackage != medicine.quantityInPackage) return false;
         if (isNeedRecipe != medicine.isNeedRecipe) return false;
-        if (isDeleted != medicine.isDeleted) return false;
         if (name != null ? !name.equals(medicine.name) : medicine.name != null) return false;
         if (price != null ? !price.equals(medicine.price) : medicine.price != null) return false;
-        if (analog != null ? !analog.equals(medicine.analog) : medicine.analog != null) return false;
         if (releaseForm != null ? !releaseForm.equals(medicine.releaseForm) : medicine.releaseForm != null)
             return false;
         if (producer != null ? !producer.equals(medicine.producer) : medicine.producer != null) return false;
@@ -148,18 +152,14 @@ public class Medicine extends Entity implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (medicineId ^ (medicineId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + quantityPackages;
         result = 31 * result + quantityInPackage;
         result = 31 * result + (isNeedRecipe ? 1 : 0);
-        result = 31 * result + (analog != null ? analog.hashCode() : 0);
         result = 31 * result + (releaseForm != null ? releaseForm.hashCode() : 0);
         result = 31 * result + (producer != null ? producer.hashCode() : 0);
         result = 31 * result + (dosage != null ? dosage.hashCode() : 0);
         result = 31 * result + (unitInPackage != null ? unitInPackage.hashCode() : 0);
-        result = 31 * result + (isDeleted ? 1 : 0);
         return result;
     }
 

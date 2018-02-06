@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.dao.manager;
 
 
-import by.teplouhova.chemist.pool.DAOConstant;
+import by.teplouhova.chemist.pool.ConfigurationConstant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,10 +37,10 @@ public class ConfigurationManager {
         String value;
 
             switch(key){
-                case DAOConstant.POOL_MAX_ACTIVE_KEY:
+                case ConfigurationConstant.POOL_MAX_ACTIVE_KEY:
                     value=property.getProperty(key,DEFAULT_POOL_MAX_ACTIVE);
                     break;
-                case DAOConstant.POOL_INIT_SIZE_KEY:
+                case ConfigurationConstant.POOL_INIT_SIZE_KEY:
                     value = property.getProperty(key,DEFAULT_POOL_INIT_SIZE);
                     break;
                 default:

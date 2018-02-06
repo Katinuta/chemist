@@ -1,9 +1,7 @@
 package by.teplouhova.chemist.dao;
 
 import by.teplouhova.chemist.entity.Entity;
-import by.teplouhova.chemist.dao.exception.DAOException;
 import by.teplouhova.chemist.pool.ProxyConnection;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

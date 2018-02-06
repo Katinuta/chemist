@@ -1,61 +1,56 @@
 package by.teplouhova.chemist.service;
 
 import by.teplouhova.chemist.dao.*;
-import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
 import by.teplouhova.chemist.entity.impl.*;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import javax.xml.soap.Detail;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderService {
-    private final static Logger LOGGER = LogManager.getLogger();
 
-    public List<Order> getUserOrders(long userId) throws ServiceException {
-        List<Order> orders;
+    private OrderDAO orderDAO;
+    private OrderDetailDAO orderDetailDAO;
+
+    public OrderService() {
+        orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
+        orderDetailDAO = DAOFactory.getDAOFactory().getOrderDetailDAO();
+    }
+
+
+
+    public Order getById(long orderId) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        OrderDAO orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
         manager.beginTransaction(orderDAO);
+        Order order = null;
         try {
-            orders = orderDAO.findOrdersByClientId(userId);
+            order = orderDAO.findById(orderId);
+            if(order==null){
+                throw new ServiceException("Order by id is not found id:" + orderId);
+            }
+            manager.beginTransaction(orderDetailDAO);
+            List<OrderDetail> details = orderDetailDAO.findAllByOrderId(order.getOrderId());
+            order.setDetails(details);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Order by id is not found id:" + orderId);
+        } finally {
+            manager.endTransaction();
         }
-        return orders;
+        return order;
     }
-public Order getById(long orderId ) throws ServiceException {
-        TransactionManager manager=new TransactionManager();
-        OrderDAO orderDAO=DAOFactory.getDAOFactory().getOrderDAO();
-        OrderDetailDAO orderDetailDAO=DAOFactory.getDAOFactory().getOrderDetailDAO();
-        manager.beginTransaction(orderDAO);
-    Order order=null;
-    try {
-       order=orderDAO.findById(orderId);
-       manager.beginTransaction(orderDetailDAO);
-        List<OrderDetail> details=orderDetailDAO.findAllByOrderId(order.getOrderId());
-       order.setDetails(details);
-    } catch (DAOException e) {
-        throw new ServiceException(e);
-    }finally {
-        manager.endTransaction();
-    }
-    return order;
-}
+
     public void create(Order order) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        OrderDAO orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
-        OrderDetailDAO orderDetailDAO = DAOFactory.getDAOFactory().getOrderDetailDAO();
         UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
         MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
-
-        manager.beginTransaction(orderDAO, orderDetailDAO, userDAO, medicineDAO);
+        PrescripDetailDAO prescripDetailDAO=DAOFactory.getDAOFactory().getPrescripDetailDAO();
+        PrescriptionDAO prescriptionDAO=DAOFactory.getDAOFactory().getPrescriptionDAO();
+        manager.beginTransaction(orderDAO, orderDetailDAO, userDAO, medicineDAO,prescripDetailDAO);
         try {
-            User user = order.getUser();
-            BigDecimal balance = userDAO.findBalanceByUserId(user.getUserId());
+
+            User user = userDAO.findById(order.getUser().getUserId());
+            BigDecimal balance = user.getAccount();
             BigDecimal newBalance = balance.subtract(order.getTotal());
             user.setAccount(newBalance);
             userDAO.update(user);
@@ -63,22 +58,32 @@ public Order getById(long orderId ) throws ServiceException {
             List<OrderDetail> details = order.getDetails();
             orderDAO.create(order);
             order = orderDAO.findById(order.getOrderId());
-
             for (OrderDetail detail : details) {
                 detail.setOrder(order);
                 Medicine medicine = detail.getMedicine();
+
+                if(medicine.getIsNeedRecipe()){
+                    PrescriptionDetail  prescripDetail=prescripDetailDAO.findByUserIdMedicineId(user.getUserId(),medicine.getMedicineId());
+                    if(prescripDetail==null){
+                        throw new ServiceException("Prescription for medicine is not found");
+                    }
+                    prescripDetail.setStatus(PrescriptionStatus.USED);
+                    Prescription prescription=prescripDetail.getPrescription();
+                    prescription.setStatus(PrescriptionStatus.USED);
+                    prescripDetailDAO.update(prescripDetail);
+                    prescriptionDAO.update(prescription);
+                }
+
                 medicine = medicineDAO.findByIdEdit(medicine.getMedicineId());
-                medicine.setQuantityPackages(medicine.getQuantityPackages()- detail.getQuantity());
+                medicine.setQuantityPackages(medicine.getQuantityPackages() - detail.getQuantity());
                 medicineDAO.update(medicine);
                 orderDetailDAO.create(detail);
-
             }
-
             order.setDetails(details);
             manager.commit();
         } catch (DAOException e) {
             manager.rollback();
-            throw new ServiceException(e);
+            throw new ServiceException("Order is not issued", e);
         } finally {
             manager.endTransaction();
         }

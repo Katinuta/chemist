@@ -1,14 +1,11 @@
 package by.teplouhova.chemist.service;
 
 import by.teplouhova.chemist.dao.DosageDAO;
-import by.teplouhova.chemist.dao.ReleaseFormDAO;
 import by.teplouhova.chemist.dao.TransactionManager;
-import by.teplouhova.chemist.dao.exception.DAOException;
+import by.teplouhova.chemist.dao.DAOException;
 import by.teplouhova.chemist.dao.factory.DAOFactory;
-import by.teplouhova.chemist.entity.impl.ReleaseForm;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class DosageService {
 

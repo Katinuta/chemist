@@ -1,6 +1,5 @@
 package by.teplouhova.chemist.controller;
 
-import by.teplouhova.chemist.manager.MessageManager;
 import by.teplouhova.chemist.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -11,8 +10,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @WebListener
 public class ChemistContextListener implements ServletContextListener {
@@ -24,10 +21,9 @@ public class ChemistContextListener implements ServletContextListener {
 
         ConnectionPool.getInstance().closePoolConnections();
         try {
-            DriverManager.deregisterDriver(DriverManager.getDriver("com.mysql.jdbc.Driver"));
-//
+            DriverManager.deregisterDriver(DriverManager.getDriver("com.impl.jdbc.Driver"));
         } catch (SQLException e) {
-//            LOGGER.log(Level.ERROR,"Connection driver is not deregistered ");
+            LOGGER.log(Level.FATAL,"Connection driver is not unregistered ");
 
         }
     }

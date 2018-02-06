@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static by.teplouhova.chemist.pool.ConfigurationConstant.*;
+
 class ConnectionConfiguration {
 
     private final static Logger LOGGER = LogManager.getLogger();
@@ -21,15 +23,15 @@ class ConnectionConfiguration {
     private final static ConnectionConfiguration configuration = new ConnectionConfiguration();
 
     private ConnectionConfiguration() {
-        POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_INIT_SIZE_KEY));
-        POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getString(DAOConstant.POOL_MAX_ACTIVE_KEY));
-        URL = ConfigurationManager.getInstance().getString(DAOConstant.URL_KEY) + "?" +
-                "useUnicode=" + ConfigurationManager.getInstance().getString("useUnicode") + "&" +
-                "characterEncoding=" + ConfigurationManager.getInstance().getString("characterEncoding") + "&" +
-                "useSSL=" + ConfigurationManager.getInstance().getString("useSSL");
+        POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getString(POOL_INIT_SIZE_KEY));
+        POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getString(POOL_MAX_ACTIVE_KEY));
+        URL = ConfigurationManager.getInstance().getString(ConfigurationConstant.URL_KEY) + "?" +
+                "useUnicode=" + ConfigurationManager.getInstance().getString(ConfigurationConstant.USE_UNICODE_KEY) + "&" +
+                "characterEncoding=" + ConfigurationManager.getInstance().getString(CHARACTER_ENCOD_KEY) + "&" +
+                "useSSL=" + ConfigurationManager.getInstance().getString(USE_SSL_KEY);
 
-        USER = ConfigurationManager.getInstance().getString("user");
-        PASSWORD = ConfigurationManager.getInstance().getString("password");
+        USER = ConfigurationManager.getInstance().getString(USER_KEY);
+        PASSWORD = ConfigurationManager.getInstance().getString(PASSWORD_KEY);
     }
 
     public static ConnectionConfiguration getConfiguration() {

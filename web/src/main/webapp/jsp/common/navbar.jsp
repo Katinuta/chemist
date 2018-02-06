@@ -17,37 +17,37 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <c:url var="register" value="/user">
-                <c:param name="command" value="register"/>
+            <c:url var="to_sign_up" value="/user">
+                <c:param name="command" value="to_sign_up"/>
             </c:url>
-            <a href="${register}">
+            <a href="${to_sign_up}">
                 <span class="glyphicon glyphicon-user"></span>
                 <fmt:message bundle="${bundle}" key="ref.register"/></a>
         </li>
         <li>
-            <c:url var="signin" value="/user">
-                <c:param name="command" value="signin"></c:param>
+            <c:url var="to_sign_in" value="/user">
+                <c:param name="command" value="to_sign_in"></c:param>
             </c:url>
-            <a href="${signin}">
+            <a href="${to_sign_in}">
                 <span class="glyphicon glyphicon-user"></span>
                 <fmt:message bundle="${bundle}" key="ref.signin"/></a>
         </li>
         <li>
-            <c:url var="englishLang" value="/user">
-                <c:param name="newlocale" value="en-EN"/>
-                <c:param name="command" value="locale"/>
+            <c:url var="eng_lang" value="/user">
+                <c:param name="new_locale" value="en-EN"/>
+                <c:param name="command" value="change_locale"/>
             </c:url>
-            <a href="${englishLang}">
+            <a href="${eng_lang}">
                 <img src="/image/united-kingdom-flag.png">
             </a>
         </li>
 
         <li>
-            <c:url var="rusLang" value="/user">
-                <c:param name="command" value="locale"/>
-                <c:param name="newlocale" value="ru-RU"/>
+            <c:url var="rus_lang" value="/user">
+                <c:param name="command" value="change_locale"/>
+                <c:param name="new_locale" value="ru-RU"/>
             </c:url>
-            <a href="${rusLang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
         </li>
 
     </ul>
