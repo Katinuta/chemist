@@ -10,20 +10,42 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+/**
+ * The Class DosageDAOImpl extends from DosageDAO
+ */
 public class DosageDAOImpl extends DosageDAO {
+
+    /** The Constant SQL_INSERT_DOSAGE. */
     private final static String SQL_INSERT_DOSAGE =
             "INSERT INTO chemist.dosage (d_dosage_size, d_dosage_unit) VALUES ( ?, ?)";
+
+    /** The Constant SQL_SELECT_UNITS_DOSAGE. */
     private final static String SQL_SELECT_UNITS_DOSAGE=
             "SELECT DISTINCT dosage.d_dosage_unit FROM chemist.dosage ORDER BY d_dosage_unit";
+
+    /** The Constant SQL_SELECT_DOSAGE_BY_SIZE_UNIT. */
     private final static String SQL_SELECT_DOSAGE_BY_SIZE_UNIT=
             "SELECT d_dosage_id,d_dosage_size,d_dosage_unit FROM chemist.dosage " +
                     "WHERE d_dosage_size=? AND d_dosage_unit=?";
 
+    /**
+     * Find by id dosage.
+     *
+     * @param id the id
+     * @return the dosage
+     */
     @Override
     public Dosage findById(long id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Creates the dosage.
+     *
+     * @param entity the dosage
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void create(Dosage entity) throws DAOException {
         PreparedStatement statement=null;
@@ -44,11 +66,22 @@ public class DosageDAOImpl extends DosageDAO {
 
     }
 
+    /**
+     * Update dosage.
+     *
+     * @param entity the dosage
+     */
     @Override
     public void update(Dosage entity) {
-
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Find dosage units.
+     *
+     * @return the array list
+     * @throws DAOException the DAO exception
+     */
     @Override
     public ArrayList<String> findDosageUnits() throws DAOException {
         PreparedStatement statement=null;
@@ -70,6 +103,14 @@ public class DosageDAOImpl extends DosageDAO {
         return dosageUnits;
     }
 
+    /**
+     * Find id  of dosage by size unit.
+     *
+     * @param dosageSize the dosage size
+     * @param dosageUnit the dosage unit
+     * @return the dosage
+     * @throws DAOException the DAO exception
+     */
     @Override
     public Dosage findIdBySizeUnit(BigDecimal dosageSize, String dosageUnit) throws DAOException {
         PreparedStatement statement=null;

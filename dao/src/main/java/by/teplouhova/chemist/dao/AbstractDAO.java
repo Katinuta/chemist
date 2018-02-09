@@ -8,25 +8,66 @@ import org.apache.logging.log4j.Logger;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class AbstractDAO <T extends Entity>  {
-    private static final Logger LOGGER= LogManager.getLogger();
+/**
+ * The Class AbstractDAO.
+ *
+ * @param <T> the generic type
+ */
+public abstract class AbstractDAO<T extends Entity> {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    /**
+     * The connection.
+     */
     protected ProxyConnection connection;
+
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the t
+     * @throws DAOException the DAO exception
+     */
     public abstract T findById(long id) throws DAOException;
+
+    /**
+     * Creates the.
+     *
+     * @param entity the entity
+     * @throws DAOException the DAO exception
+     */
     public abstract void create(T entity) throws DAOException;
+
+    /**
+     * Update.
+     *
+     * @param entity the entity
+     * @throws DAOException the DAO exception
+     */
     public abstract void update(T entity) throws DAOException;
 
 
+    /**
+     * Sets the connection.
+     *
+     * @param connection the new connection
+     */
     void setConnection(ProxyConnection connection) {
         this.connection = connection;
     }
 
-    public void close(Statement st)  {
-        if(st!=null){
+    /**
+     * Close connection.
+     *
+     * @param st the st
+     */
+    public void close(Statement st) {
+        if (st != null) {
             try {
                 st.close();
             } catch (SQLException e) {
-            LOGGER.catching(e);
+                LOGGER.catching(e);
             }
         }
     }

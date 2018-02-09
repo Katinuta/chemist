@@ -6,8 +6,6 @@ import by.teplouhova.chemist.entity.impl.Medicine;
 import by.teplouhova.chemist.entity.impl.Prescription;
 import by.teplouhova.chemist.entity.impl.PrescriptionDetail;
 import by.teplouhova.chemist.entity.impl.PrescriptionStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,9 +14,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class PrescriptionDetailDAOImpl.
+ */
 public class PrescripDetailDAOImpl extends PrescripDetailDAO {
-    private static final Logger LOGGER=  LogManager.getLogger();
 
+
+    /**
+     * The Constant SQL_SELECT_ALL_PRESCRIP_DETAIL_BY_PRESRIP_ID.
+     */
     private static final String SQL_SELECT_ALL_PRESCRIP_DETAIL_BY_PRESRIP_ID =
             "SELECT pd_record_id,pd_quantity_pack,m_medicine_id,p_prescription_id, pd_status, " +
                     "CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
@@ -34,37 +38,64 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
                     "JOIN chemist.release_form USING(rf_release_form_id) " +
                     "LEFT JOIN chemist.dosage USING(d_dosage_id)" +
                     "WHERE prescription_detail.p_prescription_id = ? ";
+
+    /**
+     * The Constant SQL_UPDATE_PRESCRIPTION_DETAIL.
+     */
     private static final String SQL_UPDATE_PRESCRIPTION_DETAIL =
             "UPDATE prescription_detail SET pd_quantity_pack=?,p_prescription_id=?, " +
                     "m_medicine_id=?, pd_status=? WHERE pd_record_id=? ";
-    private static final String SQL_SELECT_PRESCRIP_DEYAIL_BY_ID=
+
+    /**
+     * The Constant SQL_SELECT_PRESCRIP_DEYAIL_BY_ID.
+     */
+    private static final String SQL_SELECT_PRESCRIP_DEYAIL_BY_ID =
             "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
                     " FROM chemist.prescription_detail " +
                     " WHERE pd_record_id=? ";
-    private static final  String SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID=
-            "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
-            " FROM chemist.prescription_detail " +
-            " WHERE m_medicine_id=? AND prescription_detail.p_prescription_id = ? ";
-    private static final  String SQL_SELECT_BY_USER_ID_AND_MEDICINE_ID=
-            "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
-            ",p_date_begin,p_date_end,u_doctor_id,p_status,u_user_id  " +
-            "FROM prescription_detail " +
-            "JOIN prescription USING(p_prescription_id) " +
-            "WHERE u_user_id=? AND m_medicine_id=?;";
 
-    private static final String SQL_INSERT_PRESCRIPTION_DETAIL=
+    /**
+     * The Constant SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID.
+     */
+    private static final String SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID =
+            "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
+                    " FROM chemist.prescription_detail " +
+                    " WHERE m_medicine_id=? AND prescription_detail.p_prescription_id = ? ";
+
+    /**
+     * The Constant SQL_SELECT_BY_USER_ID_AND_MEDICINE_ID.
+     */
+    private static final String SQL_SELECT_BY_USER_ID_AND_MEDICINE_ID =
+            "SELECT pd_record_id,pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status " +
+                    ",p_date_begin,p_date_end,u_doctor_id,p_status,u_user_id  " +
+                    "FROM prescription_detail " +
+                    "JOIN prescription USING(p_prescription_id) " +
+                    "WHERE u_user_id=? AND m_medicine_id=?;";
+
+    /**
+     * The Constant SQL_INSERT_PRESCRIPTION_DETAIL.
+     */
+    private static final String SQL_INSERT_PRESCRIPTION_DETAIL =
             "INSERT INTO chemist.prescription_detail (pd_quantity_pack,p_prescription_id,m_medicine_id,pd_status) " +
-            " VALUES (?, ?, ?, ?)";
+                    " VALUES (?, ?, ?, ?)";
+
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the prescription detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public PrescriptionDetail findById(long id) throws DAOException {
         PreparedStatement statement = null;
-        PrescriptionDetail detail=null;
+        PrescriptionDetail detail = null;
         try {
-            statement=connection.prepareStatement(SQL_SELECT_PRESCRIP_DEYAIL_BY_ID);
-            statement.setLong(1,id);
-            ResultSet result=statement.executeQuery();
-            if(result.next()){
-                detail=new PrescriptionDetail();
+            statement = connection.prepareStatement(SQL_SELECT_PRESCRIP_DEYAIL_BY_ID);
+            statement.setLong(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                detail = new PrescriptionDetail();
                 detail.setDetailId(result.getLong("pd_record_id"));
                 detail.setQuantityPack(result.getInt("pd_quantity_pack"));
                 detail.setStatus(PrescriptionStatus.valueOf(result.getString("pd_status").toUpperCase()));
@@ -75,39 +106,51 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
 
         } catch (SQLException e) {
             throw new DAOException(e);
-        }finally {
+        } finally {
             close(statement);
         }
         return detail;
     }
 
+    /**
+     * Creates the prescription detail.
+     *
+     * @param entity the prescription detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void create(PrescriptionDetail entity) throws DAOException {
-        PreparedStatement statement=null;
+        PreparedStatement statement = null;
         try {
-            statement=connection.prepareStatement(SQL_INSERT_PRESCRIPTION_DETAIL);
-            statement.setInt(1,entity.getQuantityPack());
-            statement.setLong(2,entity.getPrescription().getPrescriptionId());
-            statement.setLong(3,entity.getMedicine().getMedicineId());
+            statement = connection.prepareStatement(SQL_INSERT_PRESCRIPTION_DETAIL);
+            statement.setInt(1, entity.getQuantityPack());
+            statement.setLong(2, entity.getPrescription().getPrescriptionId());
+            statement.setLong(3, entity.getMedicine().getMedicineId());
             statement.setString(4, entity.getStatus().getNameStatus());
             statement.execute();
         } catch (SQLException e) {
-            throw  new DAOException(e);
-        }finally {
+            throw new DAOException(e);
+        } finally {
             close(statement);
         }
     }
 
+    /**
+     * Update prescription detail.
+     *
+     * @param entity the prescription detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void update(PrescriptionDetail entity) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_UPDATE_PRESCRIPTION_DETAIL);
 
-            statement.setInt(1,entity.getQuantityPack());
+            statement.setInt(1, entity.getQuantityPack());
             statement.setLong(2, entity.getPrescription().getPrescriptionId());
-            statement.setLong(3,entity.getMedicine().getMedicineId());
-            statement.setString(4,entity.getStatus().name().toLowerCase());
+            statement.setLong(3, entity.getMedicine().getMedicineId());
+            statement.setString(4, entity.getStatus().name().toLowerCase());
             statement.setLong(5, entity.getDetailId());
             statement.execute();
 
@@ -118,6 +161,13 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
         }
     }
 
+    /**
+     * Find all by prescription id.
+     *
+     * @param id the id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     @Override
     public List<PrescriptionDetail> findAllByPrescriptionId(long id) throws DAOException {
         PreparedStatement statement = null;
@@ -131,7 +181,7 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
                 detail.setDetailId(result.getLong("pd_record_id"));
                 detail.setQuantityPack(result.getInt("pd_quantity_pack"));
                 detail.setStatus(PrescriptionStatus.valueOf(result.getString("pd_status").toUpperCase()));
-                Medicine medicine=new Medicine(result.getLong("m_medicine_id"));
+                Medicine medicine = new Medicine(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
                 detail.setMedicine(medicine);
                 detail.setPrescription(new Prescription(result.getLong("p_prescription_id")));
@@ -147,16 +197,24 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
         return !details.isEmpty() ? details : null;
     }
 
+    /**
+     * Find by prescrip id medicine id.
+     *
+     * @param prescriptionId the prescription id
+     * @param medicineId     the medicine id
+     * @return the prescription detail
+     * @throws DAOException the DAO exception
+     */
     public PrescriptionDetail findByPrescripIdMedicineId(long prescriptionId, long medicineId) throws DAOException {
-        PrescriptionDetail detail=null;
-        PreparedStatement statement=null;
+        PrescriptionDetail detail = null;
+        PreparedStatement statement = null;
         try {
-            statement=connection.prepareStatement(SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID);
-            statement.setLong(2,prescriptionId);
-            statement.setLong(1,medicineId);
-            ResultSet result=statement.executeQuery();
-            if(result.next()){
-                detail=new PrescriptionDetail();
+            statement = connection.prepareStatement(SQL_SELECT_BY_PRESCRIP_ID_AND_MEDICINE_ID);
+            statement.setLong(2, prescriptionId);
+            statement.setLong(1, medicineId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                detail = new PrescriptionDetail();
                 detail.setDetailId(result.getLong("pd_record_id"));
                 detail.setQuantityPack(result.getInt("pd_quantity_pack"));
                 detail.getMedicine().setMedicineId(result.getLong("m_medicine_id"));
@@ -166,7 +224,7 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
-        }finally {
+        } finally {
             close(statement);
         }
 
@@ -174,17 +232,25 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
 
     }
 
+    /**
+     * Find by user id medicine id.
+     *
+     * @param userId     the user id
+     * @param medicineId the medicine id
+     * @return the prescription detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public PrescriptionDetail findByUserIdMedicineId(long userId, long medicineId) throws DAOException {
-        PrescriptionDetail detail=null;
-        PreparedStatement statement=null;
+        PrescriptionDetail detail = null;
+        PreparedStatement statement = null;
         try {
-            statement=connection.prepareStatement(SQL_SELECT_BY_USER_ID_AND_MEDICINE_ID);
-            statement.setLong(1,userId);
-            statement.setLong(2,medicineId);
-            ResultSet result=statement.executeQuery();
-            if(result.next()){
-                detail=new PrescriptionDetail();
+            statement = connection.prepareStatement(SQL_SELECT_BY_USER_ID_AND_MEDICINE_ID);
+            statement.setLong(1, userId);
+            statement.setLong(2, medicineId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                detail = new PrescriptionDetail();
                 detail.setDetailId(result.getLong("pd_record_id"));
                 detail.setQuantityPack(result.getInt("pd_quantity_pack"));
                 detail.getMedicine().setMedicineId(result.getLong("m_medicine_id"));
@@ -200,7 +266,7 @@ public class PrescripDetailDAOImpl extends PrescripDetailDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
-        }finally {
+        } finally {
             close(statement);
         }
 

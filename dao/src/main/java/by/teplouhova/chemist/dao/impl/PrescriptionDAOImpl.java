@@ -5,8 +5,6 @@ import by.teplouhova.chemist.dao.DAOException;
 import by.teplouhova.chemist.entity.impl.Prescription;
 import by.teplouhova.chemist.entity.impl.PrescriptionStatus;
 import by.teplouhova.chemist.entity.impl.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,16 +13,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class PrescriptionDAOImpl.
+ */
 public class PrescriptionDAOImpl extends PrescriptionDAO {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
-
+    /** The Constant SELECT_PRESCRIPTION_BY_CLIENT_ID. */
     private static final String SELECT_PRESCRIPTION_BY_CLIENT_ID =
             "SELECT p_prescription_id,p_date_begin,p_date_end, u_doctor_id, user.u_name, user.u_surname, p_status FROM chemist.prescription " +
                     "JOIN chemist.user ON prescription.u_doctor_id=user.u_user_id " +
                     "WHERE prescription.u_user_id=?";
 
+    /** The Constant SQL_SELECT_PRESCRIPTION_BY_ID. */
     private static final String SQL_SELECT_PRESCRIPTION_BY_ID =
             "SELECT prescription.u_user_id, p_prescription_id,p_date_begin,p_date_end, u_doctor_id," +
                     "doctor.u_name AS doctorname, doctor.u_surname AS doctorsurename, " +
@@ -34,21 +34,35 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
                     "JOIN chemist.user client ON prescription.u_user_id=client.u_user_id " +
                     "WHERE p_prescription_id=?";
 
+    /** The Constant SQL_UPDATE_PRESCRIPTION. */
     private static final  String SQL_UPDATE_PRESCRIPTION=
             "UPDATE chemist.prescription SET u_user_id=?, p_date_begin=?, p_date_end=?, u_doctor_id=?, p_status=? " +
-            " WHERE p_prescription_id=?";
+                    " WHERE p_prescription_id=?";
+
+    /** The Constant SQL_SELECT_PRESCRIPTION_BY_DOCTOR_ID. */
     private static final String SQL_SELECT_PRESCRIPTION_BY_DOCTOR_ID=
             "SELECT p_prescription_id,p_date_begin,p_date_end,u_doctor_id,prescription.u_user_id, " +
                     "user.u_name, user.u_surname, p_status FROM chemist.prescription " +
                     "JOIN chemist.user ON prescription.u_user_id=user.u_user_id " +
                     "WHERE prescription.u_doctor_id=? ORDER BY p_status";
+
+    /** The Constant SQL_SELECT_PRESCRIP_BY_DOCTOR_ID_EXTAND. */
     private static final  String SQL_SELECT_PRESCRIP_BY_DOCTOR_ID_EXTAND="SELECT p_prescription_id,p_date_begin,p_date_end,u_doctor_id,prescription.u_user_id, " +
             "user.u_name, user.u_surname, p_status FROM chemist.prescription " +
             "JOIN chemist.user ON prescription.u_user_id=user.u_user_id " +
             "WHERE prescription.u_doctor_id=? AND prescription.p_status=?  ORDER BY p_date_begin ";
 
+    /** The Constant SQL_INSERT_PRESCRIPTION. */
     private static final  String SQL_INSERT_PRESCRIPTION=
             "INSERT INTO chemist.prescription (u_user_id,p_date_begin,p_date_end,u_doctor_id,p_status) VALUES ( ?,?,?,?,?)";
+
+    /**
+     * Find prescription by client id.
+     *
+     * @param clientId the client id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Prescription> findPrescriptionByClientId(long clientId) throws DAOException {
         List<Prescription> prescriptions = new ArrayList<>();
         PreparedStatement statement = null;
@@ -78,6 +92,13 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
         return !prescriptions.isEmpty()?prescriptions:null;
     }
 
+    /**
+     * Find prescription by doctor id.
+     *
+     * @param doctorId the doctor id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     @Override
     public List<Prescription> findPrescriptionByDoctorId(long doctorId) throws DAOException {
         PreparedStatement statement=null;
@@ -112,6 +133,13 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
 
     }
 
+    /**
+     * Find prescrip by doctor id extand.
+     *
+     * @param doctorId the doctor id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     @Override
     public List<Prescription> findPrescripByDoctorIdExtand(long doctorId) throws DAOException {
         PreparedStatement statement=null;
@@ -147,6 +175,13 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
 
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the prescription
+     * @throws DAOException the DAO exception
+     */
     @Override
     public Prescription findById(long id) throws DAOException {
         PreparedStatement statement = null;
@@ -180,6 +215,12 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
         return prescription;
     }
 
+    /**
+     * Creates the.
+     *
+     * @param entity the entity
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void create(Prescription entity) throws DAOException {
         PreparedStatement statement=null;
@@ -204,6 +245,12 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
 
     }
 
+    /**
+     * Update.
+     *
+     * @param entity the entity
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void update(Prescription entity) throws DAOException {
         PreparedStatement statement=null;
@@ -223,3 +270,4 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
         }
     }
 }
+

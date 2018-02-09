@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="default">
+    <test name="default">
+        <classes>
+            <class name="test.by.teplouhova.chemist.validator.MedicineValidatorInvalidTest"/>
+            <class name="test.by.teplouhova.chemist.validator.MedicineValidatorValidTest"/>
+            <class name="test.by.teplouhova.chemist.validator.PrescriptionValidatorInvalidTest"/>
+            <class name="test.by.teplouhova.chemist.validator.PrescriptionValidatorValidTest"/>
+            <class name="test.by.teplouhova.chemist.validator.UserValidatorInvalidTest"/>
+            <class name="test.by.teplouhova.chemist.validator.UserValidatorValidTest"/>
+            <class name="test.by.teplouhova.chemist.pool.ConnectionPoolTest"/>
+            <class name="test.by.teplouhova.chemist.property.PropertyTest"/>
+        </classes>
+    </test>
+</suite>

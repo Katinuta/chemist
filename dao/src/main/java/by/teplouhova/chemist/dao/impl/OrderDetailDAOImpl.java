@@ -13,11 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class OrderDetailDAOImpl.
+ */
 public class OrderDetailDAOImpl extends OrderDetailDAO {
 
+    /** The Constant SQL_INSERT_ORDER_DETAIL. */
     private static final String SQL_INSERT_ORDER_DETAIL=
             "INSERT INTO chemist.order_detail ( m_medicine_id, od_quantity, od_amount, o_order_id, od_price) " +
                     " VALUES (?, ?, ?, ?, ?)";
+
+    /** The Constant SQL_SELECT_ALL_BY_ORDER_ID. */
     private static final String SQL_SELECT_ALL_BY_ORDER_ID=
             "SELECT od_record_id, m_medicine_id,od_quantity,od_price ,od_amount,o_order_id , CONCAT(medicine.m_name,' ',release_form.rf_name,' ',  " +
                     "            IFNULL( IF(dosage.d_dosage_size > 1,  " +
@@ -34,14 +40,27 @@ public class OrderDetailDAOImpl extends OrderDetailDAO {
                     "   WHERE o_order_id=? " +
                     "ORDER BY fullname ";
 
+    /**
+     * Find order detail by id.
+     *
+     * @param id the id
+     * @return the order detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public OrderDetail findById(long id) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Creates the order detail.
+     *
+     * @param entity the entity
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void create(OrderDetail entity) throws DAOException {
-        PreparedStatement statement=null;
+        PreparedStatement statement;
         try {
             statement=connection.prepareStatement(SQL_INSERT_ORDER_DETAIL, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1,entity.getMedicine().getMedicineId());
@@ -60,11 +79,24 @@ public class OrderDetailDAOImpl extends OrderDetailDAO {
 
     }
 
+    /**
+     * Update order detail.
+     *
+     * @param entity the order detail
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void update(OrderDetail entity) throws DAOException {
-
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Find all by order id.
+     *
+     * @param orderId the order id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<OrderDetail> findAllByOrderId(long orderId) throws DAOException {
         List<OrderDetail> details=new ArrayList<>();
         PreparedStatement statement=null;

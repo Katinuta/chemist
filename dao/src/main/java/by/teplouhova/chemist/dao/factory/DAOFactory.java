@@ -3,7 +3,7 @@ package by.teplouhova.chemist.dao.factory;
 import by.teplouhova.chemist.dao.*;
 
 /**
- * A factory for creating DAO objects.
+ * Abstract class factory for creating DAO objects.
  */
 public abstract class DAOFactory {
 

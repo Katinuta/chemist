@@ -14,17 +14,31 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The Class OrderDAOImpl.
+ */
 public class OrderDAOImpl extends OrderDAO {
-    private static final Logger LOGGER= LogManager.getLogger();
 
+
+    /** The Constant SQL_INSERT_ORDER. */
     private final static String SQL_INSERT_ORDER =
             "INSERT INTO chemist.order (u_user_id,o_date_created,o_total_sum,o_status) VALUES ( ?,CURDATE(),?,?)";
+
+    /** The Constant SQL_SELECT_ORDERS_BY_CLIENT_ID. */
     private static final String SQL_SELECT_ORDERS_BY_CLIENT_ID =
             "SELECT o_order_id,o_date_created,o_status,o_total_sum FROM chemist.order WHERE u_user_id =?";
 
+    /** The Constant SQL_SELECT_BY_ID. */
     private static final String SQL_SELECT_BY_ID =
             "SELECT o_order_id,o_date_created,o_status,o_total_sum FROM chemist.order WHERE o_order_id =?";
+
+    /**
+     * Find order by id.
+     *
+     * @param id the id
+     * @return the order
+     * @throws DAOException the DAO exception
+     */
     @Override
     public Order findById(long id) throws DAOException {
         PreparedStatement statement = null;
@@ -42,13 +56,19 @@ public class OrderDAOImpl extends OrderDAO {
             }
 
         } catch (SQLException e) {
-           throw new DAOException(e);
+            throw new DAOException(e);
         }finally {
             close(statement);
         }
         return order;
     }
 
+    /**
+     * Creates the order.
+     *
+     * @param entity the order
+     * @throws DAOException the DAO exception
+     */
     @Override
     public void create(Order entity) throws DAOException {
         PreparedStatement statement = null;
@@ -57,7 +77,7 @@ public class OrderDAOImpl extends OrderDAO {
             statement.setLong(1, entity.getUser().getUserId());
             statement.setBigDecimal(2, entity.getTotal());
             statement.setString(3,entity.getStatus().name().toLowerCase());
-           statement.executeUpdate();
+            statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
                 entity.setOrderId(result.getLong(1));
@@ -70,12 +90,24 @@ public class OrderDAOImpl extends OrderDAO {
 
     }
 
+    /**
+     * Update order.
+     *
+     * @param entity the entity
+     */
     @Override
     public void update(Order entity) {
-
+        throw new UnsupportedOperationException();
     }
 
 
+    /**
+     * Find orders by client id.
+     *
+     * @param id the id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     @Override
     public List<Order> findOrdersByClientId(long id) throws DAOException {
         PreparedStatement statement = null;
@@ -100,3 +132,4 @@ public class OrderDAOImpl extends OrderDAO {
         return !orders.isEmpty() ? orders : null;
     }
 }
+
