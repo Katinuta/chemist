@@ -1,7 +1,7 @@
 package by.teplouhova.chemist.creator;
 
 import by.teplouhova.chemist.entity.impl.User;
-import by.teplouhova.chemist.validator.FieldName;
+import by.teplouhova.chemist.validator.ParameterName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +23,7 @@ public class UserCreator {
         keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
             String current=entry.getKey();
             try{
-                FieldName field=FieldName.valueOf(current.toUpperCase());
+                ParameterName field= ParameterName.valueOf(current.toUpperCase());
                 fillField(field,entry.getValue());
             }catch (IllegalArgumentException e){
                 LOGGER.info("Parameter is not field  : " +current );
@@ -32,7 +32,7 @@ public class UserCreator {
         return user;
     }
 
-    private void fillField(FieldName name, String value) {
+    private void fillField(ParameterName name, String value) {
 
         switch (name) {
             case USER_NAME: {

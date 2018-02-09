@@ -29,7 +29,6 @@ public class ShowDoctorPrescriptionsCommand implements Command {
     private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
 
 
-
     private PrescriptionService prescriptionService;
 
     public ShowDoctorPrescriptionsCommand(PrescriptionService prescriptionService) {
@@ -50,11 +49,10 @@ public class ShowDoctorPrescriptionsCommand implements Command {
                 content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.prescrip.emty"));
             }
 
-
         } catch (ServiceException e) {
             page= PAGE_ERROR;
-            responseType=REDIRECT;
-            LOGGER.log(Level.ERROR,e);
+            content.setRequestAttributes(ATTR_MESSAGE,e.getMessage());
+            LOGGER.catching(e);
         }
         return new CommandResult(responseType,page);
     }

@@ -43,7 +43,7 @@ public class ToNewPrescriptionPageCommand implements Command {
         params.put(PARAM_CLIENT_ID, content.getParameter(PARAM_CLIENT_ID));
         try {
             if (validator.isValid(params)) {
-                long clientId = Integer.parseInt(content.getParameter(PARAM_CLIENT_ID));
+                long clientId = Integer.parseInt(params.get(PARAM_CLIENT_ID));
                 User client = userService.getById(clientId);
                 content.setRequestAttributes(ATTR_DATE_BEGIN, LocalDate.now());
                 content.setRequestAttributes(ATTR_CLIENT, client);

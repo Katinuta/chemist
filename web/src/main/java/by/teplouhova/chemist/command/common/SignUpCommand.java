@@ -21,11 +21,17 @@ import static by.teplouhova.chemist.command.PageConstant.*;
 
 public class SignUpCommand implements Command {
 
-    private final static Logger LOGGER = LogManager.getLogger();
+    private  static final Logger LOGGER = LogManager.getLogger();
 
-    private final static String PARAM_lOGIN = "login";
-    private final static String ATTR_MESSAGE_BUNDLE = "messageBundle";
-    private final static String ATTR_ERROR = "error_";
+    private  static final String PARAM_lOGIN = "login";
+    private  static final String PARAM_USER_NAME = "user_name";
+    private  static final String PARAM_SURNAME = "surname";
+    private  static final String PARAM_ACCOUNT="account";
+    private  static final String PARAM_PHONE="phone";
+    private  static final String PARAM_PASSWORD="password";
+    private  static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+    private  static final String ATTR_ERROR = "error_";
+    private  static final String ATTR_MESSAGE_ERROR = "message";
 
     private UserService userService;
 
@@ -41,8 +47,12 @@ public class SignUpCommand implements Command {
         try {
             HashMap<String, String> userParams = new HashMap<>();
             ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
-            content.getParameterNames()
-                    .forEach(key -> userParams.put(key, content.getParameter(key)));
+            userParams.put(PARAM_USER_NAME,content.getParameter(PARAM_USER_NAME));
+            userParams.put(PARAM_lOGIN,content.getParameter(PARAM_lOGIN));
+            userParams.put(PARAM_SURNAME,content.getParameter(PARAM_SURNAME));
+            userParams.put(PARAM_ACCOUNT,content.getParameter(PARAM_ACCOUNT));
+            userParams.put(PARAM_PHONE,content.getParameter(PARAM_PHONE));
+            userParams.put(PARAM_PASSWORD,content.getParameter(PARAM_PASSWORD));
             Validator validator = new Validator(bundle);
             if (validator.isValid(userParams)) {
                 User user = new UserCreator().create(userParams);
@@ -63,12 +73,11 @@ public class SignUpCommand implements Command {
             }
 
         } catch (ServiceException e) {
-            //todo message
             page = PAGE_ERROR;
-            responseType = REDIRECT;
-            LOGGER.log(Level.ERROR, e.getMessage());
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
+            LOGGER.catching( e);
         }
-LOGGER.debug(page);
+
         return new CommandResult(responseType, page);
     }
 }

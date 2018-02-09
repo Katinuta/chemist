@@ -12,21 +12,29 @@ public class OrderService {
 
     private OrderDAO orderDAO;
     private OrderDetailDAO orderDetailDAO;
+    private UserDAO userDAO;
+    private MedicineDAO medicineDAO;
+    private PrescripDetailDAO prescripDetailDAO;
+    private PrescriptionDAO prescriptionDAO;
+
 
     public OrderService() {
         orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
         orderDetailDAO = DAOFactory.getDAOFactory().getOrderDetailDAO();
+        userDAO = DAOFactory.getDAOFactory().getUserDAO();
+        medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
+        prescripDetailDAO = DAOFactory.getDAOFactory().getPrescripDetailDAO();
+        prescriptionDAO = DAOFactory.getDAOFactory().getPrescriptionDAO();
     }
-
 
 
     public Order getById(long orderId) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(orderDAO);
-        Order order = null;
+        Order order;
         try {
             order = orderDAO.findById(orderId);
-            if(order==null){
+            if (order == null) {
                 throw new ServiceException("Order by id is not found id:" + orderId);
             }
             manager.beginTransaction(orderDetailDAO);
@@ -42,13 +50,8 @@ public class OrderService {
 
     public void create(Order order) throws ServiceException {
         TransactionManager manager = new TransactionManager();
-        UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
-        MedicineDAO medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
-        PrescripDetailDAO prescripDetailDAO=DAOFactory.getDAOFactory().getPrescripDetailDAO();
-        PrescriptionDAO prescriptionDAO=DAOFactory.getDAOFactory().getPrescriptionDAO();
-        manager.beginTransaction(orderDAO, orderDetailDAO, userDAO, medicineDAO,prescripDetailDAO);
+        manager.beginTransaction(orderDAO, orderDetailDAO, userDAO, medicineDAO, prescripDetailDAO);
         try {
-
             User user = userDAO.findById(order.getUser().getUserId());
             BigDecimal balance = user.getAccount();
             BigDecimal newBalance = balance.subtract(order.getTotal());
@@ -62,13 +65,13 @@ public class OrderService {
                 detail.setOrder(order);
                 Medicine medicine = detail.getMedicine();
 
-                if(medicine.getIsNeedRecipe()){
-                    PrescriptionDetail  prescripDetail=prescripDetailDAO.findByUserIdMedicineId(user.getUserId(),medicine.getMedicineId());
-                    if(prescripDetail==null){
-                        throw new ServiceException("Prescription for medicine is not found");
+                if (medicine.getIsNeedRecipe()) {
+                    PrescriptionDetail prescripDetail = prescripDetailDAO.findByUserIdMedicineId(user.getUserId(), medicine.getMedicineId());
+                    if (prescripDetail == null) {
+                        throw new ServiceException("Prescription for medicine in cart is not found");
                     }
                     prescripDetail.setStatus(PrescriptionStatus.USED);
-                    Prescription prescription=prescripDetail.getPrescription();
+                    Prescription prescription = prescripDetail.getPrescription();
                     prescription.setStatus(PrescriptionStatus.USED);
                     prescripDetailDAO.update(prescripDetail);
                     prescriptionDAO.update(prescription);

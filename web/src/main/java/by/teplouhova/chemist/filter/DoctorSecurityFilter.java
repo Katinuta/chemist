@@ -13,7 +13,7 @@ import java.io.IOException;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_MAIN;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_PHARMACIST_MAIN;
 
-@WebFilter(urlPatterns = {"/doctor","/jsp/doctor/*"},filterName = "B")
+@WebFilter(urlPatterns = {"/doctor","/jsp/doctor/*"})
 public class DoctorSecurityFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import static by.teplouhova.chemist.command.PageConstant.*;
 
-//@WebFilter(urlPatterns = {"/jsp/*"},
 @WebFilter(urlPatterns = {"/index.jsp","/jsp/common/*","/user"})
 public class PageRedirectSecurityFilter implements Filter {
 
@@ -28,11 +27,7 @@ public class PageRedirectSecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-//        if(session==null||session.getAttribute("user")==null){
        if(session!=null){
-//            response.sendRedirect(request.getContextPath() + indexPath);
-//            return;
-//        }else{
            User user= (User) session.getAttribute("user");
            if(session.getAttribute("user")!=null){
                String page=null;
@@ -50,9 +45,7 @@ public class PageRedirectSecurityFilter implements Filter {
                        page=PAGE_PHARMACIST_MAIN;
                        break;
                    }
-
                }
-
                response.sendRedirect(request.getContextPath() + page);
                return;
            }

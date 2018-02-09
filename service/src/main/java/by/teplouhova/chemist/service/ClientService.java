@@ -32,12 +32,9 @@ public class ClientService {
         List<Prescription> prescriptions;
         try {
             prescriptions = prescriptionDAO.findPrescriptionByClientId(userId);
-            if(prescriptions==null){
-                throw new ServiceException("Prescriptions is not found");
-            }
-        } catch (DAOException e) {
+                   } catch (DAOException e) {
 
-            throw new ServiceException(e);
+            throw new ServiceException("Prescriptions are not found",e);
         } finally {
             transaction.endTransaction();
         }
@@ -51,40 +48,14 @@ public class ClientService {
         manager.beginTransaction(orderDAO);
         try {
             orders = orderDAO.findOrdersByClientId(userId);
+
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Orders are not found",e);
         }
         return orders;
     }
 
-    public void sendExtandPrescription(long id) throws ServiceException {
-        TransactionManager manager = new TransactionManager();
 
-        manager.beginTransaction(prescriptionDAO);
-        try {
-            Prescription prescription = prescriptionDAO.findById(id);
-            prescription.setStatus(PrescriptionStatus.EXTEND);
-            prescriptionDAO.update(prescription);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } finally {
-            manager.endTransaction();
-        }
-    }
-
-    public BigDecimal getBalanceAccount(long userId) throws ServiceException {
-        TransactionManager manager = new TransactionManager();
-        manager.beginTransaction(userDAO);
-        BigDecimal balance;
-        try {
-            balance = userDAO.findBalanceByUserId(userId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } finally {
-            manager.endTransaction();
-        }
-        return balance;
-    }
 
     public boolean isHaveEnoughMoney(long clientId, BigDecimal sum) throws ServiceException {
         TransactionManager manager = new TransactionManager();

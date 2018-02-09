@@ -6,6 +6,9 @@
 
 <div class="container">
     <h2><fmt:message bundle="${bundle}" key="ref.prescription"/></h2>
+    <c:if test="${ not empty prescriptions_message}">
+        <h2>${prescriptions_message}</h2>
+    </c:if>
     <div class="container-fluid form">
         <table class="table table-striped">
             <thead>

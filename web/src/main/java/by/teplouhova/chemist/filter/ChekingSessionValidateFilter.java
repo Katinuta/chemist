@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/jsp/user/*","/jsp/client/*","/jsp/pharmacist/*","/jsp/doctor/*","/client","/doctor","/pharmacist"},
-        initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")},filterName = "A")
-public class ASessionValidateFilter implements Filter {
+        initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
+public class ChekingSessionValidateFilter implements Filter {
     private String indexPath;
 
     @Override
@@ -25,7 +25,6 @@ public class ASessionValidateFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         if (session == null||session.getAttribute("user")==null) {
-
             response.sendRedirect(request.getContextPath() + indexPath);
             return;
         }

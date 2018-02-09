@@ -10,9 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
-import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_CART;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
@@ -20,6 +20,8 @@ public class ToCartPageCommand implements Command {
     private static  final Logger LOGGER= LogManager.getLogger();
 
     private static final String ATTR_CART = "cart";
+    private static final String ATTR_MESSAGE_ERROR = "message";
+    private static  final String ATTR_MESSAGE_BUNDLE="messageBundle";
     private MedicineService medicineService;
 
     public ToCartPageCommand(MedicineService medicineService) {
@@ -29,8 +31,9 @@ public class ToCartPageCommand implements Command {
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page ;
-        CommandResult.ResponseType responseType ;
+        CommandResult.ResponseType responseType = FORWARD; ;
         HashMap<Medicine, Integer> cart = (HashMap<Medicine, Integer>) content.getSessionAttribute(ATTR_CART);
+        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
             for (Medicine medicine : cart.keySet()) {
                 Medicine medicineNew=medicineService.getMedicine(medicine.getMedicineId());
@@ -43,12 +46,11 @@ public class ToCartPageCommand implements Command {
 
                 }
             }
-            responseType = FORWARD;
+
             page = PAGE_CLIENT_CART;
         } catch (ServiceException e) {
-            //todo message
             page=PAGE_ERROR;
-            responseType = REDIRECT;
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR,bundle.getString("message.cart.error"));
             LOGGER.catching(e);
         }
 

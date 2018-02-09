@@ -5,6 +5,7 @@ public enum PrescriptionStatus {
     ACTIVE("active"),
     INACTIVE("inactive"),
     USED("used");
+
     private String nameStatus;
 
     PrescriptionStatus(String nameStatus) {

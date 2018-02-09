@@ -1,4 +1,4 @@
-package by.teplouhova.chemist.dao.exception;
+package by.teplouhova.chemist.dao;
 
 public class DAOException extends Exception {
     public DAOException() {

@@ -31,7 +31,7 @@ public class ReleaseFormDAOImpl extends ReleaseFormDAO {
                 return null;
             }
         } catch (SQLException e) {
-            throw new DAOException(""+ e);
+            throw new DAOException("", e);
         }finally {
             close(statement);
         }

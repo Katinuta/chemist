@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
 
     <c:choose>
@@ -15,7 +14,7 @@
                 <fmt:message bundle="${bundle}" key="table.name.medicines"/>
             </h2></c:otherwise>
     </c:choose>
-    <h2>${message}</h2>
+    <h2>${fn:escapeXml(message)}</h2>
     <c:if test="${ not empty medicines}">
     <div class="container-fluid form">
         <table class="table">
@@ -113,7 +112,6 @@
             </div>
         </c:if>
     </div>
-
 
 </div>
 

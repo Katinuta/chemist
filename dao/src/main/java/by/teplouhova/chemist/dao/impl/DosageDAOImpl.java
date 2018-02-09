@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class DosageDAOImpl extends DosageDAO {
     private final static String SQL_INSERT_DOSAGE =
             "INSERT INTO chemist.dosage (d_dosage_size, d_dosage_unit) VALUES ( ?, ?)";
-    private final static String SQL_SELECT_UNITS_DOSAGE="SELECT DISTINCT dosage.d_dosage_unit FROM chemist.dosage " +
-            "ORDER BY d_dosage_unit";
+    private final static String SQL_SELECT_UNITS_DOSAGE=
+            "SELECT DISTINCT dosage.d_dosage_unit FROM chemist.dosage ORDER BY d_dosage_unit";
     private final static String SQL_SELECT_DOSAGE_BY_SIZE_UNIT=
             "SELECT d_dosage_id,d_dosage_size,d_dosage_unit FROM chemist.dosage " +
                     "WHERE d_dosage_size=? AND d_dosage_unit=?";

@@ -69,16 +69,13 @@ public class PrescriptionDAOImpl extends PrescriptionDAO {
                 prescription.setDoctor(doctor);
                 prescriptions.add(prescription);
             }
-            if (prescriptions.isEmpty()) {
-                prescriptions = null;
-            }
 
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(statement);
         }
-        return prescriptions;
+        return !prescriptions.isEmpty()?prescriptions:null;
     }
 
     @Override

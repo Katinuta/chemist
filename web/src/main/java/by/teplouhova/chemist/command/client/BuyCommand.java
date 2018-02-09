@@ -84,7 +84,6 @@ public class BuyCommand implements Command {
                     content.setSessionAttribute(ATTR_CART,cart);
                 }
             } catch (ServiceException e) {
-                //todo message error
                 page = PAGE_ERROR;
                 content.setRequestAttributes(ATTR_MESSAGE,e.getMessage());
                 LOGGER.catching(e);

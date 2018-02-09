@@ -56,7 +56,7 @@ public class PrescriptionService {
             Prescription oldPrescrip = getPrescription(newPrescrip.getPrescriptionId());
             manager.beginTransaction(prescriptionDAO, prescripDetailDAO);
             if (oldPrescrip == null) {
-                throw new ServiceException("Prescription is not found id:" + newPrescrip.getPrescriptionId());
+                throw new ServiceException("Prescription for extending is not found id:" + newPrescrip.getPrescriptionId());
             }
             oldPrescrip.setStatus(newPrescrip.getStatus());
             List<PrescriptionDetail> details = oldPrescrip.getDetails();
@@ -100,7 +100,7 @@ public class PrescriptionService {
                 prescriptions = prescriptionDAO.findPrescriptionByDoctorId(doctorId);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Prescriptions is not found",e);
+            throw new ServiceException("Prescriptions are not found",e);
         } finally {
             manager.endTransaction();
         }

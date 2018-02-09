@@ -30,18 +30,12 @@ public class Validator {
     }
 
     public boolean isValid(HashMap<String, String> paramsMap) {
-//        if(paramsMap.isEmpty()){
-//            errors.put("params", bundle.getString("message.format.incorrect"));
-//
-//        }
+
         Set<Map.Entry<String, String>> entrySet = paramsMap.entrySet();
-//        paramsMap.entrySet().stream()
-//                .filter(entry -> entry != null && entry.getValue().isEmpty())
-//                .forEach(entry -> entry.setValue(null));
         entrySet.forEach(entry -> {
             String current = entry.getKey();
             try {
-                FieldName field = FieldName.valueOf(current.toUpperCase());
+                ParameterName field = ParameterName.valueOf(current.toUpperCase());
                 String regexp = field.getRegexp();
                 if (field.isRequired()) {
                     validateRequired(current, entry.getValue(), regexp);

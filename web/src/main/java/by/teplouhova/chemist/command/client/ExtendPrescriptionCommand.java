@@ -62,11 +62,8 @@ public class ExtendPrescriptionCommand implements Command {
 
         } catch (ServiceException e) {
             page=PAGE_ERROR;
-            //todo
-            content.setRequestAttributes(ATTR_MESSAGE, "Prescription is not extended");
-//todo message
-            //responseType = CommandResult.ResponseType.REDIRECT;
-            LOGGER.log(Level.ERROR, e);
+            content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.presrip.extend.error"));
+            LOGGER.catching(e);
         }
 
 

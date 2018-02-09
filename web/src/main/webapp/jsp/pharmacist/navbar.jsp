@@ -23,7 +23,7 @@
         <input name="command" type="hidden" value="find_medicine"/>
         <div class="input-group">
             <input type="text" class="form-control" name="medicine_name"
-                   placeholder="<fmt:message bundle="${bundle}" key="placeholder.search"/>"/>
+                   placeholder="<fmt:message bundle="${bundle}" key="placeholder.search"/>" value="${fn:escapeXml(medicine_name)}"/>
             <div class="input-group-btn">
                 <button class="btn btn-default search" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
@@ -67,8 +67,6 @@
                 <img src="/image/united-kingdom-flag.png">
             </a>
         </li>
-
-
 
         <li>
             <c:url var="rus_lang" value="/pharmacist">

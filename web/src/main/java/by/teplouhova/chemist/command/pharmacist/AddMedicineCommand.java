@@ -20,6 +20,16 @@ import static by.teplouhova.chemist.command.PageConstant.*;
 
 public class AddMedicineCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final String PARAM_MEDICINE_NAME = "medicine_name";
+
+    private static final String PARAM_PRICE = "price";
+    private static final String PARAM_ANALOG_MEDICINE_ID = "analog_medicine_id";
+    private static final String PARAM_PRODUCER_ID = "producer_id";
+    private static final String PARAM_RELEASE_FORM_ID = "release_form_id";
+    private static final String PARAM_UNIT_IN_PACKAGE = "unit_in_package";
+    private static final String PARAM_QUANTITY_IN_PACKAGE = "quantity_in_package";
+    private static final String PARAM_QUANTITY_PACKAGES = "quantity_packages";
     private static final String PARAM_DOSAGE_SIZE = "dosage_size";
     private static final String PARAM_UNIT_DOSAGE = "dosage_unit";
     private static final String PARAM_NEED_PRESCRIPTION = "need_prescription";
@@ -42,9 +52,16 @@ public class AddMedicineCommand implements Command {
         ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION);
         HashMap<String, String> medicineParams = new HashMap<>();
-        //or pull from content by one???
-        content.getParameterNames()
-                .forEach(key->medicineParams.put(key,content.getParameter(key)));
+        medicineParams.put(PARAM_ANALOG_MEDICINE_ID, content.getParameter(PARAM_ANALOG_MEDICINE_ID));
+        medicineParams.put(PARAM_PRODUCER_ID, content.getParameter(PARAM_PRODUCER_ID));
+        medicineParams.put(PARAM_RELEASE_FORM_ID, content.getParameter(PARAM_RELEASE_FORM_ID));
+        medicineParams.put(PARAM_UNIT_IN_PACKAGE, content.getParameter(PARAM_UNIT_IN_PACKAGE));
+        medicineParams.put(PARAM_QUANTITY_PACKAGES, content.getParameter(PARAM_QUANTITY_PACKAGES));
+        medicineParams.put(PARAM_QUANTITY_IN_PACKAGE, content.getParameter(PARAM_QUANTITY_IN_PACKAGE));
+        medicineParams.put(PARAM_PRICE, content.getParameter(PARAM_PRICE));
+        medicineParams.put(PARAM_MEDICINE_NAME, content.getParameter(PARAM_MEDICINE_NAME));
+        medicineParams.put(PARAM_DOSAGE_SIZE, content.getParameter(PARAM_DOSAGE_SIZE));
+        medicineParams.put(PARAM_UNIT_DOSAGE, content.getParameter(PARAM_UNIT_DOSAGE));
         medicineParams.put(PARAM_NEED_PRESCRIPTION, String.valueOf(isNeedPrescription));
         medicineParams.entrySet().stream()
                 .filter(entry -> entry!=null&&entry.getValue().isEmpty())
@@ -74,7 +91,6 @@ public class AddMedicineCommand implements Command {
             page = PAGE_ERROR;
             content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
             LOGGER.catching(e);
-            //Forward?
         }
 
         return new CommandResult(responseType, page);

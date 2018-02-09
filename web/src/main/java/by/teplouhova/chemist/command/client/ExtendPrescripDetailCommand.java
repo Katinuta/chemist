@@ -26,8 +26,8 @@ public class ExtendPrescripDetailCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PARAM_PRESCRIP_DETAIL_ID = "prescrip_detail_id";
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
-    private static final String ATTR_MESSAGE ="message";
-    private static final String HEADER_REFERER= "referer";
+    private static final String ATTR_MESSAGE = "message";
+    private static final String HEADER_REFERER = "referer";
 
     private PrescripDetailService detailService;
 
@@ -37,29 +37,27 @@ public class ExtendPrescripDetailCommand implements Command {
 
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page ;
-        CommandResult.ResponseType responseType= FORWARD;
+        String page;
+        CommandResult.ResponseType responseType = FORWARD;
 
-        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
+        ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
-            HashMap<String,String> params=new HashMap<>();
-            content.getParameterNames()
-                    .forEach(key->params.put(key,content.getParameter(key)));
-            Validator validator=new Validator(bundle);
-
-            if(validator.isValid(params)){
-                PrescriptionDetail detail=new PrescriptionDetailCreator().create(params);
+            HashMap<String, String> params = new HashMap<>();
+            params.put(PARAM_PRESCRIP_DETAIL_ID, content.getParameter(PARAM_PRESCRIP_DETAIL_ID));
+            Validator validator = new Validator(bundle);
+            if (validator.isValid(params)) {
+                PrescriptionDetail detail = new PrescriptionDetailCreator().create(params);
                 detail.setStatus(PrescriptionStatus.EXTEND);
                 detailService.updatePrescripDetail(detail);
-                page= content.getRequestHeader(HEADER_REFERER);
-                responseType= REDIRECT;
-            }else{
-                content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.parameter.wrong"));
-                page= PAGE_ERROR;
+                page = content.getRequestHeader(HEADER_REFERER);
+                responseType = REDIRECT;
+            } else {
+                content.setRequestAttributes(ATTR_MESSAGE, bundle.getString("message.parameter.wrong"));
+                page = PAGE_ERROR;
             }
 
         } catch (ServiceException e) {
-            page=PAGE_ERROR;
+            page = PAGE_ERROR;
             content.setRequestAttributes(ATTR_MESSAGE, e.getMessage());
             LOGGER.catching(e);
         }

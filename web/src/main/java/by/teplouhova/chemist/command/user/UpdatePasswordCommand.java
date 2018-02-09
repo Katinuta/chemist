@@ -24,11 +24,11 @@ import static by.teplouhova.chemist.command.PageConstant.PAGE_UPDATE_PASSWORD_SU
 public class UpdatePasswordCommand implements Command {
     private static final Logger LOGGER= LogManager.getLogger();
     private static final String PARAM_PASSWORD="password";
-    private static final String PARAM_NEW_PASSWORD="newPassword";
+    private static final String PARAM_NEW_PASSWORD="new_password";
     private static final String ATTR_ERROR="error_";
-//    private static final String ATTR_ERROR_PASS_NEW="error_new_password";
     private static final String ATTR_USER="user";
     private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+    private static final String ATTR_MESSAGE_ERROR="message";
 
     private UserService userService;
 
@@ -45,8 +45,8 @@ public class UpdatePasswordCommand implements Command {
         String password = content.getParameter(PARAM_PASSWORD);
         String newPassword = content.getParameter(PARAM_NEW_PASSWORD);
         HashMap<String,String> params=new HashMap<>();
+        params.put(PARAM_NEW_PASSWORD,newPassword);
         Validator validator=new Validator(bundle);
-        content.getParameterNames().forEach(key->params.put(key,content.getParameter(key)));
         try {
             if (validator.isValid(params)) {
                 if (userService.checkUser(user.getLogin(), password)) {
@@ -64,12 +64,10 @@ public class UpdatePasswordCommand implements Command {
                         .forEach(entry->content.setRequestAttributes(ATTR_ERROR+entry.getKey(),entry.getValue()));
             }
 
-
         } catch (ServiceException e) {
-            //todo message
             page=PageConstant.PAGE_ERROR;
-            responseType= REDIRECT;
-            LOGGER.log(Level.ERROR,e);
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
+            LOGGER.catching(e);
 
         }
         return new CommandResult(responseType, page);

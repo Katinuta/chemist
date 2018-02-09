@@ -11,8 +11,7 @@
 
 <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/index.jsp"><fmt:message bundle="${bundle}"
-                                                               key="ref.brand"/></a>
+        <a class="navbar-brand" href="/index.jsp"><fmt:message bundle="${bundle}" key="ref.brand"/></a>
     </div>
 
     <ul class="nav navbar-nav navbar-right">

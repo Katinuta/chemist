@@ -1,5 +1,7 @@
 package by.teplouhova.chemist.controller;
 
+import by.teplouhova.chemist.dao.factory.DAOFactory;
+import by.teplouhova.chemist.manager.MessageManager;
 import by.teplouhova.chemist.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +23,8 @@ public class ChemistContextListener implements ServletContextListener {
 
         ConnectionPool.getInstance().closePoolConnections();
         try {
-            DriverManager.deregisterDriver(DriverManager.getDriver("com.impl.jdbc.Driver"));
+            DriverManager.deregisterDriver(DriverManager.getDriver("com.impl.cj.jdbc.Driver"));
+
         } catch (SQLException e) {
             LOGGER.log(Level.FATAL,"Connection driver is not unregistered ");
 
@@ -31,12 +34,12 @@ public class ChemistContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         try {
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             ConnectionPool.getInstance();
-
-
-        } catch (SQLException e) {
-            LOGGER.log(Level.FATAL,"Connection driver is not registered ");
+            MessageManager.EN.getBundle();
+            DAOFactory.getDAOFactory();
+        } catch (SQLException  e) {
+            LOGGER.fatal("Connection driver is not registered ");
             new RuntimeException( "Connection driver is not registered",e);
         }
     }

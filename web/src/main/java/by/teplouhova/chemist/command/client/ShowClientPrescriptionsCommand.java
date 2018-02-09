@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_MAIN;
@@ -22,6 +23,9 @@ public class ShowClientPrescriptionsCommand implements Command {
     private static final String ATTR_PRESCRIPTIONS = "prescriptions";
     private static final String ATTR_USER = "user";
     private static final String ATTR_MESSAGE_ERROR = "message";
+    private static final String ATTR_MESSAGE_PRESCRIPTION ="prescriptions_message";
+    private static  final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
     private ClientService service;
 
     public ShowClientPrescriptionsCommand(ClientService service) {
@@ -33,9 +37,14 @@ public class ShowClientPrescriptionsCommand implements Command {
         String page;
         CommandResult.ResponseType responseType = FORWARD;
         User user = (User) content.getSessionAttribute(ATTR_USER);
+        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
             List<Prescription> prescriptions = service.getPrescriptions(user.getUserId());
+            if(prescriptions==null){
+                content.setRequestAttributes(ATTR_MESSAGE_PRESCRIPTION,bundle.getString("message.prescriptions.empty"));
+            }
             content.setRequestAttributes(ATTR_PRESCRIPTIONS, prescriptions);
+
             page = PAGE_CLIENT_MAIN;
         } catch (ServiceException e) {
             content.setRequestAttributes(ATTR_MESSAGE_ERROR, e.getMessage());

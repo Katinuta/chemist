@@ -19,7 +19,7 @@ public class DosageService {
             dosageUnits=dao.findDosageUnits();
 
         } catch (DAOException e) {
-            throw new ServiceException(""+e);
+            throw new ServiceException("Dosage units is not found",e);
         }finally {
             manager.endTransaction();
         }

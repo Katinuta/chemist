@@ -26,7 +26,7 @@ public enum CommandType {
     UPDATE_MEDICINE(new UpdateMedicineCommand(new MedicineService())),
     ADD_MEDICINE(new AddMedicineCommand(new MedicineService())),
     SHOW_ALL_ORDERS(new ShowAllOrdersCommand(new ClientService())),
-    SHOW_PRESCRIPTION_INFO(new ShowPrescripInfoCommand(new PrescriptionService(), new ClientService())),
+    SHOW_PRESCRIPTION_INFO(new ShowPrescripInfoCommand(new PrescriptionService())),
     EXTEND_PRESCRIPTION(new ExtendPrescriptionCommand(new PrescriptionService())),
     EXTEND_PRESCRIPTION_DETAIL(new ExtendPrescripDetailCommand( new PrescripDetailService())),
     APPROVE_EXTENDING_PRESCRIPTION(new ApproveExtendingPrescriptionCommand(new PrescriptionService())),
@@ -34,11 +34,10 @@ public enum CommandType {
     SHOW_PRESCRIPTIONS_TO_EXTEND(new ShowRrescriptonsToExtendCommand(new PrescriptionService())),
     SHOW_ALL_CLIENTS(new ShowAllClientsCommand(new UserService())),
     TO_NEW_PRESCRIPTION(new ToNewPrescriptionPageCommand(new UserService())),
-    TO_EDIT_PASSWORD(new ToEditPasswordPageCommand(new UserService())),
+    TO_EDIT_PASSWORD(new ToEditPasswordPageCommand()),
     UPDATE_PASSWORD(new UpdatePasswordCommand(new UserService())),
     CREATE_PRESCRIPTION(new CreatePrescriptionCommand(new PrescriptionService(), new UserService())),
     TO_SIGN_IN(new ToSignInPageCommand()),
-    TO_PREVIOUS_PAGE(new ToPreviousPageCommand()),
     EMPTY(new EmptyCommand());
 
     private Command command;

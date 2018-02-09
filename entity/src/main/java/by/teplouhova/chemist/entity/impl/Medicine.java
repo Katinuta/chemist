@@ -1,11 +1,12 @@
 package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
+import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Medicine extends Entity implements Serializable {
+public class Medicine extends Entity {
     private long medicineId;
     private String name;
     private BigDecimal price;
@@ -20,18 +21,12 @@ public class Medicine extends Entity implements Serializable {
     private boolean isDeleted;
 
     public Medicine() {
-//        analog=new Medicine();
         dosage=new Dosage();
-//        releaseForm=new ReleaseForm();
-//        producer=new Producer();
     }
 
     public Medicine(long medicineId) {
         this.medicineId = medicineId;
-//        analog=new Medicine();
         dosage=new Dosage();
-//        releaseForm=new ReleaseForm();
-//        producer=new Producer();
     }
 
 

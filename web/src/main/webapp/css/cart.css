@@ -1,61 +1,99 @@
-.flex-container {
+.flex-container-center {
     display: flex;
     justify-content: center;
-
 }
+
 .right-justify {
     display: flex;
     justify-content: flex-end;
     margin-top: 15px;
-
 }
+
 .message {
     margin-top: 7%;
 }
-.form{
+
+.form {
     padding: 5%;
 }
+
 .form-group {
     margin-bottom: 0;
 }
-button.close>i{
+
+button.close > i {
     color: red;
     opacity: 0.8;
 }
-button.close>i:hover,button.close>i:active{
+
+button.close > i:hover, button.close > i:active {
     color: red;
     opacity: 1;
 }
-.fa-plus-square,.fa-minus-square{
+
+.fa-plus-square, .fa-minus-square {
     color: #00cc99;
-    font-size:26px
+    font-size: 26px
 }
-.fa-plus-square:hover,.fa-minus-square:hover{
+
+.fa-plus-square:hover, .fa-minus-square:hover {
     color: #009973;
 }
-button.plus,button.minus{
-    border:none;
+
+button.plus, button.minus {
+    border: none;
     background-color: #f2f2f2;
 }
-button.plus:focus,button.minus:focus{
+
+button.plus:focus, button.minus:focus {
     outline: none;
 }
-input[type=number]{
-    border:none;
-    width:50px;
+
+input[type=number] {
+    border: none;
+    width: 50px;
     background-color: inherit;
-    margin-bottom:5px;
-    text-align:center;
+    margin-bottom: 5px;
+    text-align: center;
 }
-input[type=submit]{
+
+input[type=submit], button {
     font-size: 20px;
     padding: 10px 15px;
     background-color: #00cc99;
-    color: white ;
+    color: white;
     border: none;
     border-radius: 10px;
 }
-input[type=submit]:hover{
+button{
+    background-color: rgb(167, 193, 205);
+    padding: 5px 10px;
+}
+
+input[type=submit]:hover, button:hover,
+input[type=submit]:focus, button:focus, button>a:focus, button>a:visited,
+button>a:hover {
     color: #009973;
-    color: white ;
+    color: white;
+    text-decoration: none;
+    border: none;
+}
+
+button>a {
+    color: white;
+}
+
+.button {
+    font-size: 14px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 15% 0;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
 }

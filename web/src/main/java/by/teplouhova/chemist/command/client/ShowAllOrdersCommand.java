@@ -21,6 +21,7 @@ public class ShowAllOrdersCommand implements Command {
 
     private static final String ATTR_USER="user";
     private static final String ATTR_ORDERS="orders";
+    private static final String ATTR_MESSAGE="message";
 private ClientService clientService;
 
     public ShowAllOrdersCommand(ClientService clientService) {
@@ -39,7 +40,7 @@ private ClientService clientService;
 
         } catch (ServiceException e) {
             page=PAGE_ERROR;
-            content.setRequestAttributes("error","Orders are not found");
+            content.setRequestAttributes(ATTR_MESSAGE,e.getMessage());
             LOGGER.catching(e);
         }
 

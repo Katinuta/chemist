@@ -25,6 +25,14 @@ public class UpdateMedicineCommand implements Command {
     private static final String PARAM_DOSAGE_SIZE = "dosage_size";
     private static final String PARAM_UNIT_DOSAGE = "dosage_unit";
     private static final String PARAM_NEED_PRESCRIPTION = "need_prescription";
+    private static final String PARAM_MEDICINE_NAME = "medicine_name";
+    private static final String PARAM_PRICE = "price";
+    private static final String PARAM_ANALOG_MEDICINE_ID = "analog_medicine_id";
+    private static final String PARAM_PRODUCER_ID = "producer_id";
+    private static final String PARAM_RELEASE_FORM_ID = "release_form_id";
+    private static final String PARAM_UNIT_IN_PACKAGE = "unit_in_package";
+    private static final String PARAM_QUANTITY_IN_PACKAGE = "quantity_in_package";
+    private static final String PARAM_QUANTITY_PACKAGES = "quantity_packages";
     private static final String ATTR_ERROR = "error_";
     private static final String ATTR_MESSAGE="message";
     private static final String ATTR_MEDICINE = "medicine";
@@ -43,17 +51,25 @@ public class UpdateMedicineCommand implements Command {
         String page ;
         CommandResult.ResponseType responseType = FORWARD;
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
-        boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION) ? true : false;
+        boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION);
         HashMap<String, String> medicineParams = new HashMap<>();
-        content.getParameterNames()
-                .forEach(key->medicineParams.put(key,content.getParameter(key)));
+        medicineParams.put(PARAM_ANALOG_MEDICINE_ID, content.getParameter(PARAM_ANALOG_MEDICINE_ID));
+        medicineParams.put(PARAM_PRODUCER_ID, content.getParameter(PARAM_PRODUCER_ID));
+        medicineParams.put(PARAM_RELEASE_FORM_ID, content.getParameter(PARAM_RELEASE_FORM_ID));
+        medicineParams.put(PARAM_UNIT_IN_PACKAGE, content.getParameter(PARAM_UNIT_IN_PACKAGE));
+        medicineParams.put(PARAM_QUANTITY_PACKAGES, content.getParameter(PARAM_QUANTITY_PACKAGES));
+        medicineParams.put(PARAM_QUANTITY_IN_PACKAGE, content.getParameter(PARAM_QUANTITY_IN_PACKAGE));
+        medicineParams.put(PARAM_PRICE, content.getParameter(PARAM_PRICE));
+        medicineParams.put(PARAM_MEDICINE_NAME, content.getParameter(PARAM_MEDICINE_NAME));
+        medicineParams.put(PARAM_DOSAGE_SIZE, content.getParameter(PARAM_DOSAGE_SIZE));
+        medicineParams.put(PARAM_UNIT_DOSAGE, content.getParameter(PARAM_UNIT_DOSAGE));
         medicineParams.put(PARAM_NEED_PRESCRIPTION, String.valueOf(isNeedPrescription));
-        Validator validator=new Validator(bundle);
-        boolean isValid=validator.isValid(medicineParams);
         medicineParams.entrySet().stream()
-                .filter(entry -> entry != null && entry.getValue().isEmpty())
+                .filter(entry -> entry!=null&&entry.getValue().isEmpty())
                 .forEach(entry -> entry.setValue(null));
 
+        Validator validator=new Validator(bundle);
+        boolean isValid=validator.isValid(medicineParams);
         String dosageSize = medicineParams.get(PARAM_DOSAGE_SIZE);
         String unitDosage = medicineParams.get(PARAM_UNIT_DOSAGE);
 
@@ -83,7 +99,7 @@ public class UpdateMedicineCommand implements Command {
             }
         } catch (ServiceException e) {
             page = PAGE_ERROR;
-            responseType = REDIRECT;
+            content.setRequestAttributes(ATTR_MESSAGE,e.getMessage());
             LOGGER.catching(e);
         }
 

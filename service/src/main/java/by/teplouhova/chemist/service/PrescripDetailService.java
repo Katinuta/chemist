@@ -29,7 +29,7 @@ public class PrescripDetailService {
             manager.beginTransaction(prescriptionDAO);
             Prescription oldPrescription=prescriptionDAO.findById(oldDetail.getPrescription().getPrescriptionId());
             if(oldPrescription==null){
-                throw new ServiceException("Prescription  is not found");
+                throw new ServiceException("Prescription to extend  is not found");
             }
             oldDetail.setStatus(detail.getStatus());
             oldPrescription.setStatus(detail.getStatus());

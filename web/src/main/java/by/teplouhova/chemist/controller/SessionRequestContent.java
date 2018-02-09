@@ -27,17 +27,11 @@ public class SessionRequestContent {
         requestHeaders = new HashMap<>();
     }
 
-    public Object getRequestAttribute(String name) {
-        return requestAttributes.get(name);
-    }
 
     public Object getSessionAttribute(String name) {
         return sessionAttributes.get(name);
     }
 
-    public String[] getParameters(String name) {
-        return requestParameters.get(name);
-    }
 
     public String getParameter(String name) {
         if (!requestParameters.containsKey(name)) {

@@ -14,12 +14,19 @@ import java.util.HashSet;
 public class FindMedicineDetailsCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String ATTR_FORMS ="forms";
+    private static final String ATTR_PRODUCERS ="producers";
+    private static final String ATTR_UNITS_IN_PACK="unitsInPack";
+    private static final String ATTR_DOSAGE_UNITS="dosageUnits";
+    private static  final String ATTR_ANALOGS="analogs";
+
     private ReleaseFormService releaseFormService;
     private ProducerService producerService;
     private DosageService dosageService;
     private MedicineService medicineService;
 
-    public FindMedicineDetailsCommand(ReleaseFormService releaseFormService, ProducerService producerService, DosageService dosageService, MedicineService medicineService) {
+    public FindMedicineDetailsCommand(ReleaseFormService releaseFormService, ProducerService producerService,
+                                      DosageService dosageService, MedicineService medicineService) {
         this.releaseFormService = releaseFormService;
         this.producerService = producerService;
         this.dosageService = dosageService;
@@ -35,15 +42,14 @@ public class FindMedicineDetailsCommand implements Command {
             ArrayList<Producer> producers = producerService.getProdusers();
             ArrayList<String> dosageUnits = dosageService.getDosageUnits();
             ArrayList<String> unitsInPack = medicineService.getUnitsInPackage();
-            HashSet<Long> setIds=medicineService.getMedicinesId();
-            object.put("forms", releaseForm);
-            object.put("producers", producers);
-            object.put("dosageUnits", dosageUnits);
-            object.put("unitsInPack", unitsInPack);
-            object.put("analogs",setIds);
+            HashSet<Long> setIds = medicineService.getMedicinesId();
+            object.put(ATTR_FORMS, releaseForm);
+            object.put(ATTR_PRODUCERS, producers);
+            object.put(ATTR_DOSAGE_UNITS, dosageUnits);
+            object.put(ATTR_UNITS_IN_PACK, unitsInPack);
+            object.put(ATTR_ANALOGS, setIds);
 
         } catch (ServiceException e) {
-            //todo message
             LOGGER.catching(e);
         }
         return object;

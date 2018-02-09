@@ -29,7 +29,6 @@ public class IncreaseProductAmountCartCommand implements Command {
 
     @Override
     public JSONObject execute(SessionRequestContent content) {
-        //todo validation
         Long id = Long.parseLong(content.getParameter(PARAM_MEDICINE_ID));
         Integer amount = Integer.parseInt(content.getParameter(PARAM_AMOUNT));
         HashMap<Medicine, Integer> cart = (HashMap<Medicine, Integer>) content.getSessionAttribute(ATRR_CART);

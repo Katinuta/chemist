@@ -86,7 +86,6 @@ public class ConnectionPool {
             if (!connection.getAutoCommit()) {
                 connection.setAutoCommit(true);
             }
-
             connections.offer(connection);
         } catch (SQLException e) {
             LOGGER.catching(e);
@@ -101,6 +100,10 @@ public class ConnectionPool {
                 LOGGER.catching(e);
             }
         });
+    }
+
+    public int size(){
+        return connections.size();
     }
 
 }

@@ -35,6 +35,7 @@ public class AddProductToCartCommand implements Command {
             json = new JSONObject();
             json.put("size",String.valueOf(cart.size()));
         } catch (ServiceException e) {
+
             LOGGER.log(Level.ERROR, "Product is not found ",e);
         }
 

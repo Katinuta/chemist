@@ -29,8 +29,11 @@ public class CreatePrescriptionCommand implements Command {
     private static final String PARAM_CLIENT_ID = "client_id";
     private static final String PARAM_DATE_BEGIN = "date_begin";
     private static final String PARAM_DATE_END = "date_end";
+    private static final String PARAM_MEDICINE_ID = "medicine_id";
+    private static final String PARAM_QUANTITY="quantity";
     private static final String ATTR_CLIENT = "client";
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+    private static final String ATTR_MESSAGE_ERROR = "message";
     private static final String ATTR_ERROR="error_";
 
     private PrescriptionService prescriptionService;
@@ -50,13 +53,16 @@ public class CreatePrescriptionCommand implements Command {
         User doctor = (User) content.getSessionAttribute(ATTR_USER);
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         HashMap<String,String> prescripParams=new HashMap<>();
-        content.getParameterNames()
-                .forEach(key->prescripParams.put(key,content.getParameter(key)));
+        prescripParams.put(PARAM_CLIENT_ID,content.getParameter(PARAM_CLIENT_ID));
+        prescripParams.put(PARAM_DATE_BEGIN,content.getParameter(PARAM_DATE_BEGIN));
+        prescripParams.put(PARAM_DATE_END,content.getParameter(PARAM_DATE_END));
+        prescripParams.put(PARAM_MEDICINE_ID,content.getParameter(PARAM_MEDICINE_ID));
+        prescripParams.put(PARAM_QUANTITY,content.getParameter(PARAM_QUANTITY));
        Validator validator = new Validator(bundle);
         try{
             boolean isValid = validator.isValid(prescripParams);
-            String dateBegin=content.getParameter(PARAM_DATE_BEGIN);
-            String dateEnd=content.getParameter(PARAM_DATE_END);
+            String dateBegin=prescripParams.get(PARAM_DATE_BEGIN);
+            String dateEnd=prescripParams.get(PARAM_DATE_END);
             if (isValid&& !LocalDate.parse(dateEnd).isBefore(LocalDate.parse(dateBegin))) {
                 Prescription prescription=new PrescriptionCreator().create(prescripParams);
                 PrescriptionDetail detail=new PrescriptionDetailCreator().create(prescripParams);
@@ -85,8 +91,8 @@ public class CreatePrescriptionCommand implements Command {
 
         } catch (Exception e) {
             page=PAGE_ERROR;
-            //todo message
-            responseType= REDIRECT;
+            responseType =FORWARD;
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
             LOGGER.catching(e);
         }
 

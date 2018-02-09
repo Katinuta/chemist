@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class GetCartProductsIdCommand implements Command {
 
     private static final String ATTR_CART="cart";
+    private static final String ATTR_IDS="ids";
 
     @Override
     public JSONObject execute(SessionRequestContent content) {
@@ -19,7 +20,7 @@ public class GetCartProductsIdCommand implements Command {
             ArrayList<Long> ids=new ArrayList<>();
             cart.keySet().stream().forEach(key-> ids.add(key.getMedicineId()));
             object=new JSONObject();
-            object.put("ids",ids);
+            object.put(ATTR_IDS,ids);
         }else{
             object=new JSONObject();
         }

@@ -70,8 +70,10 @@ public class UserDAOImpl extends UserDAO {
 
         } catch (SQLException e) {
             throw new DAOException(e);
+        }finally {
+            close(st);
         }
-        close(st);
+
         return user;
     }
 
@@ -185,8 +187,6 @@ public class UserDAOImpl extends UserDAO {
                 user.setLogin(result.getString("u_login"));
                 user.setSurname(result.getString("u_surname"));
 
-//                user.setPassword(result.getString("u_password"));
-     //           user.setAccount(result.getBigDecimal("u_account"));
                 user.setPhone(result.getString("u_phone"));
                 user.setRole(RoleType.valueOf(result.getString("u_role").toUpperCase()));
             }

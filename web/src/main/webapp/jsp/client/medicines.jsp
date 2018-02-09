@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <%--<h2><fmt:message bundle="${bundle}" key="table.name.medicines"/></h2>--%>
     <c:choose>
         <c:when test="${flagFind}">
             <h2><fmt:message bundle="${bundle}" key="table.name.fmedicunes"/>
@@ -15,7 +14,8 @@
                 <fmt:message bundle="${bundle}" key="table.name.medicines"/>
             </h2></c:otherwise>
     </c:choose>
-    <h2>${message}</h2>
+    <h2>${fn:escapeXml(message)}</h2>
+    <span class="error" id="ajax_error">${error}</span>
     <c:if test="${ not empty medicines}">
     <div class="container-fluid form">
 
@@ -38,7 +38,7 @@
                 <tr>
                     <td>${medicine.name}</td>
                     <td>${medicine.price}</td>
-                    <td >${medicine.quantityPackages}</td>
+                    <td>${medicine.quantityPackages}</td>
                     <td>${medicine.producer.name}</td>
                     <td>
                         <c:choose>

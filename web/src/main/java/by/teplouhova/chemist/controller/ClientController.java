@@ -32,13 +32,12 @@ public class ClientController extends HttpServlet {
 
         String commandName = request.getParameter("command");
         Command command = CommandFactory.defineCommand(commandName);
-      //  request.getSession().setAttribute("refererUrl", request.getHeader("referer"));
         SessionRequestContent requestContent = new SessionRequestContent();
         requestContent.extractValues(request);
         CommandResult page = command.execute(requestContent);
         requestContent.insertAttributes(request);
 
-        if (CommandResult.ResponseType.FORWARD==(page.getResponseType())) {
+        if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + page.getPage());

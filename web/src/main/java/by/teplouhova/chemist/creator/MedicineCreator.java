@@ -4,7 +4,7 @@ import by.teplouhova.chemist.entity.impl.Medicine;
 import by.teplouhova.chemist.entity.impl.Producer;
 import by.teplouhova.chemist.entity.impl.ReleaseForm;
 import by.teplouhova.chemist.entity.impl.UnitInPackage;
-import by.teplouhova.chemist.validator.FieldName;
+import by.teplouhova.chemist.validator.ParameterName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +29,7 @@ public class MedicineCreator {
         keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
             String current=entry.getKey();
             try{
-                FieldName field=FieldName.valueOf(current.toUpperCase());
+                ParameterName field= ParameterName.valueOf(current.toUpperCase());
                 fillField(field,entry.getValue());
             }catch (IllegalArgumentException e){
                 LOGGER.debug("Parameter is not field  : " +current );
@@ -38,7 +38,7 @@ public class MedicineCreator {
         return medicine;
 
     }
-    private void fillField(FieldName name, String value) {
+    private void fillField(ParameterName name, String value) {
 
         switch (name) {
             case MEDICINE_ID : {

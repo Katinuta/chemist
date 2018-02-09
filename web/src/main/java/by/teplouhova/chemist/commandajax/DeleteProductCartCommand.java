@@ -9,13 +9,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class DeleteProductCartCommand implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+
     private static final String PARAM_MEDICINE_ID ="medicine_id";
     private static final String ATRR_CART="cart";
+    private static final String ATRR_SIZE="size";
 
     @Override
     public JSONObject execute(SessionRequestContent content) {
-        //todo validation
         Long id=Long.parseLong(content.getParameter(PARAM_MEDICINE_ID));
         HashMap<Medicine,Integer> cart= (HashMap<Medicine, Integer>) content.getSessionAttribute(ATRR_CART);
         JSONObject json=new JSONObject();
@@ -27,7 +27,7 @@ public class DeleteProductCartCommand implements Command {
            cartSize=cart.values().stream().reduce((s1,s2)->s1+s2).get();
         }
 
-        json.put("size",cartSize);
+        json.put(ATRR_SIZE,cartSize);
         return json;
     }
 }

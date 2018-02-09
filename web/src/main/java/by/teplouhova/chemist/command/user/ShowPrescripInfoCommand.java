@@ -25,12 +25,12 @@ public class ShowPrescripInfoCommand implements Command {
     private static final String ATTR_PRESCRIPTION = "prescription";
     private static final String ATTR_USER = "user";
     private static final String ATTR_MESSAGE = "message";
-    private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+    private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
 
     private PrescriptionService service;
 
 
-    public ShowPrescripInfoCommand(PrescriptionService service, ClientService clientService) {
+    public ShowPrescripInfoCommand(PrescriptionService service) {
         this.service = service;
 
     }
@@ -41,30 +41,28 @@ public class ShowPrescripInfoCommand implements Command {
         CommandResult.ResponseType responseType = FORWARD;
         String prescriptionId = content.getParameter(PARAM_PRESCRIPTION_ID);
         User user = (User) content.getSessionAttribute(ATTR_USER);
-        HashMap<String,String> params=new HashMap<>();
-        content.getParameterNames().forEach(key->params.put(key,content.getParameter(key)));
-        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
+        HashMap<String, String> params = new HashMap<>();
+        params.put(PARAM_PRESCRIPTION_ID, content.getParameter(PARAM_PRESCRIPTION_ID));
+        ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         try {
-            Validator validator=new Validator(bundle);
+            Validator validator = new Validator(bundle);
             if (validator.isValid(params)) {
                 Prescription prescription = service.getPrescription(Long.parseLong(prescriptionId));
                 content.setRequestAttributes(ATTR_PRESCRIPTION, prescription);
                 if (user.getRole() == RoleType.CLIENT) {
-                    page =PAGE_CLIENT_PRESCRIPTION_DETAIL;
+                    page = PAGE_CLIENT_PRESCRIPTION_DETAIL;
                 } else {
                     page = PAGE_DOCTOR_PRESCRIPTION_DETAIL;
                 }
 
             } else {
                 page = PAGE_ERROR;
-                content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.prescrip.parameter.wrong") +prescriptionId);
+                content.setRequestAttributes(ATTR_MESSAGE, bundle.getString("message.prescrip.parameter.wrong") + prescriptionId);
             }
         } catch (ServiceException e) {
             page = PAGE_ERROR;
-            responseType =FORWARD;
-            //todo message
-            content.setRequestAttributes(ATTR_MESSAGE,bundle.getString("message.prescrip.not.found")+prescriptionId);
-            LOGGER.catching( e);
+            content.setRequestAttributes(ATTR_MESSAGE, bundle.getString("message.prescrip.not.found") + prescriptionId);
+            LOGGER.catching(e);
         }
 
         return new CommandResult(responseType, page);

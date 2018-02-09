@@ -2,7 +2,7 @@ package by.teplouhova.chemist.validator;
 
 import static by.teplouhova.chemist.validator.RegexpConstant.*;
 
-public enum FieldName {
+public enum ParameterName {
     USER_NAME("user_name", REGEXP_NAME_USER, true),
     SURNAME("surname", REGEXP_SURNAME_USER, true),
     LOGIN("login", REGEXP_LOGIN, true),
@@ -28,14 +28,15 @@ public enum FieldName {
     UNIT_IN_PACKAGE("unit_in_package", REGEXP_UNIT_IN_PACK, true),
     DOSAGE_SIZE("dosage_size", REGEXP_BIGDECIMAL_PARAM, false),
     DOSAGE_UNIT("dosage_unit", REGEXP_DOSAGE_UNIT, false),
-    ANALOG_MEDICINE_ID("analog_medicine_id", REGEXP_ID, false);
+    ANALOG_MEDICINE_ID("analog_medicine_id", REGEXP_ID, false),
+    CURRENT_PAGE("current_page",REGEXP_ID,true);
 
 
     private String name;
     private String regexp;
     private boolean isRequired;
 
-    FieldName(String name, String regexp, boolean isRequired) {
+    ParameterName(String name, String regexp, boolean isRequired) {
         this.name = name;
         this.regexp = regexp;
         this.isRequired = isRequired;

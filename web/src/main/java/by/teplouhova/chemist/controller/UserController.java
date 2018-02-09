@@ -34,7 +34,7 @@ public class UserController extends HttpServlet {
         CommandResult page = command.execute(requestContent);
         requestContent.insertAttributes(request);
 
-        if (CommandResult.ResponseType.FORWARD==(page.getResponseType())) {
+        if (CommandResult.ResponseType.FORWARD.equals(page.getResponseType())) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + page.getPage());

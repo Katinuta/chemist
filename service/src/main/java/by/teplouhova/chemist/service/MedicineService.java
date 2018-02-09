@@ -4,6 +4,7 @@ import by.teplouhova.chemist.dao.DosageDAO;
 import by.teplouhova.chemist.dao.MedicineDAO;
 import by.teplouhova.chemist.dao.TransactionManager;
 import by.teplouhova.chemist.dao.DAOException;
+import by.teplouhova.chemist.dao.factory.DAOFactory;
 import by.teplouhova.chemist.entity.impl.Dosage;
 import by.teplouhova.chemist.entity.impl.Medicine;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +20,9 @@ public class MedicineService {
     private MedicineDAO medicineDAO;
     private DosageDAO dosageDAO;
 
-    public MedicineService(MedicineDAO medicineDAO, DosageDAO dosageDAO) {
-        this.medicineDAO = medicineDAO;
-        this.dosageDAO = dosageDAO;
+    public MedicineService() {
+        medicineDAO = DAOFactory.getDAOFactory().getMedicineDAO();
+        dosageDAO = DAOFactory.getDAOFactory().getDosageDAO();
     }
 
     public ArrayList<Medicine> getMedicinesByName(String name) throws ServiceException {
@@ -137,7 +138,7 @@ public class MedicineService {
                 throw new ServiceException("Id of medicines are not found");
             }
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Id of medicines are not found",e);
         }finally {
             manager.endTransaction();
         }
@@ -223,7 +224,6 @@ public class MedicineService {
         try {
             medicines = medicineDAO.findByPrescripNeed(isNeedPrescription);
             if(medicines==null){
-                //todo check  need
                 throw new ServiceException("Medicines by prescription are not found");
             }
         } catch (DAOException e) {

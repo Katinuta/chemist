@@ -17,7 +17,7 @@ public class TransactionManager {
 
     public void beginTransaction(AbstractDAO dao, AbstractDAO... listDAO) {
         try {
-
+//проверка на null
             connection.setAutoCommit(false);
             dao.setConnection(connection);
             Arrays.stream(listDAO).forEach(itemDAO ->

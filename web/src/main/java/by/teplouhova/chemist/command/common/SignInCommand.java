@@ -43,9 +43,9 @@ public class SignInCommand implements Command {
         String page = PAGE_COMMON_LOGIN;
         CommandResult.ResponseType responseType=FORWARD;
         HashMap<String,String> userParams=new HashMap<>();
+        userParams.put(PARAM_LOGIN,content.getParameter(PARAM_LOGIN));
+        userParams.put(PARAM_PASSWORD,content.getParameter(PARAM_PASSWORD));
         try {
-            content.getParameterNames()
-                    .forEach(key->userParams.put(key,content.getParameter(key)));
             ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
             Validator validator=new Validator(bundle);
             if(validator.isValid(userParams)){
@@ -77,9 +77,8 @@ public class SignInCommand implements Command {
             }
 
         } catch (ServiceException e) {
-            //todo
             page = PAGE_ERROR;
-            responseType= REDIRECT;
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
             LOGGER.catching(e);
         }
         return new CommandResult(responseType, page);

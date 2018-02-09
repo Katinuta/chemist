@@ -13,12 +13,6 @@ import static by.teplouhova.chemist.command.PageConstant.PAGE_COMMON_EDIT_PASSWO
 
 public class ToEditPasswordPageCommand implements Command {
 
-    private static final Logger LOGGER= LogManager.getLogger();
-    private  UserService userService;
-
-    public ToEditPasswordPageCommand(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public CommandResult execute(SessionRequestContent content) {

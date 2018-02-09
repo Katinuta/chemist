@@ -1,0 +1,46 @@
+input[type=date]:not(.end) {
+    background-color: inherit;
+    border: none;
+}
+.table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 5px;
+    vertical-align: middle;
+}
+.center{
+    text-align: center;
+}
+.form-control{
+    width: 55%;
+}
+.table>tbody{
+    font-size: 14px;
+}
+.table-presrip{
+    margin-bottom: 5%;
+}
+button {
+    background-color: #00cc99;
+    color: white;
+    font-size: 14px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+button:hover{
+    text-decoration: none;
+    color: white;
+    background-color: #009973;
+
+}
+form{
+    margin-bottom: 0;
+}
+.clients{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.flex-container {
+    display: flex;
+    justify-content: center;
+
+}
