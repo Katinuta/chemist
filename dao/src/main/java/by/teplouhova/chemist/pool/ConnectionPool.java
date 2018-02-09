@@ -10,17 +10,36 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The Class ConnectionPool.
+ */
 public class ConnectionPool {
+
+    /** The Constant LOGGER. */
     private final static Logger LOGGER = LogManager.getLogger();
 
+    /** The pool max active. */
     private final int POOL_MAX_ACTIVE;
+
+    /** The pool init size. */
     private final int POOL_INIT_SIZE;
+
+    /** The lock. */
     private static ReentrantLock lock = new ReentrantLock();
+
+    /** The pool. */
     private static ConnectionPool pool;
+
+    /** The is exist pool. */
     private static AtomicBoolean isExistPool = new AtomicBoolean(false);
+
+    /** The connections. */
     private BlockingQueue<ProxyConnection> connections;
 
 
+    /**
+     * Instantiates a new connection pool.
+     */
     private ConnectionPool() {
         POOL_MAX_ACTIVE = ConnectionConfiguration.getConfiguration().getPOOL_MAX_ACTIVE();
         POOL_INIT_SIZE = ConnectionConfiguration.getConfiguration().getPOOL_INIT_SIZE();
@@ -41,6 +60,11 @@ public class ConnectionPool {
 
     }
 
+    /**
+     * Gets the single instance of ConnectionPool.
+     *
+     * @return single instance of ConnectionPool
+     */
     public static ConnectionPool getInstance() {
         if (!isExistPool.get()) {
             try {
@@ -57,6 +81,11 @@ public class ConnectionPool {
         return pool;
     }
 
+    /**
+     * Gets the connection.
+     *
+     * @return the connection
+     */
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -81,6 +110,11 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     */
     public void releaseConnection(ProxyConnection connection) {
         try {
             if (!connection.getAutoCommit()) {
@@ -92,6 +126,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close pool connections.
+     */
     public void closePoolConnections() {
         connections.forEach(connection -> {
             try {
@@ -102,6 +139,11 @@ public class ConnectionPool {
         });
     }
 
+    /**
+     * Size.
+     *
+     * @return the int
+     */
     public int size(){
         return connections.size();
     }

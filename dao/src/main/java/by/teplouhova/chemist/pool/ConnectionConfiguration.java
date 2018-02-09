@@ -10,17 +10,35 @@ import java.sql.SQLException;
 
 import static by.teplouhova.chemist.pool.ConfigurationConstant.*;
 
+/**
+ * The Class ConnectionConfiguration.
+ */
 class ConnectionConfiguration {
 
+    /** The Constant LOGGER. */
     private final static Logger LOGGER = LogManager.getLogger();
 
+    /** The pool max active. */
     private final int POOL_MAX_ACTIVE;
+
+    /** The pool init size. */
     private final int POOL_INIT_SIZE;
+
+    /** The url. */
     private final String URL;
+
+    /** The user. */
     private final String USER;
+
+    /** The password. */
     private final String PASSWORD;
+
+    /** The Constant configuration. */
     private final static ConnectionConfiguration configuration = new ConnectionConfiguration();
 
+    /**
+     * Instantiates a new connection configuration.
+     */
     private ConnectionConfiguration() {
         POOL_INIT_SIZE = Integer.parseInt(ConfigurationManager.getInstance().getString(POOL_INIT_SIZE_KEY));
         POOL_MAX_ACTIVE = Integer.parseInt(ConfigurationManager.getInstance().getString(POOL_MAX_ACTIVE_KEY));
@@ -33,10 +51,20 @@ class ConnectionConfiguration {
         PASSWORD = ConfigurationManager.getInstance().getString(PASSWORD_KEY);
     }
 
+    /**
+     * Gets the configuration.
+     *
+     * @return the configuration
+     */
     public static ConnectionConfiguration getConfiguration() {
         return configuration;
     }
 
+    /**
+     * Gets the connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         Connection connection = null;
         try {
@@ -48,10 +76,20 @@ class ConnectionConfiguration {
         return connection;
     }
 
+    /**
+     * Gets the pool max active.
+     *
+     * @return the pool max active
+     */
     public int getPOOL_MAX_ACTIVE() {
         return POOL_MAX_ACTIVE;
     }
 
+    /**
+     * Gets the pool init size.
+     *
+     * @return the pool init size
+     */
     public int getPOOL_INIT_SIZE() {
         return POOL_INIT_SIZE;
     }
