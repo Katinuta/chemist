@@ -44,7 +44,6 @@ public class TransactionManager {
      * @param dao the dao
      */
     public void beginTransaction(AbstractDAO dao){
-
         dao.setConnection(connection);
     }
 

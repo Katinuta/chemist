@@ -3,11 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<c:choose>
-    <c:when test="${not empty locale}">
-        <fmt:setLocale value="${locale}"/>
-    </c:when>
-</c:choose>
+
+<fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 <div class="container-fluid">
     <div class="navbar-header">
@@ -34,7 +31,8 @@
                     <c:url var="show_prescriptions_to_extend" value="/doctor">
                         <c:param name="command" value="show_prescriptions_to_extend"/>
                     </c:url>
-                    <a href="${show_prescriptions_to_extend}"><fmt:message bundle="${bundle}" key="ref.request.prescriptions"/></a>
+                    <a href="${show_prescriptions_to_extend}"><fmt:message bundle="${bundle}"
+                                                                           key="ref.request.prescriptions"/></a>
                     <c:url var="to_edit_password" value="/doctor">
                         <c:param name="command" value="to_edit_password"/>
                     </c:url>

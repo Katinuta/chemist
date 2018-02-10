@@ -27,7 +27,7 @@
                     <h2><fmt:message bundle="${bundle}" key="message.cart.goods"/></h2>
                     <div class="container-fluid form shadow ">
                         <div class="form-group">
-                            <span class="error" id="ajax_error">${error}</span>
+                            <span class="error" id="ajax_error">${error} </span>
                         </div>
                         <table class="table">
                             <thead>

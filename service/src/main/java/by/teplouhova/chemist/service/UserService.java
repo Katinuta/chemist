@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class UserService {
-    private final static Logger LOGGER = LogManager.getLogger();
+
     private  static final int  RECORDS_PER_PAGE=10;
 
     private UserDAO userDAO;

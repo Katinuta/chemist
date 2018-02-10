@@ -2,8 +2,6 @@ package by.teplouhova.chemist.commandajax;
 
 import by.teplouhova.chemist.controller.SessionRequestContent;
 import by.teplouhova.chemist.entity.impl.Medicine;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 import java.util.HashMap;

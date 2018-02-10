@@ -15,7 +15,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConnectionPool {
 
-    /** The Constant LOGGER. */
     private final static Logger LOGGER = LogManager.getLogger();
 
     /** The pool max active. */
@@ -142,7 +141,7 @@ public class ConnectionPool {
     /**
      * Size.
      *
-     * @return the int
+     * @return the int size of pool
      */
     public int size(){
         return connections.size();

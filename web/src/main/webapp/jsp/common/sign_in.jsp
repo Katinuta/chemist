@@ -2,11 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:choose>
-    <c:when test="${not empty locale}">
-        <fmt:setLocale value="${locale}"/>
-    </c:when>
-</c:choose>
+<fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 
 <html>

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 public class ProducerService {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public ArrayList<Producer> getProdusers() throws ServiceException {
         ArrayList<Producer> producers;
@@ -20,8 +19,11 @@ public class ProducerService {
         manager.beginTransaction(producerDAO);
         try {
             producers=producerDAO.findAll();
+            if(producers==null){
+                throw new ServiceException("Producers are not found");
+            }
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Producers are not found",e);
         }finally {
             manager.endTransaction();
         }
