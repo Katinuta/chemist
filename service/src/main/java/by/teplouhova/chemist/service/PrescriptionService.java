@@ -16,17 +16,35 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Class PrescriptionService.
+ */
 public class PrescriptionService {
-    private static final Logger LOGGER = LogManager.getLogger();
-
+    /**
+     * The prescription DAO.
+     */
     private PrescriptionDAO prescriptionDAO;
+
+    /**
+     * The prescrip detail DAO.
+     */
     private PrescripDetailDAO prescripDetailDAO;
 
+    /**
+     * Instantiates a new prescription service.
+     */
     public PrescriptionService() {
         prescriptionDAO = DAOFactory.getDAOFactory().getPrescriptionDAO();
         prescripDetailDAO = DAOFactory.getDAOFactory().getPrescripDetailDAO();
     }
 
+    /**
+     * Gets the prescription.
+     *
+     * @param prescriptionId the prescription id
+     * @return the prescription
+     * @throws ServiceException the service exception
+     */
     public Prescription getPrescription(long prescriptionId) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(prescriptionDAO);
@@ -43,13 +61,19 @@ public class PrescriptionService {
             }
             details.stream().forEach(detail -> prescription.setDetails(detail));
         } catch (DAOException e) {
-            throw new ServiceException("Prescription is not found ID: " + prescriptionId,e);
+            throw new ServiceException("Prescription is not found ID: " + prescriptionId, e);
         } finally {
             manager.endTransaction();
         }
         return prescription;
     }
 
+    /**
+     * Update.
+     *
+     * @param newPrescrip the new prescrip
+     * @throws ServiceException the service exception
+     */
     public void update(Prescription newPrescrip) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         try {
@@ -60,12 +84,12 @@ public class PrescriptionService {
             }
             oldPrescrip.setStatus(newPrescrip.getStatus());
             List<PrescriptionDetail> details = oldPrescrip.getDetails();
-            if(PrescriptionStatus.EXTEND.equals(oldPrescrip.getStatus())){
+            if (PrescriptionStatus.EXTEND.equals(oldPrescrip.getStatus())) {
                 details.stream()
-                        .filter(detail -> PrescriptionStatus.INACTIVE.equals( detail.getStatus()))
+                        .filter(detail -> PrescriptionStatus.INACTIVE.equals(detail.getStatus()))
                         .forEach(detail -> detail.setStatus(PrescriptionStatus.EXTEND));
 
-            }else{
+            } else {
                 oldPrescrip.setDateEnd(newPrescrip.getDateEnd());
                 details.stream()
                         .filter(detail -> PrescriptionStatus.EXTEND.equals(detail.getStatus()))
@@ -89,6 +113,14 @@ public class PrescriptionService {
 
     }
 
+    /**
+     * Gets the doctor prescriptions.
+     *
+     * @param doctorId the doctor id
+     * @param isExtend the is extend
+     * @return the doctor prescriptions
+     * @throws ServiceException the service exception
+     */
     public List<Prescription> getDoctorPrescriptions(long doctorId, boolean isExtend) throws ServiceException {
         List<Prescription> prescriptions;
         TransactionManager manager = new TransactionManager();
@@ -100,14 +132,22 @@ public class PrescriptionService {
                 prescriptions = prescriptionDAO.findPrescriptionByDoctorId(doctorId);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Prescriptions are not found",e);
+            throw new ServiceException("Prescriptions are not found", e);
         } finally {
             manager.endTransaction();
         }
         return prescriptions;
     }
 
-
+    /**
+     * Check prescrip exist for medicine.
+     *
+     * @param medicine the medicine
+     * @param count    the count
+     * @param clientId the client id
+     * @return true, if successful
+     * @throws ServiceException the service exception
+     */
     public boolean checkPrescripExistForMedicine(Medicine medicine, int count, long clientId) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(prescriptionDAO);
@@ -125,7 +165,6 @@ public class PrescriptionService {
                     PrescriptionDetail detail =
                             prescripDetailDAO
                                     .findByPrescripIdMedicineId(prescription.getPrescriptionId(), medicine.getMedicineId());
-                    LOGGER.debug(detail);
                     if (detail != null) {
                         if (detail.getQuantityPack() >= count) {
                             return true;
@@ -142,6 +181,12 @@ public class PrescriptionService {
         return false;
     }
 
+    /**
+     * Creates the prescription.
+     *
+     * @param prescription the prescription
+     * @throws ServiceException the service exception
+     */
     public void createPrescription(Prescription prescription) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(prescriptionDAO, prescripDetailDAO);

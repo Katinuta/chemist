@@ -5,12 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
 
-
-<c:choose>
-    <c:when test="${not empty locale}">
-        <fmt:setLocale value="${locale}"/>
-    </c:when>
-</c:choose>
+<fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 <div class="container-fluid">
     <div class="navbar-header">

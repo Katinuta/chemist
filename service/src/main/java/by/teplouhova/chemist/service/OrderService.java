@@ -8,16 +8,45 @@ import by.teplouhova.chemist.entity.impl.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * The Class OrderService.
+ */
 public class OrderService {
 
+    /**
+     * The order DAO.
+     */
     private OrderDAO orderDAO;
+
+    /**
+     * The order detail DAO.
+     */
     private OrderDetailDAO orderDetailDAO;
+
+    /**
+     * The user DAO.
+     */
     private UserDAO userDAO;
+
+    /**
+     * The medicine DAO.
+     */
     private MedicineDAO medicineDAO;
+
+    /**
+     * The prescrip detail DAO.
+     */
     private PrescripDetailDAO prescripDetailDAO;
+
+    /**
+     * The prescription DAO.
+     */
     private PrescriptionDAO prescriptionDAO;
 
 
+    /**
+     * Instantiates a new order service.
+     */
     public OrderService() {
         orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
         orderDetailDAO = DAOFactory.getDAOFactory().getOrderDetailDAO();
@@ -27,7 +56,13 @@ public class OrderService {
         prescriptionDAO = DAOFactory.getDAOFactory().getPrescriptionDAO();
     }
 
-
+    /**
+     * Gets the by id.
+     *
+     * @param orderId the order id
+     * @return the by id
+     * @throws ServiceException the service exception
+     */
     public Order getById(long orderId) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(orderDAO);
@@ -48,6 +83,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Creates the.
+     *
+     * @param order the order
+     * @throws ServiceException the service exception
+     */
     public void create(Order order) throws ServiceException {
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(orderDAO, orderDetailDAO, userDAO, medicineDAO, prescripDetailDAO);
