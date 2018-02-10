@@ -11,40 +11,82 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * The Class IncreaseProductAmountCartCommand.
+ */
 public class IncreaseProductAmountCartCommand implements Command {
+
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * The medicine service.
+     */
     private MedicineService medicineService;
-    private static final String PARAM_MEDICINE_ID = "medicine_id";
-    private static final String PARAM_AMOUNT = "amount";
-    private static final String ATRR_CART = "cart";
-    private static  final String ATTR_MESSAGE_BUNDLE="messageBundle";
-    private static final String ATTR_MESSAGE="message";
-    private static final  String ATTR_SIZE="size";
 
+    /**
+     * The Constant PARAM_MEDICINE_ID.
+     */
+    private static final String PARAM_MEDICINE_ID = "medicine_id";
+
+    /**
+     * The Constant PARAM_AMOUNT.
+     */
+    private static final String PARAM_AMOUNT = "amount";
+
+    /**
+     * The Constant ATRR_CART.
+     */
+    private static final String ATRR_CART = "cart";
+
+    /**
+     * The Constant ATTR_MESSAGE_BUNDLE.
+     */
+    private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /**
+     * The Constant ATTR_MESSAGE.
+     */
+    private static final String ATTR_MESSAGE = "message";
+
+    /**
+     * The Constant ATTR_SIZE.
+     */
+    private static final String ATTR_SIZE = "size";
+
+    /**
+     * Instantiates a new increase product amount cart command.
+     *
+     * @param medicineService the medicine service
+     */
     public IncreaseProductAmountCartCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the JSON object
+     */
     @Override
     public JSONObject execute(SessionRequestContent content) {
         Long id = Long.parseLong(content.getParameter(PARAM_MEDICINE_ID));
         Integer amount = Integer.parseInt(content.getParameter(PARAM_AMOUNT));
         HashMap<Medicine, Integer> cart = (HashMap<Medicine, Integer>) content.getSessionAttribute(ATRR_CART);
-        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
+        ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         JSONObject json = new JSONObject();
         try {
             int currentBalance = medicineService.getMedicineBalance(id);
             Medicine medicine = cart.keySet().stream().filter(key -> key.getMedicineId() == id).findFirst().get();
-            if (currentBalance >=amount &&currentBalance!=0) {
+            if (currentBalance >= amount && currentBalance != 0) {
                 cart.put(medicine, amount);
             } else {
                 if (currentBalance != 0) {
-                    json.put(ATTR_MESSAGE,bundle.getString("message.error.amount"));
-                    amount=--amount;
+                    json.put(ATTR_MESSAGE, bundle.getString("message.error.amount"));
+                    amount = --amount;
                 } else {
-                    json.put(ATTR_MESSAGE,bundle.getString("label.archive"));
+                    json.put(ATTR_MESSAGE, bundle.getString("label.archive"));
                     amount = 0;
                     cart.put(medicine, amount);
                 }

@@ -18,20 +18,52 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_DOCTOR_MAIN;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class ShowAllClientsCommand.
+ */
 public class ShowAllClientsCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * The Constant PARAM_CURRENT_PAGE.
+     */
     private static final String PARAM_CURRENT_PAGE = "current_page";
+
+    /**
+     * The Constant ATTR_COUNT_PAGES.
+     */
     private static final String ATTR_COUNT_PAGES = "countpages";
+
+    /**
+     * The Constant ATTR_CLIENTS.
+     */
     private static final String ATTR_CLIENTS = "clients";
+
+    /**
+     * The Constant ATTR_MESSAGE_ERROR.
+     */
     private static final String ATTR_MESSAGE_ERROR = "message";
 
+    /**
+     * The service.
+     */
     private UserService service;
 
+    /**
+     * Instantiates a new show all clients command.
+     *
+     * @param service the service
+     */
     public ShowAllClientsCommand(UserService service) {
         this.service = service;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page;
@@ -43,7 +75,6 @@ public class ShowAllClientsCommand implements Command {
             List<User> users = service.getUserByRoleByPage(role, currentPage, countPages);
             content.setRequestAttributes(ATTR_CLIENTS, users);
             content.setRequestAttributes(ATTR_COUNT_PAGES, countPages[0]);
-
             page = PAGE_DOCTOR_MAIN;
 
         } catch (ServiceException e) {

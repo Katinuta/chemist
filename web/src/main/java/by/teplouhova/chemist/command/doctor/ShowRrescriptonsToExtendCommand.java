@@ -17,22 +17,45 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_DOCTOR_MAIN;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class ShowRrescriptonsToExtendCommand.
+ */
 public class ShowRrescriptonsToExtendCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER = "user";
+
+    /** The Constant ATTR_PRESCRIPTIONS. */
     private static final String ATTR_PRESCRIPTIONS = "prescriptions";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_MESSAGE. */
     private static final String ATTR_MESSAGE = "message";
+
+    /** The Constant ATTR_EXTENDING. */
     private static  final String ATTR_EXTENDING="extending";
 
+    /** The prescription service. */
     private PrescriptionService prescriptionService;
 
+    /**
+     * Instantiates a new show rrescriptons to extend command.
+     *
+     * @param prescriptionService the prescription service
+     */
     public ShowRrescriptonsToExtendCommand(PrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page;

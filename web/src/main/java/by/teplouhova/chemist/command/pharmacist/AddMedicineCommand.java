@@ -18,38 +18,111 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
+/**
+ * The Class AddMedicineCommand.
+ */
 public class AddMedicineCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-
+    /**
+     * The Constant PARAM_MEDICINE_NAME.
+     */
     private static final String PARAM_MEDICINE_NAME = "medicine_name";
 
+    /**
+     * The Constant PARAM_PRICE.
+     */
     private static final String PARAM_PRICE = "price";
-    private static final String PARAM_ANALOG_MEDICINE_ID = "analog_medicine_id";
-    private static final String PARAM_PRODUCER_ID = "producer_id";
-    private static final String PARAM_RELEASE_FORM_ID = "release_form_id";
-    private static final String PARAM_UNIT_IN_PACKAGE = "unit_in_package";
-    private static final String PARAM_QUANTITY_IN_PACKAGE = "quantity_in_package";
-    private static final String PARAM_QUANTITY_PACKAGES = "quantity_packages";
-    private static final String PARAM_DOSAGE_SIZE = "dosage_size";
-    private static final String PARAM_UNIT_DOSAGE = "dosage_unit";
-    private static final String PARAM_NEED_PRESCRIPTION = "need_prescription";
-    private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
-    private static final String ATTR_ERROR = "error_";
-    private static final String ATTR_DOSAGE = "dosage";
-    private static final String ATTR_MESSAGE_ERROR="message";
 
+    /**
+     * The Constant PARAM_ANALOG_MEDICINE_ID.
+     */
+    private static final String PARAM_ANALOG_MEDICINE_ID = "analog_medicine_id";
+
+    /**
+     * The Constant PARAM_PRODUCER_ID.
+     */
+    private static final String PARAM_PRODUCER_ID = "producer_id";
+
+    /**
+     * The Constant PARAM_RELEASE_FORM_ID.
+     */
+    private static final String PARAM_RELEASE_FORM_ID = "release_form_id";
+
+    /**
+     * The Constant PARAM_UNIT_IN_PACKAGE.
+     */
+    private static final String PARAM_UNIT_IN_PACKAGE = "unit_in_package";
+
+    /**
+     * The Constant PARAM_QUANTITY_IN_PACKAGE.
+     */
+    private static final String PARAM_QUANTITY_IN_PACKAGE = "quantity_in_package";
+
+    /**
+     * The Constant PARAM_QUANTITY_PACKAGES.
+     */
+    private static final String PARAM_QUANTITY_PACKAGES = "quantity_packages";
+
+    /**
+     * The Constant PARAM_DOSAGE_SIZE.
+     */
+    private static final String PARAM_DOSAGE_SIZE = "dosage_size";
+
+    /**
+     * The Constant PARAM_UNIT_DOSAGE.
+     */
+    private static final String PARAM_UNIT_DOSAGE = "dosage_unit";
+
+    /**
+     * The Constant PARAM_NEED_PRESCRIPTION.
+     */
+    private static final String PARAM_NEED_PRESCRIPTION = "need_prescription";
+
+    /**
+     * The Constant ATTR_MESSAGE_BUNDLE.
+     */
+    private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /**
+     * The Constant ATTR_ERROR.
+     */
+    private static final String ATTR_ERROR = "error_";
+
+    /**
+     * The Constant ATTR_DOSAGE.
+     */
+    private static final String ATTR_DOSAGE = "dosage";
+
+    /**
+     * The Constant ATTR_MESSAGE_ERROR.
+     */
+    private static final String ATTR_MESSAGE_ERROR = "message";
+
+    /**
+     * The medicine service.
+     */
     private MedicineService medicineService;
 
+    /**
+     * Instantiates a new adds the medicine command.
+     *
+     * @param medicineService the medicine service
+     */
     public AddMedicineCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
-
     public CommandResult execute(SessionRequestContent content) {
-        String page ;
+        String page;
         CommandResult.ResponseType responseType = FORWARD;
-        ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
+        ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION);
         HashMap<String, String> medicineParams = new HashMap<>();
         medicineParams.put(PARAM_ANALOG_MEDICINE_ID, content.getParameter(PARAM_ANALOG_MEDICINE_ID));
@@ -64,9 +137,9 @@ public class AddMedicineCommand implements Command {
         medicineParams.put(PARAM_UNIT_DOSAGE, content.getParameter(PARAM_UNIT_DOSAGE));
         medicineParams.put(PARAM_NEED_PRESCRIPTION, String.valueOf(isNeedPrescription));
         medicineParams.entrySet().stream()
-                .filter(entry -> entry!=null&&entry.getValue().isEmpty())
+                .filter(entry -> entry != null && entry.getValue().isEmpty())
                 .forEach(entry -> entry.setValue(null));
-        Validator validator=new Validator(bundle);
+        Validator validator = new Validator(bundle);
         boolean isValid = validator.isValid(medicineParams);
         String dosageSize = medicineParams.get(PARAM_DOSAGE_SIZE);
         String dosageUnit = medicineParams.get(PARAM_UNIT_DOSAGE);
@@ -79,17 +152,17 @@ public class AddMedicineCommand implements Command {
                 responseType = REDIRECT;
             } else {
                 if (isValid && (dosageSize == null && dosageUnit != null) || (dosageSize != null && dosageUnit == null)) {
-                    content.setRequestAttributes(ATTR_ERROR+ATTR_DOSAGE, bundle.getString("message.dosage.wrong"));
+                    content.setRequestAttributes(ATTR_ERROR + ATTR_DOSAGE, bundle.getString("message.dosage.wrong"));
                 }
                 content.getParameterNames()
-                        .forEach(nameParam->content.setRequestAttributes(nameParam,content.getParameter(nameParam)));
+                        .forEach(nameParam -> content.setRequestAttributes(nameParam, content.getParameter(nameParam)));
                 validator.getEntrySetErrors()
-                        .forEach(entry->content.setRequestAttributes(ATTR_ERROR+entry.getKey(),entry.getValue()));
+                        .forEach(entry -> content.setRequestAttributes(ATTR_ERROR + entry.getKey(), entry.getValue()));
                 page = PAGE_PHARMACIST_MEDICINE_NEW;
             }
         } catch (ServiceException e) {
             page = PAGE_ERROR;
-            content.setRequestAttributes(ATTR_MESSAGE_ERROR,e.getMessage());
+            content.setRequestAttributes(ATTR_MESSAGE_ERROR, e.getMessage());
             LOGGER.catching(e);
         }
 

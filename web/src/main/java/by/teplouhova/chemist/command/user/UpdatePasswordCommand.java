@@ -22,20 +22,45 @@ import static by.teplouhova.chemist.command.PageConstant.PAGE_COMMON_EDIT_PASSWO
 import static by.teplouhova.chemist.command.PageConstant.PAGE_UPDATE_PASSWORD_SUCCESS;
 
 public class UpdatePasswordCommand implements Command {
+
     private static final Logger LOGGER= LogManager.getLogger();
+
+    /** The Constant PARAM_PASSWORD. */
     private static final String PARAM_PASSWORD="password";
+
+    /** The Constant PARAM_NEW_PASSWORD. */
     private static final String PARAM_NEW_PASSWORD="new_password";
+
+    /** The Constant ATTR_ERROR. */
     private static final String ATTR_ERROR="error_";
+
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER="user";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR="message";
 
+    /** The user service. */
     private UserService userService;
 
+    /**
+     * Instantiates a new update password command.
+     *
+     * @param userService the user service
+     */
     public UpdatePasswordCommand(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page =PAGE_COMMON_EDIT_PASSWORD;

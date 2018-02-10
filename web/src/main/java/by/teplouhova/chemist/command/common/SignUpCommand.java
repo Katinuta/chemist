@@ -19,26 +19,58 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
+/**
+ * The Class SignUpCommand.
+ */
 public class SignUpCommand implements Command {
 
     private  static final Logger LOGGER = LogManager.getLogger();
 
+    /** The Constant PARAM_lOGIN. */
     private  static final String PARAM_lOGIN = "login";
+
+    /** The Constant PARAM_USER_NAME. */
     private  static final String PARAM_USER_NAME = "user_name";
+
+    /** The Constant PARAM_SURNAME. */
     private  static final String PARAM_SURNAME = "surname";
+
+    /** The Constant PARAM_ACCOUNT. */
     private  static final String PARAM_ACCOUNT="account";
+
+    /** The Constant PARAM_PHONE. */
     private  static final String PARAM_PHONE="phone";
+
+    /** The Constant PARAM_PASSWORD. */
     private  static final String PARAM_PASSWORD="password";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private  static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_ERROR. */
     private  static final String ATTR_ERROR = "error_";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private  static final String ATTR_MESSAGE_ERROR = "message";
 
+    /** The user service. */
     private UserService userService;
 
+    /**
+     * Instantiates a new sign up command.
+     *
+     * @param userService the user service
+     */
     public SignUpCommand(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = PAGE_COMMON_SIGN_UP;

@@ -11,20 +11,66 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * The Class FindMedicineDetailsCommand.
+ */
 public class FindMedicineDetailsCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String ATTR_FORMS ="forms";
-    private static final String ATTR_PRODUCERS ="producers";
-    private static final String ATTR_UNITS_IN_PACK="unitsInPack";
-    private static final String ATTR_DOSAGE_UNITS="dosageUnits";
-    private static  final String ATTR_ANALOGS="analogs";
 
+    /**
+     * The Constant ATTR_FORMS.
+     */
+    private static final String ATTR_FORMS = "forms";
+
+    /**
+     * The Constant ATTR_PRODUCERS.
+     */
+    private static final String ATTR_PRODUCERS = "producers";
+
+    /**
+     * The Constant ATTR_UNITS_IN_PACK.
+     */
+    private static final String ATTR_UNITS_IN_PACK = "unitsInPack";
+
+    /**
+     * The Constant ATTR_DOSAGE_UNITS.
+     */
+    private static final String ATTR_DOSAGE_UNITS = "dosageUnits";
+
+    /**
+     * The Constant ATTR_ANALOGS.
+     */
+    private static final String ATTR_ANALOGS = "analogs";
+
+    /**
+     * The release form service.
+     */
     private ReleaseFormService releaseFormService;
+
+    /**
+     * The producer service.
+     */
     private ProducerService producerService;
+
+    /**
+     * The dosage service.
+     */
     private DosageService dosageService;
+
+    /**
+     * The medicine service.
+     */
     private MedicineService medicineService;
 
+    /**
+     * Instantiates a new find medicine details command.
+     *
+     * @param releaseFormService the release form service
+     * @param producerService    the producer service
+     * @param dosageService      the dosage service
+     * @param medicineService    the medicine service
+     */
     public FindMedicineDetailsCommand(ReleaseFormService releaseFormService, ProducerService producerService,
                                       DosageService dosageService, MedicineService medicineService) {
         this.releaseFormService = releaseFormService;
@@ -33,6 +79,12 @@ public class FindMedicineDetailsCommand implements Command {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the JSON object
+     */
     @Override
     public JSONObject execute(SessionRequestContent content) {
         JSONObject object = new JSONObject();

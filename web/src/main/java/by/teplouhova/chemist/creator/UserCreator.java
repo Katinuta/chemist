@@ -10,14 +10,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The Class UserCreator.
+ */
 public class UserCreator {
+
     private static final Logger LOGGER = LogManager.getLogger();
+
+    /** The user. */
     private User user;
 
+    /**
+     * Instantiates a new user creator.
+     */
     public UserCreator() {
         user = new User();
     }
 
+    /**
+     * Creates the.
+     *
+     * @param userParams the user params
+     * @return the user
+     */
     public User create(HashMap<String, String> userParams) {
         Set<Map.Entry<String, String>> keySet = userParams.entrySet();
         keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
@@ -32,6 +47,12 @@ public class UserCreator {
         return user;
     }
 
+    /**
+     * Fill field.
+     *
+     * @param name the name
+     * @param value the value
+     */
     private void fillField(ParameterName name, String value) {
 
         switch (name) {

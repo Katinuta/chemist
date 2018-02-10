@@ -20,21 +20,42 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
-
+/**
+ * The Class ExtendPrescripDetailCommand.
+ */
 public class ExtendPrescripDetailCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    /** The Constant PARAM_PRESCRIP_DETAIL_ID. */
     private static final String PARAM_PRESCRIP_DETAIL_ID = "prescrip_detail_id";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_MESSAGE. */
     private static final String ATTR_MESSAGE = "message";
+
+    /** The Constant HEADER_REFERER. */
     private static final String HEADER_REFERER = "referer";
 
+    /** The detail service. */
     private PrescripDetailService detailService;
 
+    /**
+     * Instantiates a new extend prescrip detail command.
+     *
+     * @param detailService the detail service
+     */
     public ExtendPrescripDetailCommand(PrescripDetailService detailService) {
         this.detailService = detailService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page;

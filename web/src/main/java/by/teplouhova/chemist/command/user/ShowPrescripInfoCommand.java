@@ -19,22 +19,59 @@ import java.util.ResourceBundle;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
+/**
+ * The Class ShowPrescripInfoCommand.
+ */
 public class ShowPrescripInfoCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * The Constant PARAM_PRESCRIPTION_ID.
+     */
     private static final String PARAM_PRESCRIPTION_ID = "prescription_id";
+
+    /**
+     * The Constant ATTR_PRESCRIPTION.
+     */
     private static final String ATTR_PRESCRIPTION = "prescription";
+
+    /**
+     * The Constant ATTR_USER.
+     */
     private static final String ATTR_USER = "user";
+
+    /**
+     * The Constant ATTR_MESSAGE.
+     */
     private static final String ATTR_MESSAGE = "message";
+
+    /**
+     * The Constant ATTR_MESSAGE_BUNDLE.
+     */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
 
+    /**
+     * The service.
+     */
     private PrescriptionService service;
 
+
+    /**
+     * Instantiates a new show prescrip info command.
+     *
+     * @param service the service
+     */
 
     public ShowPrescripInfoCommand(PrescriptionService service) {
         this.service = service;
 
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page;

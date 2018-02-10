@@ -11,32 +11,53 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+/**
+ * The Class AddProductToCartCommand.
+ */
 public class AddProductToCartCommand implements Command {
     private  static final Logger LOGGER = LogManager.getLogger();
+    /** The Constant ATTR_CART. */
+    private static final String ATTR_CART = "cart";
 
+    /** The Constant ATTR_SIZE. */
+    private static final  String ATTR_SIZE="size";
+
+    /** The Constant ATTR_MEDICINE_ID. */
+    private static final String ATTR_MEDICINE_ID="medicine_id";
+
+    /** The medicine service. */
     private MedicineService medicineService;
+
+    /**
+     * Instantiates a new adds the product to cart command.
+     *
+     * @param medicineService the medicine service
+     */
 
     public AddProductToCartCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the JSON object
+     */
     @Override
     public JSONObject execute(SessionRequestContent content) {
-        String id = content.getParameter("medicine_id");
-        HashMap<Medicine,Integer> cart= (HashMap<Medicine, Integer>) content.getSessionAttribute("cart");
+        String id = content.getParameter(ATTR_MEDICINE_ID);
+        HashMap<Medicine,Integer> cart= (HashMap<Medicine, Integer>) content.getSessionAttribute(ATTR_CART);
         Medicine medicine;
         JSONObject json=null;
         try {
-            //todo validation
             medicine = medicineService.getMedicine(Long.parseLong(id));
             cart.put(medicine,1);
-
-            content.setSessionAttribute("cart",cart);
+            content.setSessionAttribute(ATTR_CART,cart);
             json = new JSONObject();
-            json.put("size",String.valueOf(cart.size()));
+            json.put(ATTR_SIZE,String.valueOf(cart.size()));
         } catch (ServiceException e) {
-
-            LOGGER.log(Level.ERROR, "Product is not found ",e);
+            LOGGER.catching(e);
         }
 
         return json;

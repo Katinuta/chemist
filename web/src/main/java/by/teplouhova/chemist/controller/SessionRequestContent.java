@@ -10,16 +10,29 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * The Class SessionRequestContent.
+ */
 public class SessionRequestContent {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
+    /** The request attributes. */
     private HashMap<String, Object> requestAttributes;
+
+    /** The request parameters. */
     private HashMap<String, String[]> requestParameters;
+
+    /** The session attributes. */
     private HashMap<String, Object> sessionAttributes;
+
+    /** The request headers. */
     private HashMap<String, String> requestHeaders;
 
 
+    /**
+     * Instantiates a new session request content.
+     */
     public SessionRequestContent() {
         requestAttributes = new HashMap<>();
         requestParameters = new HashMap<>();
@@ -28,11 +41,23 @@ public class SessionRequestContent {
     }
 
 
+    /**
+     * Gets the session attribute.
+     *
+     * @param name the name
+     * @return the session attribute
+     */
     public Object getSessionAttribute(String name) {
         return sessionAttributes.get(name);
     }
 
 
+    /**
+     * Gets the parameter.
+     *
+     * @param name the name
+     * @return the parameter
+     */
     public String getParameter(String name) {
         if (!requestParameters.containsKey(name)) {
             LOGGER.log(Level.WARN, "Parameter of the request doesn't exist: " + name);
@@ -41,26 +66,61 @@ public class SessionRequestContent {
         return requestParameters.get(name)[0];
     }
 
+    /**
+     * Sets the session attribute.
+     *
+     * @param name the name
+     * @param value the value
+     */
     public void setSessionAttribute(String name, Object value) {
         sessionAttributes.put(name, value);
     }
 
+    /**
+     * Sets the request attributes.
+     *
+     * @param name the name
+     * @param value the value
+     */
     public void setRequestAttributes(String name, Object value) {
         requestAttributes.put(name, value);
     }
 
+    /**
+     * Checks if is contain parameter.
+     *
+     * @param name the name
+     * @return true, if is contain parameter
+     */
     public boolean isContainParameter(String name) {
         return requestParameters.containsKey(name);
     }
 
+    /**
+     * Checks if is contains attributes start with.
+     *
+     * @param name the name
+     * @return true, if is contains attributes start with
+     */
     public boolean isContainsAttributesStartWith(String name) {
         return requestAttributes.keySet().stream().anyMatch(key -> key.startsWith(name));
     }
 
+    /**
+     * Gets the request header.
+     *
+     * @param name the name
+     * @return the request header
+     */
     public String getRequestHeader(String name) {
         return requestHeaders.get(name);
     }
 
+    /**
+     * Extract values.
+     *
+     * @param request the request
+     */
     public void extractValues(HttpServletRequest request) {
         Enumeration<String> listRequestAttributeNames = request.getAttributeNames();
         while (listRequestAttributeNames.hasMoreElements()) {
@@ -91,6 +151,11 @@ public class SessionRequestContent {
 
     }
 
+    /**
+     * Insert attributes.
+     *
+     * @param request the request
+     */
     public void insertAttributes(HttpServletRequest request) {
 
         if (!requestAttributes.containsKey("invalid")) {
@@ -105,6 +170,11 @@ public class SessionRequestContent {
 
     }
 
+    /**
+     * Gets the parameter names.
+     *
+     * @return the parameter names
+     */
     public Set<String> getParameterNames() {
         return requestParameters.keySet();
     }

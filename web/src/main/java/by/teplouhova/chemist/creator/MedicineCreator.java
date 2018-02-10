@@ -13,35 +13,56 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * The Class MedicineCreator.
+ */
 public class MedicineCreator {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * The medicine.
+     */
     private Medicine medicine;
 
-    public MedicineCreator(){
-        medicine=new Medicine();
+    /**
+     * Instantiates a new medicine creator.
+     */
+    public MedicineCreator() {
+        medicine = new Medicine();
     }
 
-    public Medicine createMedicine(HashMap<String,String> medicineParams) {
+    /**
+     * Creates the medicine.
+     *
+     * @param medicineParams the medicine params
+     * @return the medicine
+     */
+    public Medicine createMedicine(HashMap<String, String> medicineParams) {
         medicine.setAnalog(new Medicine());
         Set<Map.Entry<String, String>> keySet = medicineParams.entrySet();
-        keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
-            String current=entry.getKey();
-            try{
-                ParameterName field= ParameterName.valueOf(current.toUpperCase());
-                fillField(field,entry.getValue());
-            }catch (IllegalArgumentException e){
-                LOGGER.debug("Parameter is not field  : " +current );
+        keySet.stream().filter(entry -> entry.getValue() != null).forEach(entry -> {
+            String current = entry.getKey();
+            try {
+                ParameterName field = ParameterName.valueOf(current.toUpperCase());
+                fillField(field, entry.getValue());
+            } catch (IllegalArgumentException e) {
+                LOGGER.debug("Parameter is not field  : " + current);
             }
         });
         return medicine;
 
     }
+
+    /**
+     * Fill field.
+     *
+     * @param name  the name
+     * @param value the value
+     */
     private void fillField(ParameterName name, String value) {
 
         switch (name) {
-            case MEDICINE_ID : {
+            case MEDICINE_ID: {
                 medicine.setMedicineId(Long.parseLong(value));
                 break;
             }
@@ -78,26 +99,32 @@ public class MedicineCreator {
                 medicine.setQuantityInPackage(Integer.parseInt(subStringToInteger(value)));
                 break;
             }
-            case UNIT_IN_PACKAGE:{
+            case UNIT_IN_PACKAGE: {
                 medicine.setUnitInPackage(UnitInPackage.valueOf(value.toUpperCase()));
                 break;
             }
-            case PRODUCER_ID:{
+            case PRODUCER_ID: {
                 medicine.setProducer(new Producer(Long.parseLong(value)));
                 break;
             }
-            case RELEASE_FORM_ID:{
+            case RELEASE_FORM_ID: {
                 medicine.setReleaseForm(new ReleaseForm(Long.parseLong(value)));
                 break;
             }
 
             default: {
-                LOGGER.info("Parameter is not field  object User" + name );
+                LOGGER.info("Parameter is not field  object User" + name);
             }
 
         }
     }
 
+    /**
+     * Sub string to integer.
+     *
+     * @param quantity the quantity
+     * @return the string
+     */
     private String subStringToInteger(String quantity) {
         String substring = null;
 

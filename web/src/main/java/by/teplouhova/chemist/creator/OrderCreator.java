@@ -12,9 +12,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The Class OrderCreator.
+ */
 public class OrderCreator {
-    private static final Logger LOGGER = LogManager.getLogger();
 
+    private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * Creates the.
+     *
+     * @param user the user
+     * @param cart the cart
+     * @return the order
+     */
     public Order create(User user, HashMap<Medicine, Integer> cart) {
         Order order = new Order();
         order.setUser(user);

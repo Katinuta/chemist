@@ -11,23 +11,51 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * The Class ReduceProductAmountCartCommand.
+ */
 public class ReduceProductAmountCartCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    /** The Constant PARAM_MEDICINE_ID. */
     private static final String PARAM_MEDICINE_ID = "medicine_id";
+
+    /** The Constant PARAM_AMOUNT. */
     private static final String PARAM_AMOUNT = "amount";
+
+    /** The Constant ATRR_CART. */
     private static final String ATRR_CART = "cart";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_MESSAGE. */
     private static final String ATTR_MESSAGE = "message";
+
+    /** The Constant ATTR_SIZE. */
     private static final String ATTR_SIZE = "size";
+
+    /** The Constant ATTR_AMOUNT. */
     private static final String ATTR_AMOUNT = "amount";
 
+    /** The medicine service. */
     private MedicineService medicineService;
 
+    /**
+     * Instantiates a new reduce product amount cart command.
+     *
+     * @param medicineService the medicine service
+     */
     public ReduceProductAmountCartCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the JSON object
+     */
     @Override
     public JSONObject execute(SessionRequestContent content) {
         Long id = Long.parseLong(content.getParameter(PARAM_MEDICINE_ID));

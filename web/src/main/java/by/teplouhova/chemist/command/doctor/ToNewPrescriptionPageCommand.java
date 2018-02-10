@@ -18,21 +18,44 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_DOCTOR_PRESCRIPTION_NEW;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class ToNewPrescriptionPageCommand.
+ */
 public class ToNewPrescriptionPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-
+    /** The Constant PARAM_CLIENT_ID. */
     private static final String PARAM_CLIENT_ID = "client_id";
+
+    /** The Constant ATTR_CLIENT. */
     private static final String ATTR_CLIENT = "client";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR = "message";
+
+    /** The Constant ATTR_DATE_BEGIN. */
     private static final String ATTR_DATE_BEGIN = "date_begin";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
 
+    /** The user service. */
     private UserService userService;
 
+    /**
+     * Instantiates a new to new prescription page command.
+     *
+     * @param userService the user service
+     */
     public ToNewPrescriptionPageCommand(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = PAGE_DOCTOR_PRESCRIPTION_NEW;

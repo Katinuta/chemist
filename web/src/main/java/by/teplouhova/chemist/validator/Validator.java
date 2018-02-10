@@ -11,24 +11,43 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The Class Validator.
+ */
 public class Validator {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /** The bundle. */
     private ResourceBundle bundle;
+
+    /** The errors. */
     private HashMap<String, String> errors;
 
+    /**
+     * Instantiates a new validator.
+     */
     public Validator() {
         bundle = MessageManager.EN.getBundle();
         errors = new HashMap<>();
     }
 
-
+    /**
+     * Instantiates a new validator.
+     *
+     * @param bundle the bundle
+     */
     public Validator(ResourceBundle bundle) {
         this.bundle = bundle;
         errors = new HashMap<>();
     }
 
+    /**
+     * Checks if is valid.
+     *
+     * @param paramsMap the params map
+     * @return true, if is valid
+     */
     public boolean isValid(HashMap<String, String> paramsMap) {
 
         Set<Map.Entry<String, String>> entrySet = paramsMap.entrySet();
@@ -50,14 +69,33 @@ public class Validator {
         return errors.isEmpty() ? true : false;
     }
 
+    /**
+     * Gets the entry set errors.
+     *
+     * @return the entry set errors
+     */
     public Set<Map.Entry<String, String>> getEntrySetErrors() {
         return errors.entrySet();
     }
 
+    /**
+     * Checks if is exist error.
+     *
+     * @param name the name
+     * @return true, if is exist error
+     */
     public boolean isExistError(String name) {
         return errors.containsKey(name);
     }
 
+    /**
+     * Validate required.
+     *
+     * @param name the name
+     * @param value the value
+     * @param regexp the regexp
+     * @return true, if successful
+     */
     private boolean validateRequired(String name, String value, String regexp) {
         if (value == null || value.isEmpty()) {
             errors.put(name, bundle.getString("message.empty.value"));
@@ -79,7 +117,14 @@ public class Validator {
 
     }
 
-
+    /**
+     * Validate not required.
+     *
+     * @param name the name
+     * @param value the value
+     * @param regexp the regexp
+     * @return true, if successful
+     */
     private boolean validateNotRequired(String name, String value, String regexp) {
         if (value == null || value.isEmpty()) {
             return true;

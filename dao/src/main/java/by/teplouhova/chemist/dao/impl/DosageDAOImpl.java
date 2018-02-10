@@ -53,7 +53,7 @@ public class DosageDAOImpl extends DosageDAO {
             statement=connection.prepareStatement(SQL_INSERT_DOSAGE,PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setBigDecimal(1,entity.getSize());
             statement.setString(2,entity.getUnit());
-            statement.execute();
+            statement.executeUpdate();
             ResultSet result=statement.getGeneratedKeys();
             if(result.next()){
                 entity.setDosageId(result.getLong(1));

@@ -7,11 +7,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The Class GetCartProductsIdCommand.
+ */
 public class GetCartProductsIdCommand implements Command {
 
+    /** The Constant ATTR_CART. */
     private static final String ATTR_CART="cart";
+
+    /** The Constant ATTR_IDS. */
     private static final String ATTR_IDS="ids";
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the JSON object
+     */
     @Override
     public JSONObject execute(SessionRequestContent content) {
         HashMap<Medicine,Integer> cart= (HashMap<Medicine, Integer>) content.getSessionAttribute(ATTR_CART);

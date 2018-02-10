@@ -16,18 +16,38 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_CART;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class ToCartPageCommand.
+ */
 public class ToCartPageCommand implements Command {
     private static  final Logger LOGGER= LogManager.getLogger();
-
+    /** The Constant ATTR_CART. */
     private static final String ATTR_CART = "cart";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR = "message";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static  final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
+    /** The medicine service. */
     private MedicineService medicineService;
 
+    /**
+     * Instantiates a new to cart page command.
+     *
+     * @param medicineService the medicine service
+     */
     public ToCartPageCommand(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page ;

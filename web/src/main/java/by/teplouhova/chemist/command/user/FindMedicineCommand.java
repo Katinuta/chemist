@@ -18,23 +18,63 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
+/**
+ * The Class FindMedicineCommand.
+ */
 public class FindMedicineCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * The Constant PARAM_SEARCH.
+     */
     private static final String PARAM_SEARCH = "medicine_name";
+
+    /**
+     * The Constant ATTR_MEDICINES.
+     */
     private static final String ATTR_MEDICINES = "medicines";
+
+    /**
+     * The Constant ATTR_FLAG_FIND.
+     */
     private static final String ATTR_FLAG_FIND = "flagFind";
+
+    /**
+     * The Constant ATTR_USER.
+     */
     private static final String ATTR_USER = "user";
+
+    /**
+     * The Constant ATTR_MESSAGE.
+     */
     private static final String ATTR_MESSAGE = "message";
+
+    /**
+     * The Constant ATTR_MESSAGE_BUNDLE.
+     */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
 
+    /**
+     * The service.
+     */
     private MedicineService service;
 
+    /**
+     * Instantiates a new find medicine command.
+     *
+     * @param service the service
+     */
     public FindMedicineCommand(MedicineService service) {
         this.service = service;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = null;

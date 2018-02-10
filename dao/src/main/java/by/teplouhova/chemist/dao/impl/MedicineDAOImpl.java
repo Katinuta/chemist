@@ -210,7 +210,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             }
             statement.setString(10, entity.getUnitInPackage().name().toLowerCase());
 
-            statement.execute();
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             throw new DAOException("Exception in create method ",e);
@@ -250,7 +250,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             statement.setString(10, entity.getUnitInPackage().name().toLowerCase());
             statement.setBoolean(11,entity.getIsDeleted());
             statement.setLong(12, entity.getMedicineId());
-            statement.execute();
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             throw new DAOException(e);

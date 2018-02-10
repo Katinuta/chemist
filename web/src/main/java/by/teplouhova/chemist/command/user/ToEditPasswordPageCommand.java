@@ -10,10 +10,18 @@ import org.apache.logging.log4j.Logger;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_COMMON_EDIT_PASSWORD;
 
-
+/**
+ * The Class ToEditPasswordPageCommand.
+ */
 public class ToEditPasswordPageCommand implements Command {
 
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page= PAGE_COMMON_EDIT_PASSWORD;

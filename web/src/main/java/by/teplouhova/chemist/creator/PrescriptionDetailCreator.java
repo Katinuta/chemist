@@ -9,15 +9,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
+/**
+ * The Class PrescriptionDetailCreator.
+ */
 public class PrescriptionDetailCreator {
     private static final Logger LOGGER = LogManager.getLogger();
+    /** The detail. */
     private PrescriptionDetail detail;
 
+    /**
+     * Instantiates a new prescription detail creator.
+     */
     public PrescriptionDetailCreator() {
         detail=new PrescriptionDetail();
 
     }
 
+    /**
+     * Creates the.
+     *
+     * @param prescripParams the prescrip params
+     * @return the prescription detail
+     */
     public PrescriptionDetail create(HashMap<String,String> prescripParams){
         Set<Map.Entry<String, String>> keySet = prescripParams.entrySet();
         keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
@@ -33,6 +47,12 @@ public class PrescriptionDetailCreator {
     }
 
 
+    /**
+     * Sub string to integer.
+     *
+     * @param quantity the quantity
+     * @return the string
+     */
     private String subStringToInteger(String quantity) {
         String substring = null;
 
@@ -43,6 +63,13 @@ public class PrescriptionDetailCreator {
 
         return substring == null ? quantity : substring;
     }
+
+    /**
+     * Fill field.
+     *
+     * @param name the name
+     * @param value the value
+     */
     private void fillField(ParameterName name, String value) {
 
         switch (name) {

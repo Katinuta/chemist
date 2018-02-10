@@ -15,12 +15,29 @@ import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_MAIN;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_PHARMACIST_MAIN;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class NextPageCommand.
+ */
 public class NextPageCommand implements Command {
+
+    /** The Constant PARAM_PAGE. */
     private static final String PARAM_PAGE ="current_page";
+
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER="user";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR="message";
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = null;

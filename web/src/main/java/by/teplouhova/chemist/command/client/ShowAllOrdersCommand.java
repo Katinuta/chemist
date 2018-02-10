@@ -16,19 +16,39 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_CLIENT_PURCHASE;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
+/**
+ * The Class ShowAllOrdersCommand.
+ */
 public class ShowAllOrdersCommand implements Command {
     private static final Logger LOGGER= LogManager.getLogger();
-
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER="user";
-    private static final String ATTR_ORDERS="orders";
-    private static final String ATTR_MESSAGE="message";
-private ClientService clientService;
 
+    /** The Constant ATTR_ORDERS. */
+    private static final String ATTR_ORDERS="orders";
+
+    /** The Constant ATTR_MESSAGE. */
+    private static final String ATTR_MESSAGE="message";
+
+    /** The client service. */
+    private ClientService clientService;
+
+    /**
+     * Instantiates a new show all orders command.
+     *
+     * @param clientService the client service
+     */
     public ShowAllOrdersCommand(ClientService clientService) {
 
         this.clientService = clientService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page=PAGE_CLIENT_PURCHASE;
@@ -37,7 +57,6 @@ private ClientService clientService;
         try {
             List<Order> orders=clientService.getUserOrders(user.getUserId());
             content.setRequestAttributes(ATTR_ORDERS,orders);
-
         } catch (ServiceException e) {
             page=PAGE_ERROR;
             content.setRequestAttributes(ATTR_MESSAGE,e.getMessage());

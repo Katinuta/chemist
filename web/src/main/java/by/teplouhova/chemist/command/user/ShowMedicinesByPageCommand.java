@@ -20,22 +20,51 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
+/**
+ * The Class ShowMedicinesByPageCommand.
+ */
 public class ShowMedicinesByPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+
+    /** The Constant ATTR_MEDICINES. */
     private static final String ATTR_MEDICINES = "medicines";
+
+    /** The Constant PARAM_PAGE. */
     private static final String PARAM_PAGE = "current_page";
+
+    /** The Constant ATTR_COUNT_PAGES. */
     private static final String ATTR_COUNT_PAGES = "countpages";
+
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER = "user";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR = "message";
+
+    /** The Constant ATTR_CURRENT_PAGE. */
     private static final String ATTR_CURRENT_PAGE = "page";
 
+    /** The service. */
     private MedicineService service;
 
+    /**
+     * Instantiates a new show medicines by page command.
+     *
+     * @param service the service
+     */
     public ShowMedicinesByPageCommand(MedicineService service) {
         this.service = service;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = null;

@@ -11,14 +11,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The Class PrescriptionCreator.
+ */
 public class PrescriptionCreator {
+
     private static final Logger LOGGER = LogManager.getLogger();
+    /** The prescription. */
     private Prescription prescription;
 
+    /**
+     * Instantiates a new prescription creator.
+     */
     public PrescriptionCreator() {
         prescription=new Prescription();
     }
 
+    /**
+     * Creates the.
+     *
+     * @param prescripParams the prescrip params
+     * @return the prescription
+     */
     public Prescription create(HashMap<String,String> prescripParams){
         Set<Map.Entry<String, String>> keySet = prescripParams.entrySet();
         keySet.stream().filter(entry -> entry.getValue()!=null).forEach(entry -> {
@@ -34,7 +48,12 @@ public class PrescriptionCreator {
     }
 
 
-
+    /**
+     * Fill field.
+     *
+     * @param name the name
+     * @param value the value
+     */
     private void fillField(ParameterName name, String value) {
 
         switch (name) {

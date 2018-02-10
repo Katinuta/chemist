@@ -21,20 +21,44 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_SUCCESS_PRESCRIPTION_APPROVE;
 
+/**
+ * The Class ApproveExtendingPrescriptionCommand.
+ */
 public class ApproveExtendingPrescriptionCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+    /** The Constant PARAM_DATE_END. */
     private static final String PARAM_DATE_END = "date_end";
+
+    /** The Constant PARAM_PRESCRIPTION_ID. */
     private static final String PARAM_PRESCRIPTION_ID = "prescription_id";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
+
+    /** The Constant ATTR_MESSAGE. */
     private static final String ATTR_MESSAGE = "message";
+
+    /** The Constant ATTR_ERROR. */
     private static final String ATTR_ERROR = "error_";
 
+    /** The prescription service. */
     private PrescriptionService prescriptionService;
 
+    /**
+     * Instantiates a new approve extending prescription command.
+     *
+     * @param prescriptionService the prescription service
+     */
     public ApproveExtendingPrescriptionCommand(PrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = PageConstant.PAGE_DOCTOR_MAIN;

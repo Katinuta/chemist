@@ -20,24 +20,49 @@ import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
 import static by.teplouhova.chemist.command.PageConstant.*;
 
 
+/**
+ * The Class SignInCommand.
+ */
 public class SignInCommand implements Command {
 
     private final static Logger LOGGER = LogManager.getLogger();
-
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+
+    /** The Constant PARAM_PASSWORD. */
     private static final String PARAM_PASSWORD = "password";
+
+    /** The Constant ATTR_USER. */
     private static final String ATTR_USER="user";
+
+    /** The Constant ATTR_CART. */
     private static final String ATTR_CART="cart";
+
+    /** The Constant ATTR_MESSAGE_BUNDLE. */
     private static final String ATTR_MESSAGE_BUNDLE="messageBundle";
+
+    /** The Constant ATTR_MESSAGE_ERROR. */
     private static final String ATTR_MESSAGE_ERROR="message";
 
 
+    /** The user service. */
     private UserService userService;
 
+    /**
+     * Instantiates a new sign in command.
+     *
+     * @param userService the user service
+     */
     public SignInCommand(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
         String page = PAGE_COMMON_LOGIN;

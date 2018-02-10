@@ -8,18 +8,19 @@ import by.teplouhova.chemist.service.UserService;
 import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_COMMON_SIGN_UP;
 
+/**
+ * The Class ToSingUpPageCommand.
+ */
 public class ToSingUpPageCommand implements Command {
 
-
-    private UserService userService;
-
-    public ToSingUpPageCommand(UserService userService) {
-        this.userService = userService;
-    }
-
+    /**
+     * Execute.
+     *
+     * @param content the content
+     * @return the command result
+     */
     @Override
     public CommandResult execute(SessionRequestContent content) {
-
         return new CommandResult(FORWARD, PAGE_COMMON_SIGN_UP);
     }
 }
