@@ -1,15 +1,13 @@
 package by.teplouhova.chemist.entity.impl;
 
 import by.teplouhova.chemist.entity.Entity;
-import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * The Class Medicine.
  */
-public class Medicine extends Entity {
+public class Medicine extends Entity  {
 
     /** The medicine id. */
     private long medicineId;

@@ -65,6 +65,7 @@ public class UpdatePasswordCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page =PAGE_COMMON_EDIT_PASSWORD;
         CommandResult.ResponseType responseType = FORWARD;
+        String contextPath=content.getContextPath();
         User user = (User) content.getSessionAttribute(ATTR_USER);
         ResourceBundle bundle= (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         String password = content.getParameter(PARAM_PASSWORD);
@@ -77,10 +78,12 @@ public class UpdatePasswordCommand implements Command {
                 if (userService.checkUser(user.getLogin(), password)) {
                         user.setPassword(newPassword);
                         userService.update(user,true);
-                        page=PAGE_UPDATE_PASSWORD_SUCCESS;
+                        page=contextPath+PAGE_UPDATE_PASSWORD_SUCCESS;
                         responseType= REDIRECT;
                 }else{
-                    content.setRequestAttributes(ATTR_ERROR,bundle.getString("message.password.wrong"));
+                    content.setRequestAttributes(ATTR_ERROR+PARAM_PASSWORD,bundle.getString("message.password.wrong"));
+                    content.getParameterNames()
+                            .forEach(nameParam->content.setRequestAttributes(nameParam,content.getParameter(nameParam)));
                 }
             } else {
                 content.getParameterNames()

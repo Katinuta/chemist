@@ -19,7 +19,7 @@ public class MedicineValidatorInvalidTest {
         HashMap<String, String> medicineSecond = new HashMap<>();
         medicineSecond.put(PARAM_MEDICINE_NAME, "");
         HashMap<String, String> medicineThird = new HashMap<>();
-        medicineThird.put(PARAM_MEDICINE_NAME, "Спазмалгон-plus");
+        medicineThird.put(PARAM_MEDICINE_NAME, "Спазмалгон plus");
         Object[][] data = new Object[][]{{medicineFirst}, {medicineSecond}, {medicineThird}};
         return data;
     }

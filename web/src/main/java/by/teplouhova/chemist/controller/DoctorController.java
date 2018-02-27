@@ -64,7 +64,7 @@ public class DoctorController extends HttpServlet {
         if (page.getResponseType()==CommandResult.ResponseType.FORWARD) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + page.getPage());
+            response.sendRedirect(page.getPage());
         }
 
     }

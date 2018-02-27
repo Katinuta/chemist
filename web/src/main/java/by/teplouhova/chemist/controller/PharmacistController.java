@@ -64,7 +64,7 @@ public class PharmacistController extends HttpServlet{
         if (CommandResult.ResponseType.FORWARD==page.getResponseType()) {
             request.getRequestDispatcher(page.getPage()).forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + page.getPage());
+            response.sendRedirect( page.getPage());
         }
 
     }

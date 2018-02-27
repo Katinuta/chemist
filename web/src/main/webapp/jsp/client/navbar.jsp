@@ -9,12 +9,12 @@
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/jsp/client/main.jsp">
+        <a class="navbar-brand" href="/chemist/jsp/client/main.jsp">
             <fmt:message bundle="${bundle}" key="ref.brand"/>
         </a>
     </div>
 
-    <form class="navbar-form navbar-left" action="/client">
+    <form class="navbar-form navbar-left" action="/chemist/client">
         <input name="command" type="hidden" value="find_medicine"/>
         <div class="input-group">
             <input type="text" class="form-control"
@@ -75,7 +75,7 @@
                 <c:param name="command" value="change_locale"/>
             </c:url>
             <a href="${eng_lang}">
-                <img src="/image/united-kingdom-flag.png">
+                <img src="/chemist/image/united-kingdom-flag.png">
             </a>
         </li>
         <li>
@@ -83,7 +83,7 @@
                 <c:param name="command" value="change_locale"/>
                 <c:param name="new_locale" value="ru-RU"/>
             </c:url>
-            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/chemist/image/russia-flag.png"></a>
         </li>
         <li>
             <span class="hello"><ctg:hello-tag name="${user.name}"/></span>

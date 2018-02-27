@@ -80,12 +80,7 @@ public class ReleaseForm extends Entity {
         this.name = name;
     }
 
-    /**
-     * Equals.
-     *
-     * @param o the o
-     * @return true, if successful
-     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,11 +92,7 @@ public class ReleaseForm extends Entity {
         return name != null ? name.equals(form.name) : form.name == null;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         int result = (int) (releaseFormId ^ (releaseFormId >>> 32));
@@ -109,11 +100,7 @@ public class ReleaseForm extends Entity {
         return result;
     }
 
-    /**
-     * To string.
-     *
-     * @return the string
-     */
+
     @Override
     public String toString() {
         return "ReleaseForm{" +

@@ -237,12 +237,7 @@ public class User extends Entity {
         this.phone = phone;
     }
 
-    /**
-     * Equals.
-     *
-     * @param o the o
-     * @return true, if successful
-     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -260,11 +255,7 @@ public class User extends Entity {
         return phone != null ? phone.equals(user.phone) : user.phone == null;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         int result = (int) (userId ^ (userId >>> 32));
@@ -278,11 +269,7 @@ public class User extends Entity {
         return result;
     }
 
-    /**
-     * To string.
-     *
-     * @return the string
-     */
+
     @Override
     public String toString() {
         return "User{" +

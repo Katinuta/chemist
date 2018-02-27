@@ -3,7 +3,7 @@ $(document).ready(function () {
         var button = $(this);
         var medicine_id = button.val();
         $.ajax({
-            url: "/ajax",
+            url: "/chemist/ajax",
             type: "get",
             data: {
                 medicine_id: medicine_id,
@@ -21,7 +21,7 @@ $(document).ready(function () {
 });
 $(window).on('load', function () {
     $.ajax({
-            url: "/ajax",
+            url: "/chemist/ajax",
             type: "get",
             data: {
                 command: "get_cart_products_id"

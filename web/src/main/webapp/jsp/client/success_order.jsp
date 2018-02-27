@@ -26,7 +26,7 @@
 
             <div class="flex-container" >
                 <picture >
-                    <img src="/image/success.png"  style="width:auto;">
+                    <img src="/chemist/image/success.png"  style="width:auto;">
                 </picture>
             </div>
             <div class="flex-container word">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="flex-container" >
-                <form action="/client">
+                <form action="/chemist/client">
                     <input type="hidden" name="command" value="show_all_orders"/>
                     <button class="button"><fmt:message bundle="${bundle}" key="ref.orders"/></button>
                 </form>

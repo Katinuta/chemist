@@ -111,6 +111,7 @@ public class CreatePrescriptionCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page;
         CommandResult.ResponseType responseType;
+        String contextPath=content.getContextPath();
         User doctor = (User) content.getSessionAttribute(ATTR_USER);
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         HashMap<String, String> prescripParams = new HashMap<>();
@@ -130,7 +131,7 @@ public class CreatePrescriptionCommand implements Command {
                 prescription.setDoctor(doctor);
                 prescription.setDetails(detail);
                 prescriptionService.createPrescription(prescription);
-                page = PAGE_SUCCESS_PRESCRIPTION_CREATE;
+                page =contextPath+ PAGE_SUCCESS_PRESCRIPTION_CREATE;
                 responseType = REDIRECT;
             } else {
                 content.getParameterNames().forEach(name -> content.setRequestAttributes(name, content.getParameter(name)));

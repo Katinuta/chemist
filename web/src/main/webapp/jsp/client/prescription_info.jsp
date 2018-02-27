@@ -97,7 +97,7 @@
 
             </div>
             <div class="flex-container">
-                <form action="/client">
+                <form action="/chemist/client">
                     <input type="hidden" name="command" value="show_client_prescriptions"/>
                     <button class="button"><fmt:message bundle="${bundle}" key="ref.prescription"/></button>
                 </form>

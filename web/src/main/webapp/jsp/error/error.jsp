@@ -39,16 +39,16 @@
         <div class="flex-container">
             <c:choose>
                 <c:when test="${user.role=='CLIENT'}">
-                    <c:set var="main_page" value="/jsp/client/main.jsp"/>
+                    <c:set var="main_page" value="/chemist/jsp/client/main.jsp"/>
                 </c:when>
                 <c:when test="${user.role=='DOCTOR'}">
-                    <c:set var="main_page" value="/jsp/doctor/main.jsp"/>
+                    <c:set var="main_page" value="/chemist/jsp/doctor/main.jsp"/>
                 </c:when>
                 <c:when test="${user.role=='PHARMACIST'}">
-                    <c:set var="main_page" value="/jsp/pharmacist/main.jsp"/>
+                    <c:set var="main_page" value="/chemist/jsp/pharmacist/main.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    <c:set var="main_page" value="/index.jsp"/>
+                    <c:set var="main_page" value="/chemist/index.jsp"/>
                 </c:otherwise>
             </c:choose>
             <button class="button"> <a href="${main_page}"><fmt:message bundle="${bundle}" key="ref.main.page"/></a></button>

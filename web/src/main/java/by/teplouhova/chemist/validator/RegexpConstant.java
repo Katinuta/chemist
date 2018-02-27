@@ -14,8 +14,7 @@ public class RegexpConstant {
      * The Constant REGEXP_SURNAME_USER.
      */
     public static final String REGEXP_SURNAME_USER =
-            "(^[A-Za-z]{2,}\\-?([A-Za-z]{2,})?\\s*$)|(^[А-Яа-яЁё]{2,}\\-?([А-Яа-яЁё]{2,})?\\s*$)";
-
+            "(^[A-Za-z]{2,}\\s*$)|(^[А-Яа-яЁё]{2,}\\s*$)";
     /**
      * The Constant REGEXP_LOGIN.
      */
@@ -55,7 +54,7 @@ public class RegexpConstant {
      * The Constant REGEXP_MEDICINE_NAME.
      */
     public static final String REGEXP_MEDICINE_NAME =
-            "(^[A-Za-z]{2,}\\-?\\s?[A-Za-z]*\\s*$)|(^[А-Яа-яЁё]{2,}\\-?\\s?[А-Яа-яЁё]*\\s*$)";
+            "(^[A-Za-z]{2,}\\s?[A-Za-z]*\\s*$)|(^[А-Яа-яЁё]{2,}\\s?[А-Яа-яЁё]*\\s*$)";
 
     /**
      * The Constant REGEXP_DOSAGE_UNIT.

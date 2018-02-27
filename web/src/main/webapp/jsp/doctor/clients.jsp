@@ -27,7 +27,7 @@
                             <td>${client.name}</td>
                             <td>${client.phone}</td>
                             <td>
-                                <form action="/controller">
+                                <form action="/chemist/doctor">
                                     <input type="hidden" name="command" value="to_new_prescription"/>
                                     <button class="btn btn-default medicineForAdd" name="client_id" value="${client.userId}">
                                         <fmt:message bundle="${bundle}" key="button.add.prescription"/>

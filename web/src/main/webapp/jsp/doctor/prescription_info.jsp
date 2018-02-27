@@ -78,11 +78,8 @@
             </table>
         </div>
         <div class="flex-container" >
-            <form>
-
                 <button class="button">
-                    <a href="/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a></button>
-            </form>
+                    <a href="/chemist/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a></button>
         </div>
     </div>
     <footer class="container-fluid text-center">

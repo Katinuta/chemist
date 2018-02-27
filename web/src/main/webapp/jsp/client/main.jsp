@@ -15,7 +15,7 @@
         <style>
             <c:import url="/css/main.css"/>
         </style>
-        <script type="application/javascript" src="/js/medicines.js"></script>
+        <script type="application/javascript" src="/chemist/js/medicines.js"></script>
         <title><fmt:message bundle="${bundle}" key="ref.brand"/></title>
     </head>
     <body>

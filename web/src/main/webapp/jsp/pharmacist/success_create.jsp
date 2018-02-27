@@ -34,8 +34,8 @@
 
             <div class="flex-container" >
                     <button class="button">
-                        <a href="/jsp/pharmacist/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a></button>
-
+                        <a href="/chemist/jsp/pharmacist/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
+                    </button>
             </div>
         </div>
         <footer class="container-fluid text-center">

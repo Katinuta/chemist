@@ -9,8 +9,6 @@ function calculateSumTotal() {
         sum += parseFloat($(this).text());
     });
     $('.sum_total').text(sum.toFixed(2));
-    console.log(sum);
-    console.log($('input[type=submit]'));
     if (sum == 0) {
         $('input[type=submit]').attr('disabled', 'disabled');
     }
@@ -30,7 +28,7 @@ $(window).on('load', function () {
             var amount = parseInt($('#' + medicine_id).val());
             amount++;
             $.ajax({
-                url: "/ajax",
+                url: "/chemist/ajax",
                 type: "get",
                 data: {
                     medicine_id: medicine_id,
@@ -74,7 +72,7 @@ $(window).on('load', function () {
 
             }
             $.ajax({
-                url: "/ajax",
+                url: "/chemist/ajax",
                 type: "get",
                 data: {
                     medicine_id: medicine_id,
@@ -110,7 +108,7 @@ $(window).on('load', function () {
             var medicine_id = button.val();
             $.ajax(
                 {
-                    url: "/ajax",
+                    url: "/chemist/ajax",
                     type: "get",
                     data: {
                         medicine_id: medicine_id,

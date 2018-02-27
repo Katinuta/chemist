@@ -198,12 +198,7 @@ public class Prescription extends Entity {
         return details;
     }
 
-    /**
-     * Equals.
-     *
-     * @param o the o
-     * @return true, if successful
-     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -220,11 +215,7 @@ public class Prescription extends Entity {
         return details != null ? details.equals(that.details) : that.details == null;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         int result = (int) (prescriptionId ^ (prescriptionId >>> 32));
@@ -237,11 +228,7 @@ public class Prescription extends Entity {
         return result;
     }
 
-    /**
-     * To string.
-     *
-     * @return the string
-     */
+
     @Override
     public String toString() {
         return "Prescription{" +

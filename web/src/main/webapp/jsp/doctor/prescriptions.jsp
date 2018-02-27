@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
     <h2><fmt:message bundle="${bundle}" key="ref.prescription"/></h2>
     <c:choose>
@@ -38,7 +38,7 @@
                                        value="${requestScope['error_date_begin'.concat(prescription.prescriptionId)]}"/>
                                 <span class="error">${message_begin}</span>
                             </td>
-                            <form action="/doctor" method="post">
+                            <form action="/chemist/doctor" method="post">
                                 <input type="hidden" name="command" value="approve_extending_prescription">
                                 <td>
                                     <c:choose>

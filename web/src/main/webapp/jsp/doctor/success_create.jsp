@@ -27,7 +27,7 @@
 
             <div class="flex-container" >
                 <picture >
-                    <img src="/image/success.png"  style="width:auto;">
+                    <img src="/chemist/image/success.png"  style="width:auto;">
                 </picture>
             </div>
             <div class="flex-container word">
@@ -37,7 +37,7 @@
             <div class="flex-container" >
                 <form>
                     <button class="button">
-                        <a href="/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a></button>
+                        <a href="/chemist/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a></button>
                 </form>
             </div>
         </div>

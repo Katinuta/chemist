@@ -87,7 +87,7 @@ public class UserValidatorValidTest {
         HashMap<String, String> medicineSecond = new HashMap<>();
         medicineSecond.put(PARAM_SURNAME, "Levko");
         HashMap<String, String> medicineThird = new HashMap<>();
-        medicineThird.put(PARAM_SURNAME, "Popova-Ivanova");
+        medicineThird.put(PARAM_SURNAME, "Popova");
         HashMap<String, String> medicineFirst = new HashMap<>();
         medicineFirst.put(PARAM_SURNAME, "Гутько");
         Object[][] data = new Object[][]{{medicineFirst}, {medicineSecond}, {medicineThird}};

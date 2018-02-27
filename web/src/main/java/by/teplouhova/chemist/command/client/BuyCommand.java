@@ -105,6 +105,7 @@ public class BuyCommand implements Command {
     @Override
     public CommandResult execute(SessionRequestContent content) {
         HashMap<Medicine, Integer> cart = (HashMap<Medicine, Integer>) content.getSessionAttribute(ATTR_CART);
+        String contextPath=content.getContextPath();
         User user = (User) content.getSessionAttribute(ATTR_USER);
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         String page = PAGE_CLIENT_CART;
@@ -134,7 +135,7 @@ public class BuyCommand implements Command {
                     if (clientService.isHaveEnoughMoney(user.getUserId(), order.getTotal())) {
                         orderService.create(order);
                         content.setSessionAttribute(ATTR_CART, new HashMap<Medicine, Integer>());
-                        page = PAGE_CLIENT_SUCCESS_ORDER;
+                        page =contextPath+ PAGE_CLIENT_SUCCESS_ORDER;
                         responseType = REDIRECT;
                     } else {
                         content.setRequestAttributes(ATTR_ERROR, bundle.getString("message.money.notenough"));

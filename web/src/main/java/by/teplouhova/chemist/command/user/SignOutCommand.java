@@ -31,7 +31,9 @@ public class SignOutCommand implements Command {
      */
     @Override
     public CommandResult execute(SessionRequestContent content) {
-        String page = PAGE_INDEX;
+
+        String contextPath = content.getContextPath();
+        String page = contextPath + PAGE_INDEX;
         CommandResult.ResponseType responseType = REDIRECT;
         content.setRequestAttributes(ATTR_INVALID, "true");
         return new CommandResult(responseType, page);

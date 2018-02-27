@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/index.jsp"><fmt:message bundle="${bundle}" key="ref.brand"/></a>
+        <a class="navbar-brand" href="/chemist/index.jsp"><fmt:message bundle="${bundle}" key="ref.brand"/></a>
     </div>
 
     <ul class="nav navbar-nav navbar-right">
@@ -33,7 +33,7 @@
                 <c:param name="command" value="change_locale"/>
             </c:url>
             <a href="${eng_lang}">
-                <img src="/image/united-kingdom-flag.png">
+                <img src="/chemist/image/united-kingdom-flag.png">
             </a>
         </li>
 
@@ -42,7 +42,7 @@
                 <c:param name="command" value="change_locale"/>
                 <c:param name="new_locale" value="ru-RU"/>
             </c:url>
-            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/chemist/image/russia-flag.png"></a>
         </li>
 
     </ul>

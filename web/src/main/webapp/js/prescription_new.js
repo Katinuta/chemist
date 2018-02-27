@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $.ajax({
-        url: "/ajax",
+        url: "/chemist/ajax",
         type: "get",
         data: {
             command: "show_medicines_by_prescrip"

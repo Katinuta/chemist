@@ -57,6 +57,7 @@ public class ChemistContextListener implements ServletContextListener {
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             ConnectionPool.getInstance();
+            DAOFactory.getDAOFactory();
             MessageManager.EN.getBundle();
         } catch (SQLException  e) {
             LOGGER.fatal("Connection driver is not registered ");

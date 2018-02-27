@@ -55,8 +55,6 @@ public class DoctorSecurityFilter implements Filter {
                 return;
             }
         }
-
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -17,6 +17,8 @@ public class SessionRequestContent {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
+    private String contextPath;
+
     /** The request attributes. */
     private HashMap<String, Object> requestAttributes;
 
@@ -122,6 +124,7 @@ public class SessionRequestContent {
      * @param request the request
      */
     public void extractValues(HttpServletRequest request) {
+        contextPath=request.getContextPath();
         Enumeration<String> listRequestAttributeNames = request.getAttributeNames();
         while (listRequestAttributeNames.hasMoreElements()) {
             String name = listRequestAttributeNames.nextElement();
@@ -179,5 +182,7 @@ public class SessionRequestContent {
         return requestParameters.keySet();
     }
 
-
+    public String getContextPath() {
+        return contextPath;
+    }
 }

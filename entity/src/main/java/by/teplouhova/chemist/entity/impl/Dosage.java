@@ -121,11 +121,7 @@ public class Dosage extends Entity {
         return unit != null ? unit.equals(dosage.unit) : dosage.unit == null;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         int result = size != null ? size.hashCode() : 0;
@@ -133,11 +129,7 @@ public class Dosage extends Entity {
         return result;
     }
 
-    /**
-     * To string.
-     *
-     * @return the string
-     */
+
     @Override
     public String toString() {
         return "Dosage{" +

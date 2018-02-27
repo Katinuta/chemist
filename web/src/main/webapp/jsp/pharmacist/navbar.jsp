@@ -9,12 +9,12 @@
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/jsp/pharmacist/main.jsp">
+        <a class="navbar-brand" href="/chemist/jsp/pharmacist/main.jsp">
             <fmt:message bundle="${bundle}" key="ref.brand"/>
         </a>
     </div>
 
-    <form class="navbar-form navbar-left" action="/pharmacist">
+    <form class="navbar-form navbar-left" action="/chemist/pharmacist">
         <input name="command" type="hidden" value="find_medicine"/>
         <div class="input-group">
             <input type="text" class="form-control" name="medicine_name"
@@ -31,7 +31,10 @@
 
         <li>
             <div class="dropdown">
-                <a class="dropbtn disabled"><span class="glyphicon glyphicon-user"></span> Your account</a>
+                <a class="dropbtn disabled">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <fmt:message bundle="${bundle}" key="ref.account"/>
+                </a>
                 <div class="dropdown-content">
                     <c:url var="to_new_medicine" value="/pharmacist">
                         <c:param name="command" value="to_new_medicine"/>
@@ -59,7 +62,7 @@
 
         <li>
             <a href="${english_lang}">
-                <img src="/image/united-kingdom-flag.png">
+                <img src="/chemist/image/united-kingdom-flag.png">
             </a>
         </li>
 
@@ -68,7 +71,7 @@
                 <c:param name="command" value="change_locale"/>
                 <c:param name="new_locale" value="ru-RU"/>
             </c:url>
-            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/chemist/image/russia-flag.png"></a>
         </li>
         <li>
            <span class="hello"><ctg:hello-tag name="${user.name}"/></span>

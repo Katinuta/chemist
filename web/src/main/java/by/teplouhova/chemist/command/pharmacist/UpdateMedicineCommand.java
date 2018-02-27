@@ -134,6 +134,7 @@ public class UpdateMedicineCommand implements Command {
 
         String page;
         CommandResult.ResponseType responseType = FORWARD;
+        String contextPath = content.getContextPath();
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION);
         HashMap<String, String> medicineParams = new HashMap<>();
@@ -146,6 +147,7 @@ public class UpdateMedicineCommand implements Command {
         medicineParams.put(PARAM_PRICE, content.getParameter(PARAM_PRICE));
         medicineParams.put(PARAM_MEDICINE_NAME, content.getParameter(PARAM_MEDICINE_NAME));
         medicineParams.put(PARAM_DOSAGE_SIZE, content.getParameter(PARAM_DOSAGE_SIZE));
+        medicineParams.put(PARAM_MEDICINE_ID, content.getParameter(PARAM_MEDICINE_ID));
         medicineParams.put(PARAM_UNIT_DOSAGE, content.getParameter(PARAM_UNIT_DOSAGE));
         medicineParams.put(PARAM_NEED_PRESCRIPTION, String.valueOf(isNeedPrescription));
         medicineParams.entrySet().stream()
@@ -161,8 +163,8 @@ public class UpdateMedicineCommand implements Command {
             if (isValid && !(dosageSize == null && unitDosage != null || dosageSize != null && unitDosage == null)) {
                 Medicine medicine = new MedicineCreator().createMedicine(medicineParams);
                 medicineService.update(medicine);
-                page = PAGE_SUCCESS_MEDICINE_EDIT;
-                responseType = CommandResult.ResponseType.REDIRECT;
+                page = contextPath + PAGE_SUCCESS_MEDICINE_EDIT;
+                responseType = REDIRECT;
             } else {
                 if (!validator.isExistError(ATTR_ERROR + PARAM_MEDICINE_ID)) {
                     if (isValid && (dosageSize == null && unitDosage != null) || (dosageSize != null && unitDosage == null)) {

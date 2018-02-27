@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
     <head>
@@ -9,43 +10,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="application/javascript">
-            $(document).ready(function () {
-                var inputPassRep = document.getElementById('password_rep');
-                $('#password').change(function () {
-                    var password = $(this).val();
-
-                    var passwordConfirm = $('#password_rep').val();
-                    if (password != passwordConfirm) {
-                        var spanError = $('#l_password + span.confirm');
-
-                        spanError.text("<fmt:message bundle="${bundle}" key="label.passwords.mismatch"/>");
-                        inputPassRep.setCustomValidity("<fmt:message bundle="${bundle}" key="label.passwords.warning"/>");
-                    } else {
-                        $('#l_password + span.confirm').text("");
-                        inputPassRep.setCustomValidity('');
-                    }
-                });
-                $('#password_rep').change(function () {
-                    var passwordConfirm = $(this).val();
-
-                    var password = $('#password').val();
-                    if (password != passwordConfirm) {
-                        var spanError = $('#l_password + span.confirm');
-
-                        spanError.text("<fmt:message bundle="${bundle}" key="label.passwords.mismatch"/>");
-                        inputPassRep.setCustomValidity("<fmt:message bundle="${bundle}" key="label.passwords.warning"/>");
-                    } else {
-                        $('#l_password + span.confirm').text("");
-                        inputPassRep.setCustomValidity('');
-                    }
-                });
-
-
-            });
-
-
-        </script>
+        <script type="application/javascript" src="/chemist/js/sign_up.js"></script>
         <style>
             <c:import url="/css/style.css"/>
             <c:import url="/css/sing_up.css"/>
@@ -64,7 +29,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
                     <h2><fmt:message bundle="${bundle}" key="ref.register"/></h2>
                     <div class="container-fluid form shadow">
-                        <form action="controller" method="post">
+                        <form action="/chemist/user" method="post">
                             <input name="command" type="hidden" value="sign_up"/>
                             <div class="form-group">
                                 <label for="name" class="required"><fmt:message bundle="${bundle}" key="input.name"/></label>
@@ -83,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="surname" name="surname" value="${surname}"
-                                       required pattern="(^[A-Za-z]{2,}\\-?[A-Za-z]{2,}$)|(^[А-Яа-яЁё]{2,}\\-?[А-Яа-яЁё]{2,}$)"
+                                       required pattern="(^[A-Za-z]{2,}\s*$)|(^[А-Яа-яЁё]{2,}\s*$)"
                                        placeholder=<fmt:message bundle="${bundle}"
                                                                 key="placeholder.surname"/>/>
                                 <span class="helper"><fmt:message bundle="${bundle}" key="page.message.helper.name"/></span>
@@ -96,7 +61,6 @@
                             <div class="form-group">
 
                                 <input class="form-control" id="account" name="account" value="${account}"
-
                                        type="number" min="0" step="0.01" required
                                        placeholder= <fmt:message bundle="${bundle}" key="placeholder.account"/>/>
                                 <span class="helper"><fmt:message bundle="${bundle}" key="page.message.helper.account"/></span>
@@ -109,7 +73,6 @@
                             <div class="form-group">
 
                                 <input class="form-control" id="phone" name="phone" value="${phone}"
-
                                        type="text" pattern="^375(44|29|33|25)\d{7}" required
                                        placeholder= <fmt:message bundle="${bundle}"
                                                                  key="placeholder.phone"/>/>
@@ -121,7 +84,6 @@
                             </div>
                             <div class="form-group">
                                 <input
-
                                         type="email"
                                         name="login" value="${login}"
                                         required
@@ -137,9 +99,8 @@
                                 <span class="error">${error_password}</span>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="password" name="password" value="${password}"
-                                       required
-                                       pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                                <input type="password" class="form-control" id="password" name="password" value="${fn:escapeXml(password)}"
+                                       required  pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}"
                                        placeholder=
                                         <fmt:message bundle="${bundle}" key="placeholder.pass"/>/>
                                 <span class="helper"><fmt:message bundle="${bundle}" key="page.message.helper.password"/></span>

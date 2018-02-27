@@ -75,6 +75,7 @@ public class SignUpCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page = PAGE_COMMON_SIGN_UP;
         CommandResult.ResponseType responseType = FORWARD;
+        String contextPath=content.getContextPath();
 
         try {
             HashMap<String, String> userParams = new HashMap<>();
@@ -90,7 +91,7 @@ public class SignUpCommand implements Command {
                 User user = new UserCreator().create(userParams);
                 if (userService.getUser(user.getLogin()) == null) {
                     userService.createUser(user);
-                    page = PAGE_COMMON_SUCCESS_CREATE_USER;
+                    page =contextPath+ PAGE_COMMON_SUCCESS_CREATE_USER;
                     responseType = REDIRECT;
                 } else {
                     content.setRequestAttributes(ATTR_ERROR + PARAM_lOGIN, bundle.getString("message.login.double"));

@@ -6,7 +6,7 @@ import by.teplouhova.chemist.controller.SessionRequestContent;
 
 import java.util.ResourceBundle;
 
-import static by.teplouhova.chemist.command.CommandResult.ResponseType.REDIRECT;
+import static by.teplouhova.chemist.command.CommandResult.ResponseType.FORWARD;
 import static by.teplouhova.chemist.command.PageConstant.PAGE_ERROR;
 
 /**
@@ -41,6 +41,6 @@ public class EmptyCommand implements Command {
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         content.setRequestAttributes(ATTR_MESSAGE_ERROR,
                 bundle.getString("message.not.support.operation") + content.getParameter(ATTR_COMMAND_NAME));
-        return new CommandResult(REDIRECT, PAGE_ERROR);
+        return new CommandResult(FORWARD, PAGE_ERROR);
     }
 }

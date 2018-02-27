@@ -70,17 +70,17 @@
                 <c:choose>
                     <c:when test="${user.role=='CLIENT'}">
                         <button class="button">
-                            <a href="/jsp/client/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
+                            <a href="/chemist/jsp/client/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
                         </button>
                     </c:when>
                     <c:when test="${user.role=='DOCTOR'}">
                         <button class="button">
-                            <a href="/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
+                            <a href="/chemist/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
                         </button>
                     </c:when>
                     <c:when test="${user.role=='PHARMACIST'}">
                         <button class="button">
-                            <a href="/jsp/pharmacist/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
+                            <a href="/chemist/jsp/pharmacist/main.jsp"><fmt:message bundle="${bundle}" key="ref.main.page"/></a>
                         </button>
                     </c:when>
                 </c:choose>

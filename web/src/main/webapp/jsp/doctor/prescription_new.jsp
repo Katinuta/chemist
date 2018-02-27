@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="application/javascript" src="/js/prescription_new.js"></script>
+        <script type="application/javascript" src="/chemist/js/prescription_new.js"></script>
         <style>
             <c:import url="/css/main.css"/>
             <c:import url="/css/prescripition_new.css"/>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <span class="error" id="ajax_error">${error}</span>
                     </div>
-                    <form action="/doctor" method="post">
+                    <form action="/chemist/doctor" method="post">
                         <input type="hidden" name="command" value="create_prescription"/>
                         <div class="form-group row">
                             <div class="col-md-1"></div>
@@ -65,7 +65,7 @@
                             </label>
                             <div class="col-md-3">
                                 <input type="date" data-date="" name="date_end" class="end form-control"
-                                       data-date-format="DD MMMM YYYY"
+                                       data-date-format="DD MMMM YYYY" required
                                        value="${date_end}" id="date_end"/>
                                 <span class="helper"><fmt:message bundle="${bundle}" key="page.message.helper.date"/></span>
                             </div>
@@ -116,7 +116,7 @@
         </div>
         <div class="flex-container">
             <button class="button">
-                <a href="/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a>
+                <a href="/chemist/jsp/doctor/main.jsp"><fmt:message bundle="${bundle}" key="ref.prescription"/></a>
             </button>
         </div>
     </div>

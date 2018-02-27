@@ -59,7 +59,7 @@
                 <c:choose>
                     <c:when test="${not medicine.isDeleted}">
                         <td>
-                            <form action="/pharmacist" class="close">
+                            <form action="/chemist/pharmacist" class="close">
                                 <input type="hidden" value="to_edit_medicine" name="command"/>
                                 <button class="btn edit" name="medicine_id" value="${medicine.medicineId}">
                                     <i class="fa fa-edit"></i>
@@ -67,7 +67,8 @@
                             </form>
                         </td>
                         <td >
-                            <form action="/pharmacist" class="close">
+
+                            <form action="/chemist/pharmacist" class="close">
                                 <input type="hidden" value="delete_medicine" name="command"/>
                                 <button class="btn close" name="medicine_id" value="${medicine.medicineId}">
                                     <i class="fa fa-close"></i>

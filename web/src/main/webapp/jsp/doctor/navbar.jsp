@@ -8,7 +8,7 @@
 <fmt:setBundle basename="MessagesBundle" var="bundle" scope="session"/>
 <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/jsp/doctor/main.jsp">
+        <a class="navbar-brand" href="/chemist/jsp/doctor/main.jsp">
             <fmt:message bundle="${bundle}" key="ref.brand"/>
         </a>
     </div>
@@ -54,7 +54,7 @@
 
         <li>
             <a href="${eng_lang}">
-                <img src="/image/united-kingdom-flag.png">
+                <img src="/chemist/image/united-kingdom-flag.png">
             </a>
         </li>
 
@@ -65,7 +65,7 @@
         </c:url>
         <li>
 
-            <a href="${rus_lang}"> <img src="/image/russia-flag.png"></a>
+            <a href="${rus_lang}"> <img src="/chemist/image/russia-flag.png"></a>
         </li>
         <li>
             <ctg:hello-tag name="${user.name}"></ctg:hello-tag>

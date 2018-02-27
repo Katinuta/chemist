@@ -122,6 +122,7 @@ public class AddMedicineCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page;
         CommandResult.ResponseType responseType = FORWARD;
+        String contextPath=content.getContextPath();
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         boolean isNeedPrescription = content.isContainParameter(PARAM_NEED_PRESCRIPTION);
         HashMap<String, String> medicineParams = new HashMap<>();
@@ -148,7 +149,7 @@ public class AddMedicineCommand implements Command {
             if (isValid && !(dosageSize == null && dosageUnit != null || dosageSize != null && dosageUnit == null)) {
                 Medicine medicine = new MedicineCreator().createMedicine(medicineParams);
                 medicineService.create(medicine);
-                page = PAGE_SUCCESS_MEDICINE_NEW;
+                page =contextPath+PAGE_SUCCESS_MEDICINE_NEW;
                 responseType = REDIRECT;
             } else {
                 if (isValid && (dosageSize == null && dosageUnit != null) || (dosageSize != null && dosageUnit == null)) {

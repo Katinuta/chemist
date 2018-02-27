@@ -26,22 +26,34 @@ import static by.teplouhova.chemist.command.PageConstant.PAGE_SUCCESS_PRESCRIPTI
  */
 public class ApproveExtendingPrescriptionCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    /** The Constant PARAM_DATE_END. */
+    /**
+     * The Constant PARAM_DATE_END.
+     */
     private static final String PARAM_DATE_END = "date_end";
 
-    /** The Constant PARAM_PRESCRIPTION_ID. */
+    /**
+     * The Constant PARAM_PRESCRIPTION_ID.
+     */
     private static final String PARAM_PRESCRIPTION_ID = "prescription_id";
 
-    /** The Constant ATTR_MESSAGE_BUNDLE. */
+    /**
+     * The Constant ATTR_MESSAGE_BUNDLE.
+     */
     private static final String ATTR_MESSAGE_BUNDLE = "messageBundle";
 
-    /** The Constant ATTR_MESSAGE. */
+    /**
+     * The Constant ATTR_MESSAGE.
+     */
     private static final String ATTR_MESSAGE = "message";
 
-    /** The Constant ATTR_ERROR. */
+    /**
+     * The Constant ATTR_ERROR.
+     */
     private static final String ATTR_ERROR = "error_";
 
-    /** The prescription service. */
+    /**
+     * The prescription service.
+     */
     private PrescriptionService prescriptionService;
 
     /**
@@ -63,6 +75,7 @@ public class ApproveExtendingPrescriptionCommand implements Command {
     public CommandResult execute(SessionRequestContent content) {
         String page = PageConstant.PAGE_DOCTOR_MAIN;
         CommandResult.ResponseType responseType = FORWARD;
+        String contextPath = content.getContextPath();
         ResourceBundle bundle = (ResourceBundle) content.getSessionAttribute(ATTR_MESSAGE_BUNDLE);
         HashMap<String, String> prescripParams = new HashMap<>();
         Validator validator = new Validator(bundle);
@@ -76,7 +89,7 @@ public class ApproveExtendingPrescriptionCommand implements Command {
                 Prescription prescription = new PrescriptionCreator().create(prescripParams);
                 prescriptionService.update(prescription);
                 responseType = REDIRECT;
-                page = PAGE_SUCCESS_PRESCRIPTION_APPROVE;
+                page = contextPath + PAGE_SUCCESS_PRESCRIPTION_APPROVE;
             } else {
                 String prescriptionId = prescripParams.get(PARAM_PRESCRIPTION_ID);
                 if (isValid && LocalDate.parse(dateEnd).isBefore(now)) {

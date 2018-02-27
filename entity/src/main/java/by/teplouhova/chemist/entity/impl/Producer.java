@@ -79,12 +79,7 @@ public class Producer extends Entity {
         this.name = name;
     }
 
-    /**
-     * Equals.
-     *
-     * @param o the o
-     * @return true, if successful
-     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,21 +90,13 @@ public class Producer extends Entity {
         return name.equals(producer.name);
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         return name.hashCode();
     }
 
-    /**
-     * To string.
-     *
-     * @return the string
-     */
+
     @Override
     public String toString() {
         return "Producer{" +
