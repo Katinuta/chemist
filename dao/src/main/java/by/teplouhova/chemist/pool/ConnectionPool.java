@@ -17,22 +17,34 @@ public class ConnectionPool {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-    /** The pool max active. */
+    /**
+     * The pool max active.
+     */
     private final int POOL_MAX_ACTIVE;
 
-    /** The pool init size. */
+    /**
+     * The pool init size.
+     */
     private final int POOL_INIT_SIZE;
 
-    /** The lock. */
+    /**
+     * The lock.
+     */
     private static ReentrantLock lock = new ReentrantLock();
 
-    /** The pool. */
+    /**
+     * The pool.
+     */
     private static ConnectionPool pool;
 
-    /** The is exist pool. */
+    /**
+     * The is exist pool.
+     */
     private static AtomicBoolean isExistPool = new AtomicBoolean(false);
 
-    /** The connections. */
+    /**
+     * The connections.
+     */
     private BlockingQueue<ProxyConnection> connections;
 
 
@@ -43,7 +55,6 @@ public class ConnectionPool {
         POOL_MAX_ACTIVE = ConnectionConfiguration.getConfiguration().getPOOL_MAX_ACTIVE();
         POOL_INIT_SIZE = ConnectionConfiguration.getConfiguration().getPOOL_INIT_SIZE();
         connections = new ArrayBlockingQueue<>(POOL_MAX_ACTIVE);
-
         for (int index = 1; index <= POOL_INIT_SIZE; index++) {
             Connection connection = ConnectionConfiguration.getConfiguration().getConnection();
             if (connection != null) {
@@ -143,7 +154,7 @@ public class ConnectionPool {
      *
      * @return the int size of pool
      */
-    public int size(){
+    public int size() {
         return connections.size();
     }
 

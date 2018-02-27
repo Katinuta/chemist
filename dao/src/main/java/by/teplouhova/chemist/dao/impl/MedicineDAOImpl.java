@@ -13,7 +13,9 @@ import java.util.HashSet;
  */
 public class MedicineDAOImpl extends MedicineDAO {
 
-    /** The Constant SQL_SELECT_MEDICINE_BY_NAME. */
+    /**
+     * The Constant SQL_SELECT_MEDICINE_BY_NAME.
+     */
     private static final String SQL_SELECT_MEDICINE_BY_NAME = "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
             "IFNULL( IF(dosage.d_dosage_size > 1, " +
             "FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
@@ -29,7 +31,9 @@ public class MedicineDAOImpl extends MedicineDAO {
             "WHERE m_name=?  " +
             "ORDER BY medicine.m_name";
 
-    /** The Constant SQL_SELECT_ALL_MEDICINES. */
+    /**
+     * The Constant SQL_SELECT_ALL_MEDICINES.
+     */
     private static final String SQL_SELECT_ALL_MEDICINES =
             "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
                     "IFNULL( IF(dosage.d_dosage_size > 1, " +
@@ -46,8 +50,10 @@ public class MedicineDAOImpl extends MedicineDAO {
                     "ORDER BY fullname " +
                     "LIMIT ?,? ";
 
-    /** The Constant SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE. */
-    private static final String SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE=
+    /**
+     * The Constant SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE.
+     */
+    private static final String SQL_SELECT_ALL_MEDICINES_BY_RELEVANCE =
             "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', \n" +
                     "IFNULL( IF(dosage.d_dosage_size > 1, " +
                     "FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
@@ -60,11 +66,13 @@ public class MedicineDAOImpl extends MedicineDAO {
                     "JOIN chemist.release_form USING(rf_release_form_id) " +
                     "JOIN chemist.producer USING(p_producer_id) " +
                     "LEFT JOIN chemist.dosage USING(d_dosage_id) " +
-                    "WHERE m_quantity_packages>0 AND m_is_deleted=b'0' "+
+                    "WHERE m_quantity_packages>0 AND m_is_deleted=b'0' " +
                     "ORDER BY fullname " +
                     "LIMIT ?,? ";
 
-    /** The Constant SQL_SELECT_MEDICINE_BY_ID. */
+    /**
+     * The Constant SQL_SELECT_MEDICINE_BY_ID.
+     */
     private static final String SQL_SELECT_MEDICINE_BY_ID =
             "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
                     "IFNULL( IF(dosage.d_dosage_size > 1, " +
@@ -80,19 +88,27 @@ public class MedicineDAOImpl extends MedicineDAO {
                     "            LEFT JOIN chemist.dosage USING(d_dosage_id) " +
                     "           WHERE m_medicine_id=?  ";
 
-    /** The Constant SQL_SELECT_ALL_MEDICINES_COUNT_BY_NAME. */
+    /**
+     * The Constant SQL_SELECT_ALL_MEDICINES_COUNT_BY_NAME.
+     */
     private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_NAME =
             "SELECT count(m_name)  as count FROM chemist.medicine ";
 
-    /** The Constant SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE. */
-    private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE=
+    /**
+     * The Constant SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE.
+     */
+    private static final String SQL_SELECT_ALL_MEDICINES_COUNT_BY_RELEVANCE =
             "SELECT count(m_name)  as count FROM chemist.medicine WHERE m_quantity_packages>0 AND m_is_deleted=b'0'";
 
-    /** The Constant SQL_SELECT_BALANCE_MEDICINE_BY_ID. */
+    /**
+     * The Constant SQL_SELECT_BALANCE_MEDICINE_BY_ID.
+     */
     private static final String SQL_SELECT_BALANCE_MEDICINE_BY_ID =
             "SELECT m_quantity_packages as balance FROM chemist.medicine WHERE m_medicine_id=?";
 
-    /** The Constant SQL_SELECT_BY_MEDICINE_ID_EDIT. */
+    /**
+     * The Constant SQL_SELECT_BY_MEDICINE_ID_EDIT.
+     */
     private static final String SQL_SELECT_BY_MEDICINE_ID_EDIT =
             "SELECT m_medicine_id,d_dosage_unit,m_name,m_price,m_quantity_packages,m_is_need_prescrip," +
                     "m_quantity_in_pack,m_analog_id,m_unit_in_package, " +
@@ -105,30 +121,40 @@ public class MedicineDAOImpl extends MedicineDAO {
                     "LEFT JOIN dosage USING(d_dosage_id) " +
                     "WHERE m_medicine_id=?";
 
-    /** The Constant SQL_SELECT_ALL_MEDICINES_ID. */
+    /**
+     * The Constant SQL_SELECT_ALL_MEDICINES_ID.
+     */
     private static final String SQL_SELECT_ALL_MEDICINES_ID = "SELECT m_medicine_id FROM chemist.medicine";
 
-    /** The Constant SQL_SELECT_ALL_UNITS_IN_PACK. */
+    /**
+     * The Constant SQL_SELECT_ALL_UNITS_IN_PACK.
+     */
     private static final String SQL_SELECT_ALL_UNITS_IN_PACK =
             "SELECT DISTINCT m_unit_in_package FROM chemist.medicine";
 
-    /** The Constant SQL_UPDATE_MEDICINE. */
+    /**
+     * The Constant SQL_UPDATE_MEDICINE.
+     */
     private static final String SQL_UPDATE_MEDICINE =
             "UPDATE chemist.medicine SET m_name=?, m_price=?, m_quantity_packages=?, " +
                     "m_is_need_prescrip=?, m_quantity_in_pack=?, rf_release_form_id=?, " +
                     "p_producer_id=?, d_dosage_id= ?, m_analog_id=?, m_unit_in_package=?, " +
-                    "m_is_deleted=? "+
+                    "m_is_deleted=? " +
                     "WHERE m_medicine_id =?";
 
-    /** The Constant SQL_INSERT_MEDICINE. */
+    /**
+     * The Constant SQL_INSERT_MEDICINE.
+     */
     private static final String SQL_INSERT_MEDICINE =
             "INSERT INTO chemist.medicine " +
                     "(m_name, m_price, m_quantity_packages, m_is_need_prescrip, m_quantity_in_pack, " +
                     "rf_release_form_id, p_producer_id,d_dosage_id,m_analog_id, m_unit_in_package) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
-    /** The Constant SQL_SELECT_BY_IS_NEED_PRESCRIPTION. */
-    private static final String SQL_SELECT_BY_IS_NEED_PRESCRIPTION="SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
+    /**
+     * The Constant SQL_SELECT_BY_IS_NEED_PRESCRIPTION.
+     */
+    private static final String SQL_SELECT_BY_IS_NEED_PRESCRIPTION = "SELECT m_medicine_id, CONCAT(medicine.m_name,' ',release_form.rf_name,' ', " +
             "IFNULL( IF(dosage.d_dosage_size > 1, " +
             "FLOOR(dosage.d_dosage_size), dosage.d_dosage_size),''), " +
             "IFNULL(dosage.d_dosage_unit,'' ),' ', " +
@@ -163,7 +189,7 @@ public class MedicineDAOImpl extends MedicineDAO {
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
                 medicine.setPrice(result.getBigDecimal("m_price"));
-                Producer producer=new Producer();
+                Producer producer = new Producer();
                 producer.setName(result.getString("p_name"));
                 medicine.setProducer(producer);
                 medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
@@ -213,7 +239,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DAOException("Exception in create method ",e);
+            throw new DAOException("Exception in create method ", e);
         } finally {
             close(statement);
         }
@@ -248,7 +274,7 @@ public class MedicineDAOImpl extends MedicineDAO {
                 statement.setNull(9, Types.NULL);
             }
             statement.setString(10, entity.getUnitInPackage().name().toLowerCase());
-            statement.setBoolean(11,entity.getIsDeleted());
+            statement.setBoolean(11, entity.getIsDeleted());
             statement.setLong(12, entity.getMedicineId());
             statement.executeUpdate();
 
@@ -289,7 +315,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("Exception in method findByName" , e);
+            throw new DAOException("Exception in method findByName", e);
         } finally {
             close(statement);
         }
@@ -300,7 +326,7 @@ public class MedicineDAOImpl extends MedicineDAO {
      * Find all medicines on page.
      *
      * @param begin the row begin
-     * @param end the row  end
+     * @param end   the row  end
      * @return the array list
      * @throws DAOException the DAO exception
      */
@@ -317,7 +343,7 @@ public class MedicineDAOImpl extends MedicineDAO {
                 Medicine medicine = new Medicine();
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
-                Producer producer=new Producer();
+                Producer producer = new Producer();
                 producer.setName(result.getString("p_name"));
                 medicine.setProducer(producer);
                 medicine.setQuantityPackages(result.getInt("m_quantity_packages"));
@@ -339,7 +365,7 @@ public class MedicineDAOImpl extends MedicineDAO {
      * Find all medicines by relevance on page.
      *
      * @param begin the row begin
-     * @param end the row end
+     * @param end   the row end
      * @return the array list
      * @throws DAOException the DAO exception
      */
@@ -356,7 +382,7 @@ public class MedicineDAOImpl extends MedicineDAO {
                 Medicine medicine = new Medicine();
                 medicine.setMedicineId(result.getLong("m_medicine_id"));
                 medicine.setName(result.getString("fullname"));
-                Producer producer=new Producer();
+                Producer producer = new Producer();
                 producer.setName(result.getString("p_name"));
                 medicine.setProducer(producer);
                 medicine.setNeedRecipe(result.getBoolean("m_is_need_prescrip"));
@@ -371,7 +397,7 @@ public class MedicineDAOImpl extends MedicineDAO {
         } finally {
             close(statement);
         }
-        return !medicines.isEmpty()?medicines:null;
+        return !medicines.isEmpty() ? medicines : null;
     }
 
 
@@ -394,7 +420,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("Exception in getCountByName method",e);
+            throw new DAOException("Exception in getCountByName method", e);
         } finally {
             close(statement);
         }
@@ -419,7 +445,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("Exception in getCountByNameByRelevance method",e);
+            throw new DAOException("Exception in getCountByNameByRelevance method", e);
         } finally {
             close(statement);
         }
@@ -445,7 +471,7 @@ public class MedicineDAOImpl extends MedicineDAO {
                 balance = result.getInt("balance");
             }
         } catch (SQLException e) {
-            throw new DAOException("Error in method getBalanceById" + e);
+            throw new DAOException("Exception in method getBalanceById", e);
         } finally {
             close(statement);
         }
@@ -487,7 +513,7 @@ public class MedicineDAOImpl extends MedicineDAO {
 
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in method findByIdEdit", e);
         } finally {
             close(statement);
         }
@@ -538,7 +564,7 @@ public class MedicineDAOImpl extends MedicineDAO {
         } finally {
             close(statement);
         }
-        return !setIds.isEmpty()?setIds:null;
+        return !setIds.isEmpty() ? setIds : null;
     }
 
 
@@ -552,7 +578,7 @@ public class MedicineDAOImpl extends MedicineDAO {
     @Override
     public ArrayList<Medicine> findByPrescripNeed(boolean isNeedPrescrip) throws DAOException {
         PreparedStatement statement = null;
-        ArrayList<Medicine> medicines =new ArrayList<>();
+        ArrayList<Medicine> medicines = new ArrayList<>();
         try {
             statement = connection.prepareStatement(SQL_SELECT_BY_IS_NEED_PRESCRIPTION);
             statement.setBoolean(1, isNeedPrescrip);
@@ -570,7 +596,7 @@ public class MedicineDAOImpl extends MedicineDAO {
             close(statement);
 
         }
-        return !medicines.isEmpty()?medicines:null;
+        return !medicines.isEmpty() ? medicines : null;
     }
 
 

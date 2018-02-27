@@ -34,7 +34,7 @@ class ConnectionConfiguration {
     private final String PASSWORD;
 
     /** The Constant configuration. */
-    private final static ConnectionConfiguration configuration = new ConnectionConfiguration();
+    private static final  ConnectionConfiguration configuration = new ConnectionConfiguration();
 
     /**
      * Instantiates a new connection configuration.

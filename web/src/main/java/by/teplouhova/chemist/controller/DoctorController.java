@@ -17,28 +17,12 @@ import java.io.IOException;
 @WebServlet("/doctor")
 public class DoctorController extends HttpServlet {
 
-    /**
-     * Do get.
-     *
-     * @param request the request
-     * @param response the response
-     * @throws ServletException the servlet exception
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println(request.toString());
         processRequest(request, response);
     }
 
-    /**
-     * Do post.
-     *
-     * @param request the request
-     * @param response the response
-     * @throws ServletException the servlet exception
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

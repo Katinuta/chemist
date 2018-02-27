@@ -21,19 +21,16 @@ import java.sql.SQLException;
  * component's <code>addChemistContextListener<code> method. When
  * the chemistContext event occurs, that object's appropriate
  * method is invoked.
- *
  */
 @WebListener
 public class ChemistContextListener implements ServletContextListener {
 
-    /** The Constant LOGGER. */
-    private final static Logger LOGGER= LogManager.getLogger();
-
     /**
-     * Context destroyed.
-     *
-     * @param arg0 the arg 0
+     * The Constant LOGGER.
      */
+    private final static Logger LOGGER = LogManager.getLogger();
+
+
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
@@ -42,16 +39,12 @@ public class ChemistContextListener implements ServletContextListener {
             DriverManager.deregisterDriver(DriverManager.getDriver("com.impl.cj.jdbc.Driver"));
 
         } catch (SQLException e) {
-            LOGGER.log(Level.FATAL,"Connection driver is not unregistered ");
+            LOGGER.log(Level.FATAL, "Connection driver is not unregistered ");
 
         }
     }
 
-    /**
-     * Context initialized.
-     *
-     * @param arg0 the arg 0
-     */
+
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         try {
@@ -59,9 +52,9 @@ public class ChemistContextListener implements ServletContextListener {
             ConnectionPool.getInstance();
             DAOFactory.getDAOFactory();
             MessageManager.EN.getBundle();
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             LOGGER.fatal("Connection driver is not registered ");
-            new RuntimeException( "Connection driver is not registered",e);
+            new RuntimeException("Connection driver is not registered", e);
         }
     }
 }

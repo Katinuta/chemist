@@ -14,7 +14,6 @@ import java.util.Arrays;
  */
 public class TransactionManager {
 
-    /** The Constant LOGGER. */
     private final static Logger LOGGER= LogManager.getLogger();
 
     /** The connection. */
